@@ -1,9 +1,6 @@
 package org.iowacityrobotics.roboed.api.actuator;
 
-import org.iowacityrobotics.roboed.api.IPorted;
+import org.iowacityrobotics.roboed.api.abst.IObservableSetter;
+import org.iowacityrobotics.roboed.api.abst.IPorted;
 
-public interface IActuator<T> extends IPorted {
-
-	// TODO Implement
-	
-}
+public interface IActuator<T> extends IObservableSetter<T>, IPorted { }
