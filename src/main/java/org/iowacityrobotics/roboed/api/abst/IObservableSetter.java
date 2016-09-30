@@ -5,6 +5,6 @@ import java.util.function.Consumer;
 
 public interface IObservableSetter<T> extends Consumer<T> {
 
-	void onMutation(BiConsumer<T, T> handler);
+    void onMutation(BiConsumer<T, T> handler);
 
 }

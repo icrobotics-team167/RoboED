@@ -5,8 +5,8 @@ import java.util.function.Supplier;
 
 public interface IObservableGetter<T> extends Supplier<T> {
 
-	void onMutation(BiConsumer<T, T> handler);
+    void onMutation(BiConsumer<T, T> handler);
 
-	IDataBinding binding();
+    IDataBinding binding();
 
 }

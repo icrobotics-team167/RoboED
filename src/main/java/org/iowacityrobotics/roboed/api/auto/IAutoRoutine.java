@@ -1,15 +1,16 @@
 package org.iowacityrobotics.roboed.api.auto;
 
-import java.util.function.Predicate;
-
-import org.iowacityrobotics.roboed.api.sensor.ISensorRegistry;
+import java.util.concurrent.TimeUnit;
+import java.util.function.BooleanSupplier;
 
 public interface IAutoRoutine {
 
-	IAutoRoutine doWhile(Predicate<ISensorRegistry> condition, Runnable action);
-	
-	IAutoRoutine doUntil(Predicate<ISensorRegistry> condition, Runnable action);
-	
-	IAutoRoutine doFor(long ms, Runnable action);
-	
+    IAutoRoutine doWhile(BooleanSupplier condition, Runnable action);
+    
+    IAutoRoutine doUntil(BooleanSupplier condition, Runnable action);
+    
+    IAutoRoutine doFor(long ms, Runnable action);
+    
+    IAutoRoutine doFor(long time, TimeUnit unit, Runnable action);
+    
 }

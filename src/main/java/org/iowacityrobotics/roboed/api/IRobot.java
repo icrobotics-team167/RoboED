@@ -7,12 +7,12 @@ import org.iowacityrobotics.roboed.api.sensor.ISensorRegistry;
 
 public interface IRobot {
 
-	IEventBus eventBus();
-	
-	ISensorRegistry sensors();
-	
-	IActuatorRegistry actuators();
-	
-	IAutoManager autonomous();
-	
+    IEventBus eventBus();
+    
+    ISensorRegistry sensors();
+    
+    IActuatorRegistry actuators();
+    
+    IAutoManager autonomous();
+    
 }
