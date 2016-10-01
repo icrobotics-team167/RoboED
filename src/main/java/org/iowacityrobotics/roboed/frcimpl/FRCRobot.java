@@ -39,7 +39,7 @@ public class FRCRobot extends IterativeRobot implements IRobot {
     }
 
     @Override
-    public IAutoManager autonomous() {;
+    public IAutoManager autonomous() {
         // TODO Implement
     }
 
