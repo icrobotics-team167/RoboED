@@ -1,20 +1,25 @@
 package org.iowacityrobotics.roboed.frcimpl.actuator;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import org.iowacityrobotics.roboed.api.actuator.IActuator;
 import org.iowacityrobotics.roboed.api.actuator.IActuatorRegistry;
 import org.iowacityrobotics.roboed.util.primitive.IntTMap;
 
 public class FRCActuatorRegistry implements IActuatorRegistry {
 
-	private final IntTMap<IActuator<?>> registry;
+    private final FRCActuatorProvider provider;
+	private final IntTMap<FRCActuator<?>> registry;
 	
 	public FRCActuatorRegistry() {
-		registry = new IntTMap<>();
+		this.provider = new FRCActuatorProvider(DriverStation.getInstance());
+        this.registry = new IntTMap<>();
 	}
 	
     @Override
-    public void put(IActuator<?> actuator) {
+    public <T> IActuator<T> put(int id, String type) {
+        FRCActuator<T> actuator = provider.get(id, type);
         registry.put(actuator.id(), actuator);
+        return actuator;
     }
 
     @SuppressWarnings("unchecked")

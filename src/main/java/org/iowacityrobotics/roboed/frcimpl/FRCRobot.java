@@ -1,21 +1,22 @@
 package org.iowacityrobotics.roboed.frcimpl;
 
+import edu.wpi.first.wpilibj.IterativeRobot;
 import org.iowacityrobotics.roboed.api.IRobot;
 import org.iowacityrobotics.roboed.api.actuator.IActuatorRegistry;
 import org.iowacityrobotics.roboed.api.auto.IAutoManager;
 import org.iowacityrobotics.roboed.api.event.IEventBus;
 import org.iowacityrobotics.roboed.api.sensor.ISensorRegistry;
 import org.iowacityrobotics.roboed.frcimpl.actuator.FRCActuatorRegistry;
+import org.iowacityrobotics.roboed.frcimpl.auto.FRCAutoManager;
 import org.iowacityrobotics.roboed.frcimpl.event.FRCEventBus;
 import org.iowacityrobotics.roboed.frcimpl.sensor.FRCSensorRegistry;
-
-import edu.wpi.first.wpilibj.IterativeRobot;
 
 public class FRCRobot extends IterativeRobot implements IRobot {
     
     private FRCEventBus eventBus;
     private FRCSensorRegistry sensorRegistry;
     private FRCActuatorRegistry actuatorRegistry;
+    private FRCAutoManager autoManager;
     
     public FRCRobot() {
         this.eventBus = new FRCEventBus();
@@ -40,7 +41,7 @@ public class FRCRobot extends IterativeRobot implements IRobot {
 
     @Override
     public IAutoManager autonomous() {
-        // TODO Implement
+        return autoManager;
     }
 
 }

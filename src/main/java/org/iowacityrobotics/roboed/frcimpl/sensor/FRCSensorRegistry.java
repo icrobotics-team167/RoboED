@@ -1,20 +1,26 @@
 package org.iowacityrobotics.roboed.frcimpl.sensor;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import org.iowacityrobotics.roboed.api.sensor.ISensor;
 import org.iowacityrobotics.roboed.api.sensor.ISensorRegistry;
+import org.iowacityrobotics.roboed.frcimpl.actuator.FRCSensorProvider;
 import org.iowacityrobotics.roboed.util.primitive.IntTMap;
 
 public class FRCSensorRegistry implements ISensorRegistry {
 
-	private final IntTMap<ISensor<?>> registry;
+    private final FRCSensorProvider provider;
+	private final IntTMap<FRCSensor<?>> registry;
 	
 	public FRCSensorRegistry() {
-		registry = new IntTMap<>();
+		this.provider = new FRCSensorProvider(DriverStation.getInstance());
+        this.registry = new IntTMap<>();
 	}
 	
     @Override
-    public void put(ISensor<?> sensor) {
-        registry.put(sensor.id(), sensor);        
+    public <T> ISensor<T> put(int id, String type) {
+        FRCSensor<T> sensor = provider.get(id, type);
+        registry.put(sensor.id(), sensor);
+        return sensor;
     }
 
     @SuppressWarnings("unchecked")
@@ -24,7 +30,7 @@ public class FRCSensorRegistry implements ISensorRegistry {
     }
     
     public void tick() {
-    	// TODO Implement
+    	registry.forEach((i, s) -> s.tick());
     }
 
 }
