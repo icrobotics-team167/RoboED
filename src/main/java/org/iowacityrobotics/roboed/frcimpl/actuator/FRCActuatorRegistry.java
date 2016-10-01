@@ -8,13 +8,13 @@ import org.iowacityrobotics.roboed.util.primitive.IntTMap;
 public class FRCActuatorRegistry implements IActuatorRegistry {
 
     private final FRCActuatorProvider provider;
-	private final IntTMap<FRCActuator<?>> registry;
-	
-	public FRCActuatorRegistry() {
-		this.provider = new FRCActuatorProvider(DriverStation.getInstance());
+    private final IntTMap<FRCActuator<?>> registry;
+
+    public FRCActuatorRegistry() {
+        this.provider = new FRCActuatorProvider(DriverStation.getInstance());
         this.registry = new IntTMap<>();
-	}
-	
+    }
+
     @Override
     public <T> IActuator<T> put(int id, String type) {
         FRCActuator<T> actuator = provider.get(id, type);
@@ -23,7 +23,7 @@ public class FRCActuatorRegistry implements IActuatorRegistry {
     }
 
     @SuppressWarnings("unchecked")
-	@Override
+    @Override
     public <T> IActuator<T> get(int id) {
         return (IActuator<T>)registry.get(id);
     }

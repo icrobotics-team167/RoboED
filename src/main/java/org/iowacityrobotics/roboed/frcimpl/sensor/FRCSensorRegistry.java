@@ -9,13 +9,13 @@ import org.iowacityrobotics.roboed.util.primitive.IntTMap;
 public class FRCSensorRegistry implements ISensorRegistry {
 
     private final FRCSensorProvider provider;
-	private final IntTMap<FRCSensor<?>> registry;
-	
-	public FRCSensorRegistry() {
-		this.provider = new FRCSensorProvider(DriverStation.getInstance());
+    private final IntTMap<FRCSensor<?>> registry;
+
+    public FRCSensorRegistry() {
+        this.provider = new FRCSensorProvider(DriverStation.getInstance());
         this.registry = new IntTMap<>();
-	}
-	
+    }
+
     @Override
     public <T> ISensor<T> put(int id, String type) {
         FRCSensor<T> sensor = provider.get(id, type);
@@ -24,13 +24,13 @@ public class FRCSensorRegistry implements ISensorRegistry {
     }
 
     @SuppressWarnings("unchecked")
-	@Override
+    @Override
     public <T> ISensor<T> get(int id) {
         return (ISensor<T>)registry.get(id);
     }
     
     public void tick() {
-    	registry.forEach((i, s) -> s.tick());
+        registry.forEach((i, s) -> s.tick());
     }
 
 }

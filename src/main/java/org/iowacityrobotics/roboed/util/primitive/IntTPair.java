@@ -2,7 +2,7 @@ package org.iowacityrobotics.roboed.util.primitive;
 
 public class IntTPair<T> {
 
-	public static <T> IntTPair<T> of(int a, T b) {
+    public static <T> IntTPair<T> of(int a, T b) {
         return new IntTPair<>(a, b);
     }
     
@@ -32,5 +32,5 @@ public class IntTPair<T> {
     public String toString() {
         return new StringBuilder("(").append(a).append(", ").append(b.toString()).append(")").toString();
     }
-	
+
 }
