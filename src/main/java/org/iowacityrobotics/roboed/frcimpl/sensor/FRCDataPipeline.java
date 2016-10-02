@@ -7,6 +7,10 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+/**
+ * Part of the WPILib 2016 implementation of RoboED.
+ * @author Evan Geng
+ */
 public abstract class FRCDataPipeline<T> implements IDataBinding<T> {
 
     Consumer<T> sink;

@@ -8,6 +8,10 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.function.BiConsumer;
 
+/**
+ * Part of the WPILib 2016 implementation of RoboED.
+ * @author Evan Geng
+ */
 public abstract class FRCSensor<T> implements ISensor<T> {
 
     private final int id;

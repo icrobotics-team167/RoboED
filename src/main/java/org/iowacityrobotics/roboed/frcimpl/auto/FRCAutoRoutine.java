@@ -8,6 +8,10 @@ import org.iowacityrobotics.roboed.util.function.TimeDelayCondition;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Part of the WPILib 2016 implementation of RoboED.
+ * @author Evan Geng
+ */
 public class FRCAutoRoutine implements IAutoRoutine {
 
     FRCAutoManager autoMan;

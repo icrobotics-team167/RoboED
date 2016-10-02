@@ -6,6 +6,10 @@ import org.iowacityrobotics.roboed.api.auto.IAutoRoutine;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Part of the WPILib 2016 implementation of RoboED.
+ * @author Evan Geng
+ */
 public class FRCAutoManager implements IAutoManager {
 
     private Map<String, IAutoRoutine> routines;

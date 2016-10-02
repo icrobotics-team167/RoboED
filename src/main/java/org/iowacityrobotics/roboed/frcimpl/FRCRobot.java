@@ -11,7 +11,11 @@ import org.iowacityrobotics.roboed.frcimpl.auto.FRCAutoManager;
 import org.iowacityrobotics.roboed.frcimpl.event.FRCEventBus;
 import org.iowacityrobotics.roboed.frcimpl.sensor.FRCSensorRegistry;
 
-public class FRCRobot extends IterativeRobot implements IRobot {
+/**
+ * The default RoboED implementation, designed for the 2016 WPILib release.
+ * @author Evan Geng
+ */
+public class FRCRobot extends IterativeRobot implements IRobot { // TODO Finish implementation
     
     private FRCEventBus eventBus;
     private FRCSensorRegistry sensorRegistry;

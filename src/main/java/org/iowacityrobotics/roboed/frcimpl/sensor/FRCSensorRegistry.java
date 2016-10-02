@@ -3,9 +3,12 @@ package org.iowacityrobotics.roboed.frcimpl.sensor;
 import edu.wpi.first.wpilibj.DriverStation;
 import org.iowacityrobotics.roboed.api.sensor.ISensor;
 import org.iowacityrobotics.roboed.api.sensor.ISensorRegistry;
-import org.iowacityrobotics.roboed.frcimpl.actuator.FRCSensorProvider;
 import org.iowacityrobotics.roboed.util.primitive.IntTMap;
 
+/**
+ * Part of the WPILib 2016 implementation of RoboED.
+ * @author Evan Geng
+ */
 public class FRCSensorRegistry implements ISensorRegistry {
 
     private final FRCSensorProvider provider;

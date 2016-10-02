@@ -5,6 +5,10 @@ import org.iowacityrobotics.roboed.util.function.Lambdas;
 
 import java.util.function.BiConsumer;
 
+/**
+ * Part of the WPILib 2016 implementation of RoboED.
+ * @author Evan Geng
+ */
 public abstract class FRCActuator<T> implements IActuator<T> {
 
     private final int id;

@@ -1,13 +1,17 @@
 package org.iowacityrobotics.roboed.frcimpl.event;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.function.Consumer;
-
 import org.iowacityrobotics.roboed.api.event.IEvent;
 import org.iowacityrobotics.roboed.api.event.IEventBus;
 import org.iowacityrobotics.roboed.util.OneToManyMap;
 
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.function.Consumer;
+
+/**
+ * Part of the WPILib 2016 implementation of RoboED.
+ * @author Evan Geng
+ */
 public class FRCEventBus implements IEventBus {
 
     private final OneToManyMap<Class<? extends IEvent>, Consumer<? extends IEvent>, Collection<Consumer<? extends IEvent>>> handlers;

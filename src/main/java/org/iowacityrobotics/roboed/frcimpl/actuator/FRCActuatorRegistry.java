@@ -5,6 +5,10 @@ import org.iowacityrobotics.roboed.api.actuator.IActuator;
 import org.iowacityrobotics.roboed.api.actuator.IActuatorRegistry;
 import org.iowacityrobotics.roboed.util.primitive.IntTMap;
 
+/**
+ * Part of the WPILib 2016 implementation of RoboED.
+ * @author Evan Geng
+ */
 public class FRCActuatorRegistry implements IActuatorRegistry {
 
     private final FRCActuatorProvider provider;
