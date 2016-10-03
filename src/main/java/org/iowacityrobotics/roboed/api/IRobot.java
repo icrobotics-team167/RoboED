@@ -35,4 +35,10 @@ public interface IRobot {
      */
     IAutoManager autonomous();
     
+    /**
+     * Gets the operational mode of the robot.
+     * @return The robot's operational mode.
+     */
+    RobotMode mode();
+    
 }

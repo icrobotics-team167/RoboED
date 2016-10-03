@@ -1,10 +1,11 @@
 package org.iowacityrobotics.roboed.frcimpl.auto;
 
-import org.iowacityrobotics.roboed.api.auto.IAutoManager;
-import org.iowacityrobotics.roboed.api.auto.IAutoRoutine;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import org.iowacityrobotics.roboed.api.auto.IAutoManager;
+import org.iowacityrobotics.roboed.api.auto.IAutoRoutine;
+import org.iowacityrobotics.roboed.frcimpl.event.FRCEventBus;
 
 /**
  * Part of the WPILib 2016 implementation of RoboED.
@@ -12,8 +13,8 @@ import java.util.Map;
  */
 public class FRCAutoManager implements IAutoManager {
 
-    private Map<String, IAutoRoutine> routines;
-    private String routineId;
+    private Map<String, FRCAutoRoutine> routines;
+    private FRCAutoRoutine selectedRoutine;
 
     public FRCAutoManager() {
         this.routines = new HashMap<>();
@@ -21,7 +22,7 @@ public class FRCAutoManager implements IAutoManager {
 
     @Override
     public IAutoRoutine createRoutine(String id) {
-        IAutoRoutine routine = new FRCAutoRoutine(this, id);
+        FRCAutoRoutine routine = new FRCAutoRoutine(this, id);
         routines.put(id, routine);
         return routine;
     }
@@ -29,8 +30,13 @@ public class FRCAutoManager implements IAutoManager {
     @Override
     public void setRoutine(String id) {
         if (routines.containsKey(id))
-            routineId = id;
+            selectedRoutine = routines.get(id);
         throw new IllegalArgumentException("No such autonomous routine!");
+    }
+
+    public void tick(FRCEventBus eventBus) {
+        // eventBus.post(new AutoTickEvent(selectedRoutine)); Is there a real reason to have an event here?
+        
     }
 
 }
