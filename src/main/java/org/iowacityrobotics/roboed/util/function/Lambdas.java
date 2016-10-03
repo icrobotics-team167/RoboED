@@ -1,6 +1,10 @@
 package org.iowacityrobotics.roboed.util.function;
 
-import java.util.function.*;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.IntBinaryOperator;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 /**
  * Utility class for creating various anonymous functions.
@@ -88,6 +92,15 @@ public class Lambdas {
      */
     public static <T> Predicate<T> nonNull() {
         return x -> x != null;
+    }
+    
+    /**
+     * Creates a getter function for the given value.
+     * @param value Underlying value to supply.
+     * @return The new {@link Supplier}.
+     */
+    public static <T> Supplier<T> getter(T value) {
+        return () -> value;
     }
 
 }

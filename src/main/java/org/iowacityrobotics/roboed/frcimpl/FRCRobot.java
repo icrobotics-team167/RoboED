@@ -73,11 +73,12 @@ public class FRCRobot extends IterativeRobot implements IRobot { // TODO Finish 
 	public void autonomousInit() {
 	    modeChange(RobotMode.AUTO);
 		eventBus.post(new AutoInitEvent(autoManager));
+		autoManager.autonomousStart();
 	}
 
 	@Override
 	public void autonomousPeriodic() {
-		autoManager.tick(eventBus);
+		autoManager.tick();
 	}
 
 	@Override
@@ -88,7 +89,7 @@ public class FRCRobot extends IterativeRobot implements IRobot { // TODO Finish 
 
 	@Override
 	public void disabledPeriodic() {
-		//eventBus.post(new DisabledTickEvent()); Nothing should happen in disabled anyways; is this necessary?
+		// NO-OP
 	}
 
 	@Override

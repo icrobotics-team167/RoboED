@@ -1,8 +1,9 @@
 package org.iowacityrobotics.roboed.api.auto;
 
-import org.iowacityrobotics.roboed.util.function.ICondition;
-
 import java.util.concurrent.TimeUnit;
+
+import org.iowacityrobotics.roboed.util.function.ICondition;
+import org.iowacityrobotics.roboed.util.function.IConditionFactory;
 
 /**
  * Represents an autonomous routine; a chain of actions to run in sequence.
@@ -12,12 +13,28 @@ public interface IAutoRoutine {
 
     /**
      * Queues an action to be done until a condition is no longer satisfied.
+     * @param conditionFactory Creates the condition to check.
+     * @param action The action to execute. Be sure to feed the watchdogs!
+     * @return This autonomous routine instance, for chaining.
+     */
+    IAutoRoutine doWhile(IConditionFactory conditionFactory, Runnable action);
+    
+    /**
+     * Queues an action to be done until a condition is no longer satisfied.
      * @param condition The condition to check.
      * @param action The action to execute. Be sure to feed the watchdogs!
      * @return This autonomous routine instance, for chaining.
      */
     IAutoRoutine doWhile(ICondition condition, Runnable action);
 
+    /**
+     * Queues an action to be done until a condition is satisfied.
+     * @param conditionFactory Creates the condition to check.
+     * @param action The action to execute. Be sure to feed the watchdogs!
+     * @return This autonomous routine instance, for chaining.
+     */
+    IAutoRoutine doUntil(IConditionFactory conditionFactory, Runnable action);
+    
     /**
      * Queues an action to be done until a condition is satisfied.
      * @param condition The condition to check.
