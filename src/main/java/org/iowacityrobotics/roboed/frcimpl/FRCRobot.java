@@ -4,6 +4,7 @@ import org.iowacityrobotics.roboed.api.IRobot;
 import org.iowacityrobotics.roboed.api.RobotMode;
 import org.iowacityrobotics.roboed.api.actuator.IActuatorRegistry;
 import org.iowacityrobotics.roboed.api.auto.IAutoManager;
+import org.iowacityrobotics.roboed.api.event.IButtonManager;
 import org.iowacityrobotics.roboed.api.event.IEventBus;
 import org.iowacityrobotics.roboed.api.event.mode.AutoInitEvent;
 import org.iowacityrobotics.roboed.api.event.mode.DisabledEvent;
@@ -30,12 +31,14 @@ public class FRCRobot extends IterativeRobot implements IRobot { // TODO Finish 
     private FRCSensorRegistry sensorRegistry;
     private FRCActuatorRegistry actuatorRegistry;
     private FRCAutoManager autoManager;
+    private FRCButtonManager btnManager;
     private RobotMode mode = RobotMode.UNINITIALIZED;
     
     public FRCRobot() {
         this.eventBus = new FRCEventBus();
         this.sensorRegistry = new FRCSensorRegistry();
         this.actuatorRegistry = new FRCActuatorRegistry();
+        this.btnManager = new FRCButtonManager();
     }
 
     @Override
@@ -56,6 +59,10 @@ public class FRCRobot extends IterativeRobot implements IRobot { // TODO Finish 
     @Override
     public IAutoManager autonomous() {
         return autoManager;
+    }
+    
+    public IButtonManager buttons() {
+        return btnManager;
     }
     
     @Override
@@ -102,6 +109,7 @@ public class FRCRobot extends IterativeRobot implements IRobot { // TODO Finish 
 	public void teleopPeriodic() {
 		//eventBus.post(new TeleopTickEvent()); Is this event actually necessary?
 		sensorRegistry.tick();
+		btnManager.tick();
 	}
 
 	@Override

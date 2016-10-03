@@ -2,6 +2,7 @@ package org.iowacityrobotics.roboed.api;
 
 import org.iowacityrobotics.roboed.api.actuator.IActuatorRegistry;
 import org.iowacityrobotics.roboed.api.auto.IAutoManager;
+import org.iowacityrobotics.roboed.api.event.IButtonManager;
 import org.iowacityrobotics.roboed.api.event.IEventBus;
 import org.iowacityrobotics.roboed.api.sensor.ISensorRegistry;
 
@@ -34,6 +35,12 @@ public interface IRobot {
      * @return The robot's autonomous manager.
      */
     IAutoManager autonomous();
+    
+    /**
+     * Gets the button input manager for this robot.
+     * @return The robot's button manager.
+     */
+    IButtonManager buttons();
     
     /**
      * Gets the operational mode of the robot.
