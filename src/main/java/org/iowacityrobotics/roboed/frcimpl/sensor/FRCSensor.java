@@ -16,7 +16,7 @@ public abstract class FRCSensor<T> implements ISensor<T> {
 
     private final int id;
     private BiConsumer<T, T> onMutation;
-    private Collection<FRCDataPipeline.MappingPipelineRoot> bindings;
+    private Collection<FRCDataPipeline.MappingPipelineRoot<T>> bindings;
 
     protected FRCSensor(int id) {
         this.id = id;
@@ -35,7 +35,7 @@ public abstract class FRCSensor<T> implements ISensor<T> {
     }
 
     @Override
-    public IDataBinding binding() {
+    public IDataBinding<T> binding() {
         FRCDataPipeline.MappingPipelineRoot<T> binding = new FRCDataPipeline.MappingPipelineRoot<>(this);
         bindings.add(binding);
         return binding;

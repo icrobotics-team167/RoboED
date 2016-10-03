@@ -20,6 +20,6 @@ public interface IObservableGetter<T> extends Supplier<T> {
      * Creates a data conduit from this supplier which can be bound to an {@link IObservableSetter}.
      * @return The newly created data conduit.
      */
-    IDataBinding binding();
+    IDataBinding<T> binding();
 
 }
