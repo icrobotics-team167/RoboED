@@ -99,7 +99,7 @@ public class SmallIntSet {
     
     /**
      * Creates a stream of all the values in this set.
-     * @return
+     * @return The streamed values.
      */
     public IntStream stream() {
         return IntStream.range(0, 65).filter(i -> (bitmask & (1 << i)) != 0);
