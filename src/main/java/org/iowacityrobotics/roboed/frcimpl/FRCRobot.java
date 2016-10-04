@@ -11,6 +11,7 @@ import org.iowacityrobotics.roboed.api.event.mode.DisabledEvent;
 import org.iowacityrobotics.roboed.api.event.mode.ModeChangeEvent;
 import org.iowacityrobotics.roboed.api.event.mode.RobotInitEvent;
 import org.iowacityrobotics.roboed.api.event.mode.TeleopInitEvent;
+import org.iowacityrobotics.roboed.api.event.mode.TeleopTickEvent;
 import org.iowacityrobotics.roboed.api.event.mode.TestInitEvent;
 import org.iowacityrobotics.roboed.api.event.mode.TestTickEvent;
 import org.iowacityrobotics.roboed.api.sensor.ISensorRegistry;
@@ -25,7 +26,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  * The default RoboED implementation, designed for the 2016 WPILib release.
  * @author Evan Geng
  */
-public class FRCRobot extends IterativeRobot implements IRobot { // TODO Finish implementation
+public class FRCRobot extends IterativeRobot implements IRobot {
     
     private FRCEventBus eventBus;
     private FRCSensorRegistry sensorRegistry;
@@ -107,7 +108,7 @@ public class FRCRobot extends IterativeRobot implements IRobot { // TODO Finish 
 
 	@Override
 	public void teleopPeriodic() {
-		//eventBus.post(new TeleopTickEvent()); Is this event actually necessary?
+		eventBus.post(new TeleopTickEvent());
 		sensorRegistry.tick();
 		btnManager.tick();
 	}

@@ -6,7 +6,7 @@ import org.iowacityrobotics.roboed.api.event.AbstractEvent;
  * Event fired when a button is pressed down.
  * @author Evan Geng
  */
-public class ButtonPressEvent extends AbstractEvent { // TODO Additional event for button release
+public class ButtonPressEvent extends AbstractEvent {
 
     /**
      * The port the controller is plugged into.
