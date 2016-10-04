@@ -1,5 +1,8 @@
 package org.iowacityrobotics.roboed.util.primitive;
 
+import java.util.function.IntConsumer;
+import java.util.stream.IntStream;
+
 import org.iowacityrobotics.roboed.util.Maths;
 
 /**
@@ -81,6 +84,25 @@ public class SmallIntSet {
      */
     public boolean contains(int value) {
         return (bitmask & (1 << value)) != 0;
+    }
+    
+    /**
+     * Performs an action on each element of this set.
+     * @param action The action to execute.
+     */
+    public void forEach(IntConsumer action) {
+        for (int i = 0; i <= 64; i++) {
+            if ((bitmask & (1 << i)) != 0)
+                action.accept(i);
+        }
+    }
+    
+    /**
+     * Creates a stream of all the values in this set.
+     * @return
+     */
+    public IntStream stream() {
+        return IntStream.range(0, 65).filter(i -> (bitmask & (1 << i)) != 0);
     }
 
 }
