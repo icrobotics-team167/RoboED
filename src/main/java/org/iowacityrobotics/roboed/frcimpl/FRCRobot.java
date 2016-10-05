@@ -17,16 +17,18 @@ import org.iowacityrobotics.roboed.api.event.mode.TestTickEvent;
 import org.iowacityrobotics.roboed.api.sensor.ISensorRegistry;
 import org.iowacityrobotics.roboed.frcimpl.actuator.FRCActuatorRegistry;
 import org.iowacityrobotics.roboed.frcimpl.auto.FRCAutoManager;
+import org.iowacityrobotics.roboed.frcimpl.event.FRCButtonManager;
 import org.iowacityrobotics.roboed.frcimpl.event.FRCEventBus;
 import org.iowacityrobotics.roboed.frcimpl.sensor.FRCSensorRegistry;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 /**
  * The default RoboED implementation, designed for the 2016 WPILib release.
  * @author Evan Geng
  */
-public class FRCRobot extends IterativeRobot implements IRobot {
+public class FRCRobot extends IterativeRobot implements IRobot { // TODO Comment EVERYTHING
     
     private FRCEventBus eventBus;
     private FRCSensorRegistry sensorRegistry;
@@ -39,7 +41,7 @@ public class FRCRobot extends IterativeRobot implements IRobot {
         this.eventBus = new FRCEventBus();
         this.sensorRegistry = new FRCSensorRegistry();
         this.actuatorRegistry = new FRCActuatorRegistry();
-        this.btnManager = new FRCButtonManager();
+        this.btnManager = new FRCButtonManager(eventBus, DriverStation.getInstance());
     }
 
     @Override

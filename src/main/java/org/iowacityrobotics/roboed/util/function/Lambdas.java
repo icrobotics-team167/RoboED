@@ -1,10 +1,16 @@
 package org.iowacityrobotics.roboed.util.function;
 
+import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.IntBinaryOperator;
+import java.util.function.IntConsumer;
+import java.util.function.IntFunction;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+
+import org.iowacityrobotics.roboed.util.primitive.IntTMap;
 
 /**
  * Utility class for creating various anonymous functions.
@@ -101,6 +107,26 @@ public class Lambdas {
      */
     public static <T> Supplier<T> getter(T value) {
         return () -> value;
+    }
+    
+    /**
+     * Creates a {@link java.util.stream.Stream Stream} consumer that adds each stream element to a map.
+     * @param map The map to add elements to.
+     * @param mapper The key-to-value mapping function.
+     * @return The created consumer.
+     */
+    public static <K, V> Consumer<K> into(Map<K, V> map, Function<K, V> mapper) {
+        return k -> map.put(k, mapper.apply(k));
+    }
+    
+    /**
+     * Creates a {@link java.util.stream.Stream Stream} consumer that adds each stream element to a map.
+     * @param map The map to add elements to.
+     * @param mapper The key-to-value mapping function.
+     * @return The created consumer.
+     */
+    public static <T> IntConsumer into(IntTMap<T> map, IntFunction<T> mapper) {
+        return k -> map.put(k, mapper.apply(k));
     }
 
 }
