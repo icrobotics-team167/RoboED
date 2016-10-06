@@ -1,4 +1,4 @@
-package org.iowacityrobotics.roboed.util;
+package org.iowacityrobotics.roboed.util.collection;
 
 /**
  * Represents an immutable 2-tuple (i.e. pair of objects).

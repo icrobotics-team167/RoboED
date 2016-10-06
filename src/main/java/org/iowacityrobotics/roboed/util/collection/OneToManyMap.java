@@ -1,4 +1,4 @@
-package org.iowacityrobotics.roboed.util;
+package org.iowacityrobotics.roboed.util.collection;
 
 import java.util.Collection;
 import java.util.HashMap;

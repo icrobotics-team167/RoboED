@@ -1,4 +1,4 @@
-package org.iowacityrobotics.roboed.util;
+package org.iowacityrobotics.roboed.util.math;
 
 /**
  * Mathematical utilities.

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.iowacityrobotics.roboed.api.auto.IAutoRoutine;
-import org.iowacityrobotics.roboed.util.Pair;
+import org.iowacityrobotics.roboed.util.collection.Pair;
 import org.iowacityrobotics.roboed.util.function.ICondition;
 import org.iowacityrobotics.roboed.util.function.IConditionFactory;
 import org.iowacityrobotics.roboed.util.function.TimeDelayCondition;

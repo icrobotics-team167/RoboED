@@ -34,6 +34,6 @@ public abstract class FRCActuator<T> implements IActuator<T> {
         set(t);
     }
 
-    protected abstract void set(T t);
+    abstract void set(T t);
 
 }

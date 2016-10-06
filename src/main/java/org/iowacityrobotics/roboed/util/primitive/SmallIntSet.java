@@ -3,7 +3,7 @@ package org.iowacityrobotics.roboed.util.primitive;
 import java.util.function.IntConsumer;
 import java.util.stream.IntStream;
 
-import org.iowacityrobotics.roboed.util.Maths;
+import org.iowacityrobotics.roboed.util.math.Maths;
 
 /**
  * A set of the primitive type <code>int</code>. Stores numbers between 0 and 64.

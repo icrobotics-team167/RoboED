@@ -2,7 +2,7 @@ package org.iowacityrobotics.roboed.frcimpl.event;
 
 import org.iowacityrobotics.roboed.api.event.IEvent;
 import org.iowacityrobotics.roboed.api.event.IEventBus;
-import org.iowacityrobotics.roboed.util.OneToManyMap;
+import org.iowacityrobotics.roboed.util.collection.OneToManyMap;
 
 import java.util.Collection;
 import java.util.LinkedList;
