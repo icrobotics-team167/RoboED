@@ -13,7 +13,7 @@ public interface ISensorRegistry {
      * @param <T> The type of data supplied by the device.
      * @return The newly registered device.
      */
-    <T> ISensor<T> put(int id, String type);
+    <T> ISensor<T> put(int id, SensorType<T> type);
 
     /**
      * Gets an sensor on the given port.

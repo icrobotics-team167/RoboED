@@ -1,9 +1,11 @@
 package org.iowacityrobotics.roboed.frcimpl.actuator;
 
-import edu.wpi.first.wpilibj.DriverStation;
+import org.iowacityrobotics.roboed.api.actuator.ActuatorType;
 import org.iowacityrobotics.roboed.api.actuator.IActuator;
 import org.iowacityrobotics.roboed.api.actuator.IActuatorRegistry;
 import org.iowacityrobotics.roboed.util.primitive.IntTMap;
+
+import edu.wpi.first.wpilibj.DriverStation;
 
 /**
  * Part of the WPILib 2016 implementation of RoboED.
@@ -20,7 +22,7 @@ public class FRCActuatorRegistry implements IActuatorRegistry {
     }
 
     @Override
-    public <T> IActuator<T> put(int id, String type) {
+    public <T> IActuator<T> put(int id, ActuatorType<T> type) {
         FRCActuator<T> actuator = provider.get(id, type);
         registry.put(actuator.id(), actuator);
         return actuator;

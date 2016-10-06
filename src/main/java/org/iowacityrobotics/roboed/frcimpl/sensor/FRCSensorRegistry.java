@@ -1,9 +1,11 @@
 package org.iowacityrobotics.roboed.frcimpl.sensor;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import org.iowacityrobotics.roboed.api.sensor.ISensor;
 import org.iowacityrobotics.roboed.api.sensor.ISensorRegistry;
+import org.iowacityrobotics.roboed.api.sensor.SensorType;
 import org.iowacityrobotics.roboed.util.primitive.IntTMap;
+
+import edu.wpi.first.wpilibj.DriverStation;
 
 /**
  * Part of the WPILib 2016 implementation of RoboED.
@@ -20,7 +22,7 @@ public class FRCSensorRegistry implements ISensorRegistry {
     }
 
     @Override
-    public <T> ISensor<T> put(int id, String type) {
+    public <T> ISensor<T> put(int id, SensorType<T> type) {
         FRCSensor<T> sensor = provider.get(id, type);
         registry.put(sensor.id(), sensor);
         return sensor;

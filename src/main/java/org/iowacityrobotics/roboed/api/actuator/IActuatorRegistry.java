@@ -13,7 +13,7 @@ public interface IActuatorRegistry {
      * @param <T> The type of data accepted by the device.
      * @return The newly registered device.
      */
-    <T> IActuator<T> put(int id, String type);
+    <T> IActuator<T> put(int id, ActuatorType<T> type);
 
     /**
      * Gets an actuator on the given port.
