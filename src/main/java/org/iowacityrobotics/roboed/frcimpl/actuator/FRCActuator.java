@@ -11,16 +11,16 @@ import java.util.function.BiConsumer;
  */
 public abstract class FRCActuator<T> implements IActuator<T> {
 
-    private final int id;
+    private final int port;
     private BiConsumer<T, T> onMutation = Lambdas.noopBinary();
 
-    public FRCActuator(int id) {
-        this.id = id;
+    public FRCActuator(int port) {
+        this.port = port;
     }
 
     @Override
-    public int id() {
-        return id;
+    public int port() {
+        return port;
     }
 
     @Override
@@ -34,6 +34,6 @@ public abstract class FRCActuator<T> implements IActuator<T> {
         set(t);
     }
 
-    abstract void set(T t);
+    protected abstract void set(T t);
 
 }

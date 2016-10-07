@@ -8,12 +8,12 @@ public interface ISensorRegistry {
 
     /**
      * Registers a new sensor with the given port and type.
-     * @param id The device's port number.
+     * @param port The device's port number.
      * @param type The type of device to register.
      * @param <T> The type of data supplied by the device.
      * @return The newly registered device.
      */
-    <T> ISensor<T> put(int id, SensorType<T> type);
+    <T> ISensor<T> put(int port, SensorType<T> type);
 
     /**
      * Gets an sensor on the given port.

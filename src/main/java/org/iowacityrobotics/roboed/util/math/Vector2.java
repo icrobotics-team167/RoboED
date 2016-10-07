@@ -4,25 +4,25 @@ package org.iowacityrobotics.roboed.util.math;
  * A vector of two numbers.
  * @author Evan Geng
  */
-public class Vec2D implements Cloneable {
+public class Vector2 implements Cloneable {
 
     /**
-     * An immutable {@link Vec2D} representing (0, 0).
+     * An immutable {@link Vector2} representing (0, 0).
      */
-    public static final Vec2D ZERO = new Vec2D() {
+    public static final Vector2 ZERO = new Vector2() {
         
         @Override
-        public Vec2D x(double newX) {
+        public Vector2 x(double newX) {
             throw new UnsupportedOperationException("Cannot modify immutable!");
         }
         
         @Override
-        public Vec2D y(double newY) {
+        public Vector2 y(double newY) {
             throw new UnsupportedOperationException("Cannot modify immutable!");
         }
         
         @Override
-        public Vec2D set(double x, double y) {
+        public Vector2 set(double x, double y) {
             throw new UnsupportedOperationException("Cannot modify immutable!");
         }
         
@@ -39,18 +39,18 @@ public class Vec2D implements Cloneable {
     private double y;
     
     /**
-     * Creates a new Vec2D with the value (0, 0).
+     * Creates a new Vector2 with the value (0, 0).
      */
-    public Vec2D() {
+    public Vector2() {
         this(0, 0);
     }
     
     /**
-     * Creates a new Vec2D with the given values.
+     * Creates a new Vector2 with the given values.
      * @param x The x value.
      * @param y The y value.
      */
-    public Vec2D(double x, double y) {
+    public Vector2(double x, double y) {
         this.x = x;
         this.y = y;
     }
@@ -76,7 +76,7 @@ public class Vec2D implements Cloneable {
      * @param newX The new x value.
      * @return This vector, for chaining.
      */
-    public Vec2D x(double newX) {
+    public Vector2 x(double newX) {
         this.x = newX;
         return this;
     }
@@ -86,7 +86,7 @@ public class Vec2D implements Cloneable {
      * @param newY The new y value.
      * @return This vector, for chaining.
      */
-    public Vec2D y(double newY) {
+    public Vector2 y(double newY) {
         this.y = newY;
         return this;
     }
@@ -97,7 +97,7 @@ public class Vec2D implements Cloneable {
      * @param y The new y value.
      * @return This vector, for chaining.
      */
-    public Vec2D set(double x, double y) {
+    public Vector2 set(double x, double y) {
         return x(x).y(y);
     }
     
@@ -107,7 +107,7 @@ public class Vec2D implements Cloneable {
      * @param y The y value to add.
      * @return This vector, for chaining.
      */
-    public Vec2D add(double x, double y) {
+    public Vector2 add(double x, double y) {
         return x(this.x + x).y(this.y + y);
     }
     
@@ -116,7 +116,7 @@ public class Vec2D implements Cloneable {
      * @param vec The x value to add.
      * @return This vector, for chaining.
      */
-    public Vec2D add(Vec2D vec) {
+    public Vector2 add(Vector2 vec) {
         return add(vec.x, vec.y);
     }
     
@@ -125,7 +125,7 @@ public class Vec2D implements Cloneable {
      * @param fac The factor.
      * @return This vector, for chaining.
      */
-    public Vec2D multiply(double fac) {
+    public Vector2 multiply(double fac) {
         return x(x * fac).y(y * fac);
     }
     
@@ -133,7 +133,7 @@ public class Vec2D implements Cloneable {
      * Changes this vector to its additive inverse.
      * @return This vector, for chaining.
      */
-    public Vec2D negate() {
+    public Vector2 negate() {
         return multiply(-1);
     }
     
@@ -149,7 +149,7 @@ public class Vec2D implements Cloneable {
      * Normalizes the values of this vector.
      * @return This vector, for chaining.
      */
-    public Vec2D normalize() {
+    public Vector2 normalize() {
         double fac = Math.pow(magnitude(), -1);
         return x(x * fac).y(y * fac);
     }
@@ -159,18 +159,18 @@ public class Vec2D implements Cloneable {
      * @param o The other vector.
      * @return Whether they're equal or not.
      */
-    private boolean doesEqual(Vec2D o) {
+    private boolean doesEqual(Vector2 o) {
         return x == o.x && y == o.y;
     }
     
     @Override
     public boolean equals(Object o) {
-        return o instanceof Vec2D && doesEqual((Vec2D)o);
+        return o instanceof Vector2 && doesEqual((Vector2)o);
     }
     
     @Override
-    public Vec2D clone() {
-        return new Vec2D(x, y);
+    public Vector2 clone() {
+        return new Vector2(x, y);
     }
     
 }

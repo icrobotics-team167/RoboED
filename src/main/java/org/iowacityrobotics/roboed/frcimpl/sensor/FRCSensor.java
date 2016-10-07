@@ -1,12 +1,12 @@
 package org.iowacityrobotics.roboed.frcimpl.sensor;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.function.BiConsumer;
-
 import org.iowacityrobotics.roboed.api.abst.IDataBinding;
 import org.iowacityrobotics.roboed.api.sensor.ISensor;
 import org.iowacityrobotics.roboed.util.function.Lambdas;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.function.BiConsumer;
 
 /**
  * Part of the WPILib 2016 implementation of RoboED.
@@ -14,20 +14,20 @@ import org.iowacityrobotics.roboed.util.function.Lambdas;
  */
 public abstract class FRCSensor<T> implements ISensor<T> {
 
-    private final int id;
+    private final int port;
     private BiConsumer<T, T> onMutation;
     private T cached;
     private Collection<FRCDataPipeline.MappingPipelineRoot<T>> bindings;
 
-    protected FRCSensor(int id) {
-        this.id = id;
+    protected FRCSensor(int port) {
+        this.port = port;
         this.onMutation = Lambdas.noopBinary();
         this.bindings = new HashSet<>();
     }
 
     @Override
-    public int id() {
-        return id;
+    public int port() {
+        return port;
     }
 
     @Override
@@ -45,7 +45,7 @@ public abstract class FRCSensor<T> implements ISensor<T> {
         return value;
     }
     
-    abstract T doGet();
+    protected abstract T doGet();
 
     @Override
     public IDataBinding<T> binding() {

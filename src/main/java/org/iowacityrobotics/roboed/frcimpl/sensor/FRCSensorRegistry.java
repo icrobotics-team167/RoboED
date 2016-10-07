@@ -22,9 +22,9 @@ public class FRCSensorRegistry implements ISensorRegistry {
     }
 
     @Override
-    public <T> ISensor<T> put(int id, SensorType<T> type) {
-        FRCSensor<T> sensor = provider.get(id, type);
-        registry.put(sensor.id(), sensor);
+    public <T> ISensor<T> put(int port, SensorType<T> type) {
+        FRCSensor<T> sensor = provider.get(port, type);
+        registry.put(sensor.port(), sensor);
         return sensor;
     }
 

@@ -8,12 +8,12 @@ public interface IActuatorRegistry {
 
     /**
      * Registers a new actuator with the given port and type.
-     * @param id The device's port number.
+     * @param port The device's port number.
      * @param type The type of device to register.
      * @param <T> The type of data accepted by the device.
      * @return The newly registered device.
      */
-    <T> IActuator<T> put(int id, ActuatorType<T> type);
+    <T> IActuator<T> put(int port, ActuatorType<T> type);
 
     /**
      * Gets an actuator on the given port.

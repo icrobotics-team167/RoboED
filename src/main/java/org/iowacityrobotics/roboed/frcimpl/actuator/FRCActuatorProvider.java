@@ -1,12 +1,13 @@
 package org.iowacityrobotics.roboed.frcimpl.actuator;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import edu.wpi.first.wpilibj.DriverStation;
 import org.iowacityrobotics.roboed.api.actuator.ActuatorType;
+import org.iowacityrobotics.roboed.frcimpl.actuator.impl.FRCCANMotor;
+import org.iowacityrobotics.roboed.frcimpl.actuator.impl.FRCPWMMotor;
 import org.iowacityrobotics.roboed.util.primitive.IIntTBiFunction;
 
-import edu.wpi.first.wpilibj.DriverStation;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Part of the WPILib 2016 implementation of RoboED.
@@ -20,11 +21,13 @@ public class FRCActuatorProvider {
     public FRCActuatorProvider(DriverStation ds) {
         this.ds = ds;
         this.typeMap = new HashMap<>(); // TODO Implement actuator types
+        this.typeMap.put("a_motor_can_cont", FRCCANMotor::new);
+        this.typeMap.put("a_motor_pwm_cont", FRCPWMMotor::new);
     }
 
     @SuppressWarnings("unchecked")
-    public <T> FRCActuator<T> get(int id, ActuatorType<T> type) {
-        return (FRCActuator<T>)typeMap.get(type.name()).apply(id, ds);
+    public <T> FRCActuator<T> get(int port, ActuatorType<T> type) {
+        return (FRCActuator<T>)typeMap.get(type.name()).apply(port, ds);
     }
 
 }

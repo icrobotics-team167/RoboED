@@ -22,9 +22,9 @@ public class FRCActuatorRegistry implements IActuatorRegistry {
     }
 
     @Override
-    public <T> IActuator<T> put(int id, ActuatorType<T> type) {
-        FRCActuator<T> actuator = provider.get(id, type);
-        registry.put(actuator.id(), actuator);
+    public <T> IActuator<T> put(int port, ActuatorType<T> type) {
+        FRCActuator<T> actuator = provider.get(port, type);
+        registry.put(actuator.port(), actuator);
         return actuator;
     }
 
