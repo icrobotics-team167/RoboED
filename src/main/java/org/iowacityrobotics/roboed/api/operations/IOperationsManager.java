@@ -21,5 +21,11 @@ public interface IOperationsManager {
      * @param id The operational mode to run by default in this state.
      */
     void setDefaultOpMode(RobotMode status, String id);
+
+    /**
+     * Sets the current operational mode.
+     * @param id The new operational mode.
+     */
+    void setOpMode(String id);
     
 }
