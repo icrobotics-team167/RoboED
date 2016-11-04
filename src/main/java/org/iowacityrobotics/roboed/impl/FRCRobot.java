@@ -46,11 +46,11 @@ public class FRCRobot extends IterativeRobot implements IRobot {
     
     private void tick() {
         sysReg.tick();
-        opMan.tick();
     }
     
     @Override
     public void robotInit() {
+        opMan.initialize();
         setRunMode(RobotMode.DISABLED);
     }
 
