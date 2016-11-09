@@ -1,6 +1,7 @@
 package org.iowacityrobotics.roboed.api.subsystem;
 
 import org.iowacityrobotics.roboed.api.data.IDataSource;
+import org.iowacityrobotics.roboed.api.subsystem.provider.ISubsystemProvider;
 
 /**
  * Represents a subsystem of a robot that optionally takes an input or returns an output.
@@ -15,7 +16,13 @@ public interface ISubsystem<I, O> {
      * Gets the type of this subsystem.
      * @return The subsystem's type.
      */
-    ISubsystemType<I, O> getType();
+    <P extends ISubsystemProvider<I, O>> ISubsystemType<I, O, P> getType();
+    
+    /**
+     * Gets the ID of this subsystem as assigned by the {@link ISystemRegistry}.
+     * @return The subsystem's ID.
+     */
+    int getId();
     
     /**
      * Binds a data stream to this subsystem to serve as the input stream.

@@ -1,5 +1,7 @@
 package org.iowacityrobotics.roboed.api.subsystem;
 
+import org.iowacityrobotics.roboed.api.subsystem.provider.ISubsystemProvider;
+
 /**
  * A registry for the robot's subsystems.
  * @author Evan Geng
@@ -12,13 +14,13 @@ public interface ISystemRegistry {
      * @param id The subsystem's ID.
      * @return The requested subsystem, if it exists.
      */
-    <I, O> ISubsystem<I, O> getSubsystem(ISubsystemType<I, O> type, int id);
-
+    <I, O, P extends ISubsystemProvider<I, O>> ISubsystem<I, O> getSubsystem(ISubsystemType<I, O, P> type, int id);
+    
     /**
-     * Registers a subsystem.
-     * @param system The subsystem to register.
-     * @return
+     * Gets a provider for the given subsystem type.
+     * @param type The subsystem type.
+     * @return The provider for this subsystem type.
      */
-    <I, O> int registerSubsystem(ISubsystem<I, O> system);
+    <I, O, P extends ISubsystemProvider<I, O>> P getProvider(ISubsystemType<I, O, P> type);
     
 }

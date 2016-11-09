@@ -5,25 +5,38 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.iowacityrobotics.roboed.api.subsystem.ISubsystem;
 import org.iowacityrobotics.roboed.api.subsystem.ISubsystemType;
 import org.iowacityrobotics.roboed.api.subsystem.ISystemRegistry;
+import org.iowacityrobotics.roboed.api.subsystem.provider.ISubsystemProvider;
 
 /** 
  * @author Evan Geng
  */
 public class FRCSysRegistry implements ISystemRegistry {
     
-    private final Map<ISubsystemType<?, ?>, List<ISubsystem<?, ?>>> registry = new HashMap<>();
+    private static final Map<ISubsystemType<?, ?, ?>, ISubsystemProvider<?, ?>> providerMap = new HashMap<>();
+    
+    static {
+        // TODO Initialize provider map
+    }
+    
+    private final Map<ISubsystemType<?, ?, ?>, List<FRCSubsystem<?, ?>>> registry = new HashMap<>();
 
+    @SuppressWarnings("unchecked")
     @Override
-    public <I, O> ISubsystem<I, O> getSubsystem(ISubsystemType<I, O> type, int id) {
-        return null; // TODO Implement
+    public <I, O, P extends ISubsystemProvider<I, O>> FRCSubsystem<I, O> getSubsystem(ISubsystemType<I, O, P> type, int id) {
+        List<FRCSubsystem<?, ?>> ofSubsys = registry.get(type);
+        return (ofSubsys == null || id >= ofSubsys.size() || id < 0) ? null : (FRCSubsystem<I, O>)ofSubsys.get(id);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public <I, O> int registerSubsystem(ISubsystem<I, O> system) {
-        List<ISubsystem<?, ?>> ofSubsys = registry.get(system.getType());
+    public <I, O, P extends ISubsystemProvider<I, O>> P getProvider(ISubsystemType<I, O, P> type) {
+        return (P)providerMap.get(type);
+    }
+    
+    <I, O> int registerSubsystem(FRCSubsystem<I, O> system) {
+        List<FRCSubsystem<?, ?>> ofSubsys = registry.get(system.getType());
         if (ofSubsys == null) {
             ofSubsys = new ArrayList<>();
             registry.put(system.getType(), ofSubsys);
@@ -33,7 +46,7 @@ public class FRCSysRegistry implements ISystemRegistry {
     }
     
     public void tick() {
-        // TODO Implement
+        // TODO Process all terminal elements
     }
 
 }
