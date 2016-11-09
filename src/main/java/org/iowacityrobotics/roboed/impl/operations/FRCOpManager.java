@@ -7,6 +7,7 @@ import org.iowacityrobotics.roboed.api.RobotMode;
 import org.iowacityrobotics.roboed.api.operations.IOperationsManager;
 import org.iowacityrobotics.roboed.api.operations.InvalidOpModeException;
 import org.iowacityrobotics.roboed.util.collection.StackNode;
+import org.iowacityrobotics.roboed.util.function.ICondition;
 
 /** 
  * @author Evan Geng
@@ -19,6 +20,8 @@ public class FRCOpManager implements IOperationsManager {
     
     @Override
     public FRCOpMode getOpMode(String id) {
+        if (id == FRCOpMode.OP_NONE)
+            return null;
         FRCOpMode opMode = registry.get(id);
         if (opMode == null) {
             opMode = new FRCOpMode();
@@ -59,24 +62,19 @@ public class FRCOpManager implements IOperationsManager {
     
     private void startOpThread(String opmode) {
         FRCOpMode mode = registry.get(opmode);
-        OpThread opThread = new OpThread(() -> {
-            // TODO Do the op and release the parent thread if it's locked
-            /*
-            synchronized (opThread.lock) {
-                opThread.lock.notify();
-            }
-             */
-        }, "OpThread: " + opmode);
+        OpThread opThread = new OpThread(opmode, mode);
         running = running.extend(opThread);
         opThread.start();
     }
     
     private void wipeAndRun(String opmode) {
         while (running.hasParent()) {
-            running.getValue().interrupt();
+            if (running.getValue() != Thread.currentThread())
+                running.getValue().interrupt();
             running = running.getParent();
         }
         startOpThread(opmode);
+        Thread.currentThread().interrupt();
     }
     
     public void initialize() {
@@ -92,12 +90,30 @@ public class FRCOpManager implements IOperationsManager {
         wipeAndRun(defaults.containsKey(newMode) ? defaults.get(newMode) : FRCOpMode.OP_NOOP);
     }
     
-    private static class OpThread extends Thread {
+    private class OpThread extends Thread {
         
-        Object lock;
+        final FRCOpMode mode;
+        final Object lock = new Object();
         
-        OpThread(Runnable runnable, String name) {
-            super(runnable, name);
+        OpThread(String modeName, FRCOpMode mode) {
+            super("OpThread: " + modeName);
+            this.mode = mode;
+        }
+        
+        @Override
+        public void run() {
+            mode.onInit.run();
+            ICondition condition = mode.doWhile.create();
+            while (condition.isMet()) { }
+            mode.onDone.run();
+            if (mode.next == null) {
+                running = running.getParent();
+                synchronized (lock) {
+                    lock.notifyAll();
+                }
+            } else {
+                wipeAndRun(mode.next);
+            }
         }
         
     }
