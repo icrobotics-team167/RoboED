@@ -8,19 +8,20 @@ import java.util.Map;
 import org.iowacityrobotics.roboed.api.subsystem.ISubsystemType;
 import org.iowacityrobotics.roboed.api.subsystem.ISystemRegistry;
 import org.iowacityrobotics.roboed.api.subsystem.provider.ISubsystemProvider;
+import org.iowacityrobotics.roboed.impl.subsystem.impl.MecanumSubsystem;
 
 /** 
  * @author Evan Geng
  */
 public class FRCSysRegistry implements ISystemRegistry {
-    
-    private static final Map<ISubsystemType<?, ?, ?>, ISubsystemProvider<?, ?>> providerMap = new HashMap<>();
-    
-    static {
-        // TODO Initialize provider map
-    }
-    
+
+    private final Map<ISubsystemType<?, ?, ?>, ISubsystemProvider<?, ?>> providerMap = new HashMap<>();
     private final Map<ISubsystemType<?, ?, ?>, List<FRCSubsystem<?, ?>>> registry = new HashMap<>();
+    private int firstUnusedId = 0;
+    
+    public FRCSysRegistry() {
+        providerMap.put(MecanumSubsystem.TYPE, new MecanumSubsystem.Provider(this));
+    }
 
     @SuppressWarnings("unchecked")
     @Override
@@ -51,6 +52,10 @@ public class FRCSysRegistry implements ISystemRegistry {
         .filter(s -> s instanceof FRCTerminalSubsystem)
         .map(s -> (FRCTerminalSubsystem)s)
         .forEach(FRCTerminalSubsystem::tick);
+    }
+    
+    public int nextUnusedId() {
+        return ++firstUnusedId - 1;
     }
 
 }

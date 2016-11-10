@@ -173,4 +173,14 @@ public class Vector2 implements Cloneable {
         return new Vector2(x, y);
     }
     
+    /**
+     * Creates a new vector from the given polar coordinates.
+     * @param angle The angle of the vector, in radians.
+     * @param magnitude The magnitude of the vector.
+     * @return The new vector.
+     */
+    public static Vector2 fromPolar(double angle, double magnitude) {
+        return new Vector2(magnitude * Math.cos(angle), magnitude * Math.sin(angle));
+    }
+    
 }
