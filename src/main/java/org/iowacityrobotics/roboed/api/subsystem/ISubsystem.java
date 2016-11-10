@@ -16,7 +16,7 @@ public interface ISubsystem<I, O> {
      * Gets the type of this subsystem.
      * @return The subsystem's type.
      */
-    <P extends ISubsystemProvider<I, O>> ISubsystemType<I, O, P> getType();
+    ISubsystemType<I, O, ? extends ISubsystemProvider<I, O>> getType();
     
     /**
      * Gets the ID of this subsystem as assigned by the {@link ISystemRegistry}.

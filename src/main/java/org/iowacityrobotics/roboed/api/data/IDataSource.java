@@ -18,6 +18,7 @@ public interface IDataSource<T> {
     /**
      * Requests data from this pipeline.
      * @return The data received, if any.
+     * @throws DataUnavailableException If no data is available.
      */
     T request();
     

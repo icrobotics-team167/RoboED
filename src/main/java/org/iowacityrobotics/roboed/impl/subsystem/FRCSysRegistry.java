@@ -45,8 +45,12 @@ public class FRCSysRegistry implements ISystemRegistry {
         return ofSubsys.size() - 1;
     }
     
+    @SuppressWarnings("rawtypes")
     public void tick() {
-        // TODO Process all terminal elements
+        registry.values().stream().flatMap(List::stream)
+        .filter(s -> s instanceof FRCTerminalSubsystem)
+        .map(s -> (FRCTerminalSubsystem)s)
+        .forEach(FRCTerminalSubsystem::tick);
     }
 
 }
