@@ -1,28 +1,33 @@
 package org.iowacityrobotics.roboed.util.math;
 
 /**
- * A vector of two numbers.
+ * A three-dimensional vector.
  * @author Evan Geng
  */
-public class Vector2 implements Cloneable {
+public class Vector3 implements Cloneable {
 
     /**
-     * An immutable {@link Vector2} representing (0, 0).
+     * An immutable {@link Vector3} representing (0, 0, 0).
      */
-    public static final Vector2 ZERO = new Vector2() {
+    public static final Vector3 ZERO = new Vector3() {
         
         @Override
-        public Vector2 x(double newX) {
+        public Vector3 x(double newX) {
             throw new UnsupportedOperationException("Cannot modify immutable!");
         }
         
         @Override
-        public Vector2 y(double newY) {
+        public Vector3 y(double newY) {
             throw new UnsupportedOperationException("Cannot modify immutable!");
         }
         
         @Override
-        public Vector2 set(double x, double y) {
+        public Vector3 z(double newZ) {
+            throw new UnsupportedOperationException("Cannot modify immutable!");
+        }
+         
+        @Override
+        public Vector3 set(double x, double y, double z) {
             throw new UnsupportedOperationException("Cannot modify immutable!");
         }
         
@@ -39,20 +44,27 @@ public class Vector2 implements Cloneable {
     private double y;
     
     /**
+     * The z value for this vector.
+     */
+    private double z;
+    
+    /**
      * Creates a new Vector2 with the value (0, 0).
      */
-    public Vector2() {
-        this(0, 0);
+    public Vector3() {
+        this(0, 0, 0);
     }
     
     /**
      * Creates a new Vector2 with the given values.
      * @param x The x value.
      * @param y The y value.
+     * @param z The z value.
      */
-    public Vector2(double x, double y) {
+    public Vector3(double x, double y, double z) {
         this.x = x;
         this.y = y;
+        this.z = z;
     }
     
     /**
@@ -72,11 +84,19 @@ public class Vector2 implements Cloneable {
     }
     
     /**
+     * Gets the z value.
+     * @return The z value.
+     */
+    public double z() {
+        return z;
+    }
+    
+    /**
      * Sets the x value.
      * @param newX The new x value.
      * @return This vector, for chaining.
      */
-    public Vector2 x(double newX) {
+    public Vector3 x(double newX) {
         this.x = newX;
         return this;
     }
@@ -86,8 +106,18 @@ public class Vector2 implements Cloneable {
      * @param newY The new y value.
      * @return This vector, for chaining.
      */
-    public Vector2 y(double newY) {
+    public Vector3 y(double newY) {
         this.y = newY;
+        return this;
+    }
+    
+    /**
+     * Sets the z value.
+     * @param newZ The new z value.
+     * @return This vector, for chaining.
+     */
+    public Vector3 z(double newZ) {
+        this.z = newZ;
         return this;
     }
     
@@ -95,20 +125,22 @@ public class Vector2 implements Cloneable {
      * Sets the x and y values.
      * @param x The new x value.
      * @param y The new y value.
+     * @param z The new z value.
      * @return This vector, for chaining.
      */
-    public Vector2 set(double x, double y) {
-        return x(x).y(y);
+    public Vector3 set(double x, double y, double z) {
+        return x(x).y(y).z(z);
     }
     
     /**
      * Adds another vector to this one.
      * @param x The x value to add.
      * @param y The y value to add.
+     * @param z The z value to add.
      * @return This vector, for chaining.
      */
-    public Vector2 add(double x, double y) {
-        return x(this.x + x).y(this.y + y);
+    public Vector3 add(double x, double y, double z) {
+        return x(this.x + x).y(this.y + y).z(this.z + z);
     }
     
     /**
@@ -116,8 +148,8 @@ public class Vector2 implements Cloneable {
      * @param vec The x value to add.
      * @return This vector, for chaining.
      */
-    public Vector2 add(Vector2 vec) {
-        return add(vec.x, vec.y);
+    public Vector3 add(Vector3 vec) {
+        return add(vec.x, vec.y, vec.z);
     }
     
     /**
@@ -125,15 +157,15 @@ public class Vector2 implements Cloneable {
      * @param fac The factor.
      * @return This vector, for chaining.
      */
-    public Vector2 multiply(double fac) {
-        return x(x * fac).y(y * fac);
+    public Vector3 multiply(double fac) {
+        return x(x * fac).y(y * fac).z(z * fac);
     }
     
     /**
      * Changes this vector to its additive inverse.
      * @return This vector, for chaining.
      */
-    public Vector2 negate() {
+    public Vector3 negate() {
         return multiply(-1);
     }
     
@@ -142,24 +174,23 @@ public class Vector2 implements Cloneable {
      * @return The vector's magnitude.
      */
     public double magnitude() {
-        return Math.hypot(x, y);
+        return Math.hypot(x,  Math.hypot(y, z));
     }
     
     /**
      * Normalizes the values of this vector.
      * @return This vector, for chaining.
      */
-    public Vector2 normalize() {
+    public Vector3 normalize() {
         return multiply(Math.pow(magnitude(), -1));
     }
     
     /**
-     * Creates a new 3-dimensional vector with this vector's x and y values.
-     * @param z The new vector's z value.
+     * Creates a new 2-dimensional vector with this vector's x and y values.
      * @return The new vector.
      */
-    public Vector3 augment(double z) {
-        return new Vector3(x, y, z);
+    public Vector2 truncate() {
+        return new Vector2(x, y);
     }
     
     /**
@@ -167,28 +198,18 @@ public class Vector2 implements Cloneable {
      * @param o The other vector.
      * @return Whether they're equal or not.
      */
-    private boolean doesEqual(Vector2 o) {
-        return x == o.x && y == o.y;
+    private boolean doesEqual(Vector3 o) {
+        return x == o.x && y == o.y && z == o.z;
     }
     
     @Override
     public boolean equals(Object o) {
-        return o instanceof Vector2 && doesEqual((Vector2)o);
+        return o instanceof Vector3 && doesEqual((Vector3)o);
     }
     
     @Override
-    public Vector2 clone() {
-        return new Vector2(x, y);
-    }
-    
-    /**
-     * Creates a new vector from the given polar coordinates.
-     * @param angle The angle of the vector, in radians.
-     * @param magnitude The magnitude of the vector.
-     * @return The new vector.
-     */
-    public static Vector2 fromPolar(double angle, double magnitude) {
-        return new Vector2(magnitude * Math.cos(angle), magnitude * Math.sin(angle));
+    public Vector3 clone() {
+        return new Vector3(x, y, z);
     }
     
 }
