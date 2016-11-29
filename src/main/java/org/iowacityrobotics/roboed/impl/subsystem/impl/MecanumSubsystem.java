@@ -3,6 +3,7 @@ package org.iowacityrobotics.roboed.impl.subsystem.impl;
 import org.iowacityrobotics.roboed.api.subsystem.ISubsystem;
 import org.iowacityrobotics.roboed.api.subsystem.ISubsystemType;
 import org.iowacityrobotics.roboed.api.subsystem.provider.IQuadraPortSubsystemProvider;
+import org.iowacityrobotics.roboed.impl.subsystem.FRCSubsystemType;
 import org.iowacityrobotics.roboed.impl.subsystem.FRCSysRegistry;
 import org.iowacityrobotics.roboed.impl.subsystem.FRCTerminalSubsystem;
 import org.iowacityrobotics.roboed.impl.subsystem.impl.MecanumSubsystem.ControlDataFrame;
@@ -15,7 +16,7 @@ import edu.wpi.first.wpilibj.RobotDrive;
  */
 public class MecanumSubsystem extends FRCTerminalSubsystem<ControlDataFrame> {
     
-    public static final ISubsystemType<ControlDataFrame, Void, Provider> TYPE = new ISubsystemType<ControlDataFrame, Void, Provider>() { };
+    public static final ISubsystemType<ControlDataFrame, Void, Provider> TYPE = new FRCSubsystemType<>();
     
     private final RobotDrive drive;
 

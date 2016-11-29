@@ -6,6 +6,7 @@ import org.iowacityrobotics.roboed.api.subsystem.ISubsystem;
 import org.iowacityrobotics.roboed.api.subsystem.ISubsystemType;
 import org.iowacityrobotics.roboed.api.subsystem.provider.ISinglePortSubsystemProvider;
 import org.iowacityrobotics.roboed.impl.subsystem.FRCSourceSubsystem;
+import org.iowacityrobotics.roboed.impl.subsystem.FRCSubsystemType;
 import org.iowacityrobotics.roboed.impl.subsystem.FRCSysRegistry;
 import org.iowacityrobotics.roboed.util.math.Vector3;
 
@@ -16,7 +17,7 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class SingleJoySubsystem extends FRCSourceSubsystem<Vector3> {
     
-    public static final ISubsystemType<Void, Vector3, Provider> TYPE = new ISubsystemType<Void, Vector3, Provider>() { };
+    public static final ISubsystemType<Void, Vector3, Provider> TYPE = new FRCSubsystemType<>();
     
     private final IDataSource<Vector3> upstream;
 
