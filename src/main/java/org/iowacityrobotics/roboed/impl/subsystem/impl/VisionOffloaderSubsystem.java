@@ -1,9 +1,5 @@
 package org.iowacityrobotics.roboed.impl.subsystem.impl;
 
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
-import com.mashape.unirest.http.utils.ResponseUtils;
 import org.iowacityrobotics.roboed.api.data.Data;
 import org.iowacityrobotics.roboed.api.data.DataUnavailableException;
 import org.iowacityrobotics.roboed.api.data.IDataSource;
@@ -13,50 +9,53 @@ import org.iowacityrobotics.roboed.api.subsystem.provider.IGenericSubsystemProvi
 import org.iowacityrobotics.roboed.impl.subsystem.FRCSubsystem;
 import org.iowacityrobotics.roboed.impl.subsystem.FRCSubsystemType;
 import org.iowacityrobotics.roboed.impl.subsystem.FRCSysRegistry;
+import org.iowacityrobotics.roboed.util.vision.Images;
 
-import java.io.IOException;
-import java.io.InputStream;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
+
+import edu.wpi.first.wpilibj.image.HSLImage;
 
 /**
  * @author Evan Geng
  */
-public class VisionOffloaderSubsystem extends FRCSubsystem<byte[], byte[]> {
+public class VisionOffloaderSubsystem extends FRCSubsystem<HSLImage, JsonNode> {
 
-    public static final ISubsystemType<byte[], byte[], Provider> TYPE = new FRCSubsystemType<>();
+    public static final ISubsystemType<HSLImage, JsonNode, Provider> TYPE = new FRCSubsystemType<>();
 
     private final String host, routine;
-    private final IDataSource<byte[]> output;
-    private IDataSource<byte[]> input;
+    private final IDataSource<JsonNode> output;
+    private IDataSource<HSLImage> input;
 
     protected VisionOffloaderSubsystem(int id, VisionOffloaderConfig config) {
         super(TYPE, id);
         this.host = config.host;
         this.routine = config.routine;
         this.output = Data.provider(() -> {
-            byte[] imgData = input.request();
+            HSLImage img = input.request();
             try {
-                HttpResponse<InputStream> resp = Unirest.post(host)
+                HttpResponse<JsonNode> resp = Unirest.post(host)
                         .queryString("routine", routine)
-                        .body(imgData)
-                        .asBinary();
+                        .body(Images.serialize(img))
+                        .asJson();
                 if (resp.getStatus() != 200)
                     throw new DataUnavailableException("Encountered " + resp.getStatus() + ": " + resp.getStatusText());
-                try (InputStream str = resp.getBody()) {
-                    return ResponseUtils.getBytes(str);
-                }
-            } catch (UnirestException | IOException e) {
+                return resp.getBody();
+            } catch (UnirestException e) {
                 throw new DataUnavailableException("Vision server comms failed: " + e.getMessage());
             }
         });
     }
 
     @Override
-    public void bind(IDataSource<byte[]> input) {
+    public void bind(IDataSource<HSLImage> input) {
         this.input = input;
     }
 
     @Override
-    public IDataSource<byte[]> output() {
+    public IDataSource<JsonNode> output() {
         return output;
     }
 
@@ -72,7 +71,7 @@ public class VisionOffloaderSubsystem extends FRCSubsystem<byte[], byte[]> {
 
     }
 
-    public static class Provider implements IGenericSubsystemProvider<byte[], byte[], VisionOffloaderConfig> {
+    public static class Provider implements IGenericSubsystemProvider<HSLImage, JsonNode, VisionOffloaderConfig> {
 
         private final FRCSysRegistry registry;
 
@@ -81,7 +80,7 @@ public class VisionOffloaderSubsystem extends FRCSubsystem<byte[], byte[]> {
         }
 
         @Override
-        public ISubsystem<byte[], byte[]> getSubsystem(VisionOffloaderConfig config) {
+        public ISubsystem<HSLImage, JsonNode> getSubsystem(VisionOffloaderConfig config) {
             return new VisionOffloaderSubsystem(registry.nextUnusedId(), config);
         }
 

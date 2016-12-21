@@ -10,7 +10,7 @@ import org.iowacityrobotics.roboed.api.subsystem.ISystemRegistry;
 import org.iowacityrobotics.roboed.api.subsystem.provider.ISubsystemProvider;
 import org.iowacityrobotics.roboed.impl.subsystem.impl.MecanumSubsystem;
 import org.iowacityrobotics.roboed.impl.subsystem.impl.SingleJoySubsystem;
-import org.iowacityrobotics.roboed.impl.subsystem.impl.VisionServerSubsystem;
+import org.iowacityrobotics.roboed.impl.subsystem.impl.VisionOffloaderSubsystem;
 
 /** 
  * @author Evan Geng
@@ -24,7 +24,7 @@ public class FRCSysRegistry implements ISystemRegistry {
     public FRCSysRegistry() {
         providerMap.put(MecanumSubsystem.TYPE, new MecanumSubsystem.Provider(this));
         providerMap.put(SingleJoySubsystem.TYPE, new SingleJoySubsystem.Provider(this));
-        providerMap.put(VisionServerSubsystem.TYPE, new VisionServerSubsystem.Provider(this));
+        providerMap.put(VisionOffloaderSubsystem.TYPE, new VisionOffloaderSubsystem.Provider(this));
     }
 
     @SuppressWarnings("unchecked")
