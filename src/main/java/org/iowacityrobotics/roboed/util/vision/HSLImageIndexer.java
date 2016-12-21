@@ -21,6 +21,21 @@ public class HSLImageIndexer {
         this.img = img;
     }
     
-    // TODO Implement
+    /**
+     * Adds a new pixel processor.
+     * @param proc The processor.
+     * @return This instance, for chaining.
+     */
+    public HSLImageIndexer withProcessor(PixelProcessor proc) {
+        // TODO Implement
+        return this;
+    }
+    
+    /**
+     * Performs the iteration.
+     */
+    public void iterate() {
+        // TODO Implement
+    }
 
 }
