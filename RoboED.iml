@@ -9,7 +9,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: edu.wpi.first.wpilibj:wpilibJavaFinal:0.1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: edu.wpi.first.wpilibj:wpilibJavaFinal:2016.5.1" level="project" />
     <orderEntry type="library" name="Maven: edu.wpi.first.wpilib.networktables.java:NetworkTables:arm:3.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: com.mashape.unirest:unirest-java:1.4.9" level="project" />
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.5.2" level="project" />

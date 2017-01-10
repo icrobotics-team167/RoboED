@@ -24,19 +24,16 @@ public class VisionOffloaderSubsystem extends FRCSubsystem<byte[], byte[]> {
 
     public static final ISubsystemType<byte[], byte[], Provider> TYPE = new FRCSubsystemType<>();
 
-    private final String host, routine;
     private final IDataSource<byte[]> output;
     private IDataSource<byte[]> input;
 
     protected VisionOffloaderSubsystem(int id, VisionOffloaderConfig config) {
         super(TYPE, id);
-        this.host = config.host;
-        this.routine = config.routine;
         this.output = Data.provider(() -> {
             byte[] imgData = input.request();
             try {
-                HttpResponse<InputStream> resp = Unirest.post(host)
-                        .queryString("routine", routine)
+                HttpResponse<InputStream> resp = Unirest.post(config.host)
+                        .queryString("routine", config.routine)
                         .body(imgData)
                         .asBinary();
                 if (resp.getStatus() != 200)
