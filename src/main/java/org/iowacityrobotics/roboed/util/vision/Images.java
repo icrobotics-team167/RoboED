@@ -1,6 +1,6 @@
 package org.iowacityrobotics.roboed.util.vision;
 
-import edu.wpi.first.wpilibj.image.HSLImage;
+import org.opencv.core.Mat;
 
 /**
  * Image manipulation utilities.
@@ -13,7 +13,7 @@ public class Images {
      * @param img The image to serialize.
      * @return The serialized image.
      */
-    public static String serialize(HSLImage img) {
+    public static String serialize(Mat img) {
         // TODO Implement
     }
     
@@ -22,17 +22,8 @@ public class Images {
      * @param ser The serialized image.
      * @return The deserialized image.
      */
-    public static HSLImage deserialize(String ser) {
+    public static Mat deserialize(String ser) {
         // TODO Implement
-    }
-    
-    /**
-     * Creates an indexer over the pixels in an image.
-     * @param img The image to iterate over.
-     * @return The indexer.
-     */
-    public static HSLImageIndexer iterate(HSLImage img) {
-        return new HSLImageIndexer(img);
     }
 
 }

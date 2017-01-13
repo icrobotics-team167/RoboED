@@ -16,25 +16,25 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
-import edu.wpi.first.wpilibj.image.HSLImage;
+import org.opencv.core.Mat;
 
 /**
  * @author Evan Geng
  */
-public class VisionOffloaderSubsystem extends FRCSubsystem<HSLImage, JsonNode> {
+public class VisionOffloaderSubsystem extends FRCSubsystem<Mat, JsonNode> {
 
-    public static final ISubsystemType<HSLImage, JsonNode, Provider> TYPE = new FRCSubsystemType<>();
+    public static final ISubsystemType<Mat, JsonNode, Provider> TYPE = new FRCSubsystemType<>();
 
     private final String host, routine;
     private final IDataSource<JsonNode> output;
-    private IDataSource<HSLImage> input;
+    private IDataSource<Mat> input;
 
     protected VisionOffloaderSubsystem(int id, VisionOffloaderConfig config) {
         super(TYPE, id);
         this.host = config.host;
         this.routine = config.routine;
         this.output = Data.provider(() -> {
-            HSLImage img = input.request();
+            Mat img = input.request();
             try {
                 HttpResponse<JsonNode> resp = Unirest.post(host)
                         .queryString("routine", routine)
@@ -50,7 +50,7 @@ public class VisionOffloaderSubsystem extends FRCSubsystem<HSLImage, JsonNode> {
     }
 
     @Override
-    public void bind(IDataSource<HSLImage> input) {
+    public void bind(IDataSource<Mat> input) {
         this.input = input;
     }
 
@@ -68,10 +68,9 @@ public class VisionOffloaderSubsystem extends FRCSubsystem<HSLImage, JsonNode> {
             this.routine = routine;
         }
 
-
     }
 
-    public static class Provider implements IGenericSubsystemProvider<HSLImage, JsonNode, VisionOffloaderConfig> {
+    public static class Provider implements IGenericSubsystemProvider<Mat, JsonNode, VisionOffloaderConfig> {
 
         private final FRCSysRegistry registry;
 
@@ -80,7 +79,7 @@ public class VisionOffloaderSubsystem extends FRCSubsystem<HSLImage, JsonNode> {
         }
 
         @Override
-        public ISubsystem<HSLImage, JsonNode> getSubsystem(VisionOffloaderConfig config) {
+        public ISubsystem<Mat, JsonNode> getSubsystem(VisionOffloaderConfig config) {
             return new VisionOffloaderSubsystem(registry.nextUnusedId(), config);
         }
 

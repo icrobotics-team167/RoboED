@@ -1,6 +1,5 @@
 package org.iowacityrobotics.roboed.impl.subsystem.impl;
 
-import edu.wpi.first.wpilibj.vision.USBCamera;
 import org.iowacityrobotics.roboed.api.data.Data;
 import org.iowacityrobotics.roboed.api.data.IDataSource;
 import org.iowacityrobotics.roboed.api.subsystem.ISubsystem;
@@ -15,7 +14,7 @@ import java.nio.ByteBuffer;
 /**
  * @author Evan Geng
  */
-public class USBCameraSubsystem extends FRCSourceSubsystem<byte[]> {
+public class USBCameraSubsystem extends FRCSourceSubsystem<byte[]> { // TODO Fix this class!!!!!!
 
     public static final ISubsystemType<Void, byte[], Provider> TYPE = new FRCSubsystemType<>();
     
