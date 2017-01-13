@@ -5,7 +5,7 @@ import org.iowacityrobotics.roboed.api.data.IDataSource;
 import org.iowacityrobotics.roboed.api.subsystem.ISubsystem;
 import org.iowacityrobotics.roboed.api.subsystem.ISubsystemType;
 import org.iowacityrobotics.roboed.api.subsystem.provider.IGenericSubsystemProvider;
-import org.iowacityrobotics.roboed.api.vision.ICamera;
+import org.iowacityrobotics.roboed.api.vision.IImageProvider;
 import org.iowacityrobotics.roboed.impl.subsystem.FRCSourceSubsystem;
 import org.iowacityrobotics.roboed.impl.subsystem.FRCSubsystemType;
 import org.iowacityrobotics.roboed.impl.subsystem.FRCSysRegistry;
@@ -18,13 +18,13 @@ public class CameraSubsystem extends FRCSourceSubsystem<Mat> { // TODO Fix this 
 
     public static final ISubsystemType<Void, Mat, Provider> TYPE = new FRCSubsystemType<>();
     
-    private final ICamera camera;
+    private final IImageProvider camera;
     private final IDataSource<Mat> output;
     
-    public CameraSubsystem(int id, ICamera camera) {
+    public CameraSubsystem(int id, IImageProvider camera) {
         super(TYPE, id);
         this.camera = camera;
-        this.output = Data.provider(camera::capture);
+        this.output = Data.provider(camera::getImage);
     }
     
     @Override
@@ -32,7 +32,7 @@ public class CameraSubsystem extends FRCSourceSubsystem<Mat> { // TODO Fix this 
         return output;
     }
     
-    public static class Provider implements IGenericSubsystemProvider<Void, Mat, ICamera> {
+    public static class Provider implements IGenericSubsystemProvider<Void, Mat, IImageProvider> {
         
         private final FRCSysRegistry registry;
         
@@ -41,7 +41,7 @@ public class CameraSubsystem extends FRCSourceSubsystem<Mat> { // TODO Fix this 
         }
 
         @Override
-        public ISubsystem<Void, Mat> getSubsystem(ICamera camera) {
+        public ISubsystem<Void, Mat> getSubsystem(IImageProvider camera) {
             return new CameraSubsystem(registry.nextUnusedId(), camera);
         }
         
