@@ -2,6 +2,7 @@ package org.iowacityrobotics.roboed.api;
 
 import org.iowacityrobotics.roboed.api.operations.IOperationsManager;
 import org.iowacityrobotics.roboed.api.subsystem.ISystemRegistry;
+import org.iowacityrobotics.roboed.api.vision.ICameraServer;
 
 /**
  * Interface representing the robot instances. Exposes all the necessary API functions to program a functioning robot.
@@ -20,11 +21,17 @@ public interface IRobot {
      * @return The robot's operations manager.
      */
     IOperationsManager getOpManager();
+
+    /**
+     * Gets the camera server for this robot.
+     * @return The robot's camera server.
+     */
+    ICameraServer getCameraServer();
     
     /**
      * Gets the running mode of the robot.
      * @return The robot's running mode.
      */
     RobotMode getRunningMode();
-    
+
 }
