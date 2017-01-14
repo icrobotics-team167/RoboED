@@ -14,7 +14,7 @@ import org.opencv.core.Mat;
 /**
  * @author Evan Geng
  */
-public class CameraSubsystem extends FRCSourceSubsystem<Mat> { // TODO Fix this class!!!!!!
+public class CameraSubsystem extends FRCSourceSubsystem<Mat> {
 
     public static final ISubsystemType<Void, Mat, Provider> TYPE = new FRCSubsystemType<>();
     

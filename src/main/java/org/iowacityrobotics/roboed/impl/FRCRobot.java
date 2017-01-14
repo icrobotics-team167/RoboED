@@ -1,6 +1,7 @@
 package org.iowacityrobotics.roboed.impl;
 
 import org.iowacityrobotics.roboed.api.IRobot;
+import org.iowacityrobotics.roboed.api.IRobotProgram;
 import org.iowacityrobotics.roboed.api.RobotMode;
 import org.iowacityrobotics.roboed.api.operations.IOperationsManager;
 import org.iowacityrobotics.roboed.api.subsystem.ISystemRegistry;
@@ -19,6 +20,7 @@ public class FRCRobot extends IterativeRobot implements IRobot {
     private final FRCSysRegistry sysReg;
     private final FRCOpManager opMan;
     private final FRCCameraServer camServ;
+    private IRobotProgram prog;
     private RobotMode runMode;
     
     public FRCRobot() {
@@ -59,6 +61,11 @@ public class FRCRobot extends IterativeRobot implements IRobot {
     
     @Override
     public void robotInit() {
+        prog = IRobotProgram.getImplementation();
+        if (prog != null)
+            prog.init(this);
+        else
+            System.out.println("[!] No robot program detected!"); // TODO Better logging implementation?
         opMan.initialize();
         setRunMode(RobotMode.DISABLED);
     }

@@ -17,8 +17,9 @@ public interface ICameraServer {
 
     /**
      * Registers a new image source to be polled for images to send to the driver station.
+     * @param name The name to assign to the image source.
      * @param provider The image source.
      */
-    void putImageSource(IImageProvider provider);
+    void putImageSource(String name, IImageProvider provider);
 
 }

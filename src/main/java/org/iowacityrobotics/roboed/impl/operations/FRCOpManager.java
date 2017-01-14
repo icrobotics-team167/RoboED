@@ -20,19 +20,14 @@ public class FRCOpManager implements IOperationsManager {
     
     @Override
     public FRCOpMode getOpMode(String id) {
-        if (id == FRCOpMode.OP_NONE)
+        if (id.equals(FRCOpMode.OP_NONE))
             return null;
-        FRCOpMode opMode = registry.get(id);
-        if (opMode == null) {
-            opMode = new FRCOpMode();
-            registry.put(id, opMode);
-        }
-        return opMode;
+        return registry.computeIfAbsent(id, k -> new FRCOpMode());
     }
 
     @Override
     public void setDefaultOpMode(RobotMode status, String id) {
-        if (id == null || id == FRCOpMode.OP_NONE)
+        if (id == null || id.equals(FRCOpMode.OP_NONE))
             defaults.remove(status);
         else
             defaults.put(status, id);

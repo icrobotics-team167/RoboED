@@ -25,7 +25,7 @@ public class CachedCameraFeed implements IImageProvider {
     public Mat getImage() {
         if (System.currentTimeMillis() - lastCache > cacheTime)
             backing.grabFrame(cached);
-        return cached;
+        return cached.clone();
     }
 
 }

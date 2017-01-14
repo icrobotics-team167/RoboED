@@ -1,14 +1,13 @@
 plugins {
     id "java"
+    id "maven-publish"
     id "eclipse"
     id "idea"
     id "jaci.openrio.gradle.GradleRIO" version "2017.0.5"
 }
 
-frc {
-    team = "167"
-    robotClass = "org.iowacityrobotics.roboed.impl.FRCRobot"
-}
+group = "org.iowacityrobotics.roboed"
+version = "2017-1.0.0"
 
 repositories {
     mavenCentral()
@@ -20,14 +19,19 @@ dependencies {
     compile group: 'com.mashape.unirest', name: 'unirest-java', version: '1.4.9'
 }
 
-def robotManifest = {
-    attributes 'Main-Class': 'edu.wpi.first.wpilibj.RobotBase'
-    attributes 'Robot-Class': frc.robotClass
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
 }
 
-jar {
-    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-    manifest robotManifest
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifact sourceJar {
+                classifier 'sources'
+            }
+        }
+    }
 }
 
 task wrapper(type: Wrapper) {
