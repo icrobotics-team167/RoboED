@@ -180,6 +180,11 @@ public class Vector2 implements Cloneable {
     public Vector2 clone() {
         return new Vector2(x, y);
     }
+
+    @Override
+    public String toString() {
+        return "(" + Double.toString(x) + ", " + Double.toString(y) + ")";
+    }
     
     /**
      * Creates a new vector from the given polar coordinates.

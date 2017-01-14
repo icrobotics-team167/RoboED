@@ -13,9 +13,9 @@ public class FRCOpMode implements IOpMode {
     public static final String OP_NOOP = "builtin_op_noop";
     
     String next = OP_NOOP;
-    NullaryEventStream onInit;
-    IConditionFactory doWhile;
-    NullaryEventStream onDone;
+    NullaryEventStream onInit = new NullaryEventStream();
+    IConditionFactory doWhile = IConditionFactory.getter(() -> false);
+    NullaryEventStream onDone = new NullaryEventStream();
     
     private boolean immutable = false;
 

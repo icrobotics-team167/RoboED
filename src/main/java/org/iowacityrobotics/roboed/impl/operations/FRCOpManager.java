@@ -1,22 +1,28 @@
 package org.iowacityrobotics.roboed.impl.operations;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.iowacityrobotics.roboed.api.RobotMode;
 import org.iowacityrobotics.roboed.api.operations.IOperationsManager;
 import org.iowacityrobotics.roboed.api.operations.InvalidOpModeException;
+import org.iowacityrobotics.roboed.impl.subsystem.FRCSysRegistry;
 import org.iowacityrobotics.roboed.util.collection.StackNode;
 import org.iowacityrobotics.roboed.util.function.ICondition;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /** 
  * @author Evan Geng
  */
 public class FRCOpManager implements IOperationsManager {
-    
+
+    private final FRCSysRegistry sysReg;
     private final Map<String, FRCOpMode> registry = new HashMap<>();
     private final Map<RobotMode, String> defaults = new HashMap<>();
     private StackNode<OpThread> running;
+
+    public FRCOpManager(FRCSysRegistry sysReg) {
+        this.sysReg = sysReg;
+    }
     
     @Override
     public FRCOpMode getOpMode(String id) {
@@ -97,9 +103,11 @@ public class FRCOpManager implements IOperationsManager {
         
         @Override
         public void run() {
+            System.out.println("opmode thread run: " + this.getName());
             mode.onInit.run();
             ICondition condition = mode.doWhile.create();
-            while (condition.isMet()) { }
+            while (condition.isMet())
+                sysReg.tick();
             mode.onDone.run();
             if (mode.next == null) {
                 running = running.getParent();

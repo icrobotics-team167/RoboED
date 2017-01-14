@@ -33,7 +33,8 @@ public abstract class FRCTerminalSubsystem<T> extends FRCSubsystem<T, Void> {
     
     public void tick() {
         try {
-            processData(input.request());
+            if (input != null)
+                processData(input.request());
         } catch (DataUnavailableException ignored) { }
     }
     

@@ -1,36 +1,39 @@
 package org.iowacityrobotics.roboed.impl.subsystem;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.iowacityrobotics.roboed.api.subsystem.ISubsystemType;
 import org.iowacityrobotics.roboed.api.subsystem.ISystemRegistry;
 import org.iowacityrobotics.roboed.api.subsystem.provider.ISubsystemProvider;
-import org.iowacityrobotics.roboed.impl.subsystem.impl.MecanumSubsystem;
-import org.iowacityrobotics.roboed.impl.subsystem.impl.SingleJoySubsystem;
-import org.iowacityrobotics.roboed.impl.subsystem.impl.VisionOffloaderSubsystem;
+import org.iowacityrobotics.roboed.impl.subsystem.impl.*;
+import org.iowacityrobotics.roboed.util.primitive.IntTMap;
+import org.iowacityrobotics.roboed.util.primitive.IntTPair;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /** 
  * @author Evan Geng
  */
-public class FRCSysRegistry implements ISystemRegistry {
+public class FRCSysRegistry implements ISystemRegistry { // TODO A way to register custom subsystems
 
     private final Map<ISubsystemType<?, ?, ?>, ISubsystemProvider<?, ?>> providerMap = new HashMap<>();
-    private final Map<ISubsystemType<?, ?, ?>, List<FRCSubsystem<?, ?>>> registry = new HashMap<>();
+    private final Map<ISubsystemType<?, ?, ?>, IntTMap<FRCSubsystem<?, ?>>> registry = new HashMap<>();
     private int firstUnusedId = 0;
     
     public FRCSysRegistry() {
         providerMap.put(MecanumSubsystem.TYPE, new MecanumSubsystem.Provider(this));
+        providerMap.put(MecanumSubsystem.TYPE_CUSTOM, new MecanumSubsystem.CustomProvider(this));
+        providerMap.put(DualTreadSubsystem.TYPE, new DualTreadSubsystem.Provider(this));
+        providerMap.put(DualTreadSubsystem.TYPE_CUSTOM, new DualTreadSubsystem.CustomProvider(this));
+        providerMap.put(CameraSubsystem.TYPE, new CameraSubsystem.Provider(this));
         providerMap.put(SingleJoySubsystem.TYPE, new SingleJoySubsystem.Provider(this));
+        providerMap.put(DualJoySubsystem.TYPE, new DualJoySubsystem.Provider(this));
         providerMap.put(VisionOffloaderSubsystem.TYPE, new VisionOffloaderSubsystem.Provider(this));
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <I, O, P extends ISubsystemProvider<I, O>> FRCSubsystem<I, O> getSubsystem(ISubsystemType<I, O, P> type, int id) {
-        List<FRCSubsystem<?, ?>> ofSubsys = registry.get(type);
+        IntTMap<FRCSubsystem<?, ?>> ofSubsys = registry.get(type);
         return (ofSubsys == null || id >= ofSubsys.size() || id < 0) ? null : (FRCSubsystem<I, O>)ofSubsys.get(id);
     }
 
@@ -40,24 +43,25 @@ public class FRCSysRegistry implements ISystemRegistry {
         return (P)providerMap.get(type);
     }
     
-    <I, O> int registerSubsystem(FRCSubsystem<I, O> system) {
-        List<FRCSubsystem<?, ?>> ofSubsys = registry.get(system.getType());
-        if (ofSubsys == null) {
-            ofSubsys = new ArrayList<>();
-            registry.put(system.getType(), ofSubsys);
-        }
-        ofSubsys.add(system);
-        return ofSubsys.size() - 1;
+    public <I, O> FRCSubsystem<I, O> register(FRCSubsystem<I, O> system) {
+        IntTMap<FRCSubsystem<?, ?>> ofSubsys = registry.computeIfAbsent(system.getType(), t -> new IntTMap<>());
+        ofSubsys.put(system.getId(), system);
+        return system;
     }
     
     @SuppressWarnings("rawtypes")
     public void tick() {
-        registry.values().stream().flatMap(List::stream)
-        .filter(s -> s instanceof FRCTerminalSubsystem)
-        .map(s -> (FRCTerminalSubsystem)s)
-        .forEach(FRCTerminalSubsystem::tick);
+        registry.values().stream().flatMap(IntTMap::stream)
+                .map(IntTPair::getB)
+                .filter(s -> s instanceof FRCTerminalSubsystem)
+                .map(s -> (FRCTerminalSubsystem)s)
+                .forEach(FRCTerminalSubsystem::tick);
     }
-    
+
+    public void reset() {
+        registry.values().forEach(type -> type.forEach((id, sys) -> sys.reset()));
+    }
+
     public int nextUnusedId() {
         return ++firstUnusedId - 1;
     }

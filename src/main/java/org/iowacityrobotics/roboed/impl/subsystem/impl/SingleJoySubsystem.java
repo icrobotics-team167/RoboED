@@ -41,7 +41,7 @@ public class SingleJoySubsystem extends FRCSourceSubsystem<Vector3> {
         
         @Override
         public ISubsystem<Void, Vector3> getSubsystem(int port) {
-            return new SingleJoySubsystem(registry.nextUnusedId(), new Joystick(port));
+            return registry.register(new SingleJoySubsystem(registry.nextUnusedId(), new Joystick(port)));
         }
         
     }

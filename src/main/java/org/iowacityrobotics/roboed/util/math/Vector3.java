@@ -211,5 +211,10 @@ public class Vector3 implements Cloneable {
     public Vector3 clone() {
         return new Vector3(x, y, z);
     }
+
+    @Override
+    public String toString() {
+        return "(" + Double.toString(x) + ", " + Double.toString(y) + ", " + Double.toString(z) + ")";
+    }
     
 }

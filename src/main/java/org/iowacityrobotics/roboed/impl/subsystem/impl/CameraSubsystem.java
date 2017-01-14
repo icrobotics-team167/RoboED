@@ -42,7 +42,7 @@ public class CameraSubsystem extends FRCSourceSubsystem<Mat> {
 
         @Override
         public ISubsystem<Void, Mat> getSubsystem(IImageProvider camera) {
-            return new CameraSubsystem(registry.nextUnusedId(), camera);
+            return registry.register(new CameraSubsystem(registry.nextUnusedId(), camera));
         }
         
     }

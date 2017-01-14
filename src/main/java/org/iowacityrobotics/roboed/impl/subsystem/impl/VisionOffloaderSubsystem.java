@@ -80,7 +80,7 @@ public class VisionOffloaderSubsystem extends FRCSubsystem<Mat, JsonNode> {
 
         @Override
         public ISubsystem<Mat, JsonNode> getSubsystem(VisionOffloaderConfig config) {
-            return new VisionOffloaderSubsystem(registry.nextUnusedId(), config);
+            return registry.register(new VisionOffloaderSubsystem(registry.nextUnusedId(), config));
         }
 
     }

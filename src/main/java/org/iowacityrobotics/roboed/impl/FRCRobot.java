@@ -25,7 +25,7 @@ public class FRCRobot extends IterativeRobot implements IRobot {
     
     public FRCRobot() {
         this.sysReg = new FRCSysRegistry();
-        this.opMan = new FRCOpManager();
+        this.opMan = new FRCOpManager(sysReg);
         this.camServ = new FRCCameraServer();
         this.runMode = RobotMode.UNINITIALIZED;
     }
@@ -52,11 +52,12 @@ public class FRCRobot extends IterativeRobot implements IRobot {
     
     private void setRunMode(RobotMode mode) {
         this.runMode = mode;
+        sysReg.reset();
         opMan.modeChanged(mode);
     }
-    
+
     private void tick() {
-        sysReg.tick();
+        // NO-OP
     }
     
     @Override
@@ -68,6 +69,11 @@ public class FRCRobot extends IterativeRobot implements IRobot {
             System.out.println("[!] No robot program detected!"); // TODO Better logging implementation?
         opMan.initialize();
         setRunMode(RobotMode.DISABLED);
+    }
+
+    @Override
+    public void robotPeriodic() {
+        // NO-OP
     }
 
     @Override
