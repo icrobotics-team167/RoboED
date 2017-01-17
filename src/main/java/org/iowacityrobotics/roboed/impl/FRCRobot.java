@@ -1,5 +1,6 @@
 package org.iowacityrobotics.roboed.impl;
 
+import edu.wpi.first.wpilibj.IterativeRobot;
 import org.iowacityrobotics.roboed.api.IRobot;
 import org.iowacityrobotics.roboed.api.IRobotProgram;
 import org.iowacityrobotics.roboed.api.RobotMode;
@@ -8,8 +9,6 @@ import org.iowacityrobotics.roboed.api.subsystem.ISystemRegistry;
 import org.iowacityrobotics.roboed.api.vision.ICameraServer;
 import org.iowacityrobotics.roboed.impl.operations.FRCOpManager;
 import org.iowacityrobotics.roboed.impl.subsystem.FRCSysRegistry;
-
-import edu.wpi.first.wpilibj.IterativeRobot;
 import org.iowacityrobotics.roboed.impl.vision.FRCCameraServer;
 
 /** 
@@ -73,7 +72,7 @@ public class FRCRobot extends IterativeRobot implements IRobot {
 
     @Override
     public void robotPeriodic() {
-        // NO-OP
+        tick();
     }
 
     @Override
@@ -83,7 +82,7 @@ public class FRCRobot extends IterativeRobot implements IRobot {
 
     @Override
     public void disabledPeriodic() {
-        tick();
+        // NO-OP
     }
     
     @Override
@@ -93,7 +92,7 @@ public class FRCRobot extends IterativeRobot implements IRobot {
     
     @Override
     public void autonomousPeriodic() {
-        tick();
+        // NO-OP
     }
 
     @Override
@@ -103,7 +102,7 @@ public class FRCRobot extends IterativeRobot implements IRobot {
     
     @Override
     public void teleopPeriodic() {
-        tick();
+        // NO-OP
     }
 
     @Override
@@ -113,7 +112,7 @@ public class FRCRobot extends IterativeRobot implements IRobot {
 
     @Override
     public void testPeriodic() {
-        tick();
+        // NO-OP
     }
 
 }
