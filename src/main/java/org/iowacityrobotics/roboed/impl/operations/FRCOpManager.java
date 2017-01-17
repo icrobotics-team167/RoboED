@@ -48,6 +48,7 @@ public class FRCOpManager implements IOperationsManager {
             waitForChild(running.getValue());
         } else {
             wipeAndRun(id);
+            Thread.currentThread().interrupt();
         }
     }
     
@@ -75,14 +76,13 @@ public class FRCOpManager implements IOperationsManager {
             running = running.getParent();
         }
         startOpThread(opmode);
-        Thread.currentThread().interrupt();
     }
     
     public void initialize() {
         FRCOpMode mode = getOpMode(FRCOpMode.OP_NOOP);
         mode.whileCondition(() -> true);
         mode.setImmutable();
-        
+
         running = new StackNode<>();
         startOpThread(FRCOpMode.OP_NOOP);
     }
