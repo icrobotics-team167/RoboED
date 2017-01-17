@@ -22,8 +22,8 @@ public class DualJoySubsystem extends FRCSourceSubsystem<Pair<Vector2, Vector2>>
     
     private final IDataSource<Pair<Vector2, Vector2>> upstream;
 
-    protected DualJoySubsystem(int id, XboxController cont) {
-        super(TYPE, id);
+    protected DualJoySubsystem(XboxController cont) {
+        super(TYPE);
         upstream = Data.provider(() -> new Pair<>(
                 new Vector2(cont.getX(GenericHID.Hand.kLeft), cont.getY(GenericHID.Hand.kLeft)),
                 new Vector2(cont.getX(GenericHID.Hand.kRight), cont.getY(GenericHID.Hand.kRight))
@@ -36,16 +36,10 @@ public class DualJoySubsystem extends FRCSourceSubsystem<Pair<Vector2, Vector2>>
     }
     
     public static class Provider implements ISinglePortSubsystemProvider<Void, Pair<Vector2, Vector2>> {
-
-        private final FRCSysRegistry registry;
-        
-        public Provider(FRCSysRegistry registry) {
-            this.registry = registry;
-        }
         
         @Override
         public ISubsystem<Void, Pair<Vector2, Vector2>> getSubsystem(int port) {
-            return registry.register(new DualJoySubsystem(registry.nextUnusedId(), new XboxController(port)));
+            return new DualJoySubsystem(new XboxController(port));
         }
         
     }

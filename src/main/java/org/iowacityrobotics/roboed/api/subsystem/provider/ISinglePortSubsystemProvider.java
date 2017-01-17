@@ -13,6 +13,7 @@ public interface ISinglePortSubsystemProvider<I, O> extends ISubsystemProvider<I
      * @param port The port number.
      * @return The newly instantiated subsystem.
      */
+    @Providing
     ISubsystem<I, O> getSubsystem(int port);
     
 }

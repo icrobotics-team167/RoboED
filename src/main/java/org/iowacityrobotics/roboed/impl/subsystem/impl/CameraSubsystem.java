@@ -17,13 +17,11 @@ import org.opencv.core.Mat;
 public class CameraSubsystem extends FRCSourceSubsystem<Mat> {
 
     public static final ISubsystemType<Void, Mat, Provider> TYPE = new FRCSubsystemType<>();
-    
-    private final IImageProvider camera;
+
     private final IDataSource<Mat> output;
     
-    public CameraSubsystem(int id, IImageProvider camera) {
-        super(TYPE, id);
-        this.camera = camera;
+    public CameraSubsystem(IImageProvider camera) {
+        super(TYPE);
         this.output = Data.provider(camera::getImage);
     }
     
@@ -33,16 +31,10 @@ public class CameraSubsystem extends FRCSourceSubsystem<Mat> {
     }
     
     public static class Provider implements IGenericSubsystemProvider<Void, Mat, IImageProvider> {
-        
-        private final FRCSysRegistry registry;
-        
-        public Provider(FRCSysRegistry registry) {
-            this.registry = registry;
-        }
 
         @Override
         public ISubsystem<Void, Mat> getSubsystem(IImageProvider camera) {
-            return registry.register(new CameraSubsystem(registry.nextUnusedId(), camera));
+            return new CameraSubsystem(camera);
         }
         
     }

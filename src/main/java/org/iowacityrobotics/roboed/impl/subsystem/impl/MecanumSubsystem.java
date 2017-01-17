@@ -22,8 +22,8 @@ public class MecanumSubsystem extends FRCTerminalSubsystem<MecanumSubsystem.Cont
     
     private final RobotDrive drive;
 
-    protected MecanumSubsystem(int id, RobotDrive drive) {
-        super(TYPE, id);
+    protected MecanumSubsystem(RobotDrive drive) {
+        super(TYPE);
         this.drive = drive;
     }
 
@@ -45,36 +45,24 @@ public class MecanumSubsystem extends FRCTerminalSubsystem<MecanumSubsystem.Cont
     }
     
     public static class Provider implements IQuadraPortSubsystemProvider<ControlDataFrame, Void> {
-
-        private final FRCSysRegistry registry;
-        
-        public Provider(FRCSysRegistry registry) {
-            this.registry = registry;
-        }
         
         @Override
         public ISubsystem<ControlDataFrame, Void> getSubsystem(int port1, int port2, int port3, int port4) { // Front-left, front-right, back-left, back-right
-            return new MecanumSubsystem(registry.nextUnusedId(), new RobotDrive(port1, port2, port3, port4));
+            return new MecanumSubsystem(new RobotDrive(port1, port2, port3, port4));
         }
         
     }
 
     public static class CustomProvider implements IGenericSubsystemProvider<ControlDataFrame, Void, QuadraSpeedController> {
 
-        private final FRCSysRegistry registry;
-
-        public CustomProvider(FRCSysRegistry registry) {
-            this.registry = registry;
-        }
-
         @Override
         public ISubsystem<ControlDataFrame, Void> getSubsystem(QuadraSpeedController controllers) {
-            return registry.register(new MecanumSubsystem(registry.nextUnusedId(), new RobotDrive(
+            return new MecanumSubsystem(new RobotDrive(
                     controllers.getA(),
                     controllers.getB(),
                     controllers.getC(),
                     controllers.getD()
-            )));
+            ));
         }
 
     }

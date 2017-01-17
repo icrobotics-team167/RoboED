@@ -9,8 +9,8 @@ import org.iowacityrobotics.roboed.api.subsystem.provider.ISubsystemProvider;
  */
 public abstract class FRCSourceSubsystem<T> extends FRCSubsystem<Void, T> {
     
-    protected <P extends ISubsystemProvider<Void, T>> FRCSourceSubsystem(ISubsystemType<Void, T, P> type, int id) {
-        super(type, id);
+    protected <P extends ISubsystemProvider<Void, T>> FRCSourceSubsystem(ISubsystemType<Void, T, P> type) {
+        super(type);
     }
 
     @Override

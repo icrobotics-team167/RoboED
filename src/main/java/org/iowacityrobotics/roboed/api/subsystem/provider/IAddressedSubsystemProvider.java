@@ -13,6 +13,7 @@ public interface IAddressedSubsystemProvider<I, O> extends ISubsystemProvider<I,
      * @param address The subsystem's address.
      * @return The newly instantiated subsystem.
      */
+    @Providing
     ISubsystem<I, O> getSubsystem(byte address);
     
 }

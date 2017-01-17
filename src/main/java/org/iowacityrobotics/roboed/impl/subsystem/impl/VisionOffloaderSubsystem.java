@@ -29,8 +29,8 @@ public class VisionOffloaderSubsystem extends FRCSubsystem<Mat, JsonNode> {
     private final IDataSource<JsonNode> output;
     private IDataSource<Mat> input;
 
-    protected VisionOffloaderSubsystem(int id, VisionOffloaderConfig config) {
-        super(TYPE, id);
+    protected VisionOffloaderSubsystem(VisionOffloaderConfig config) {
+        super(TYPE);
         this.host = config.host;
         this.routine = config.routine;
         this.output = Data.provider(() -> {
@@ -72,15 +72,9 @@ public class VisionOffloaderSubsystem extends FRCSubsystem<Mat, JsonNode> {
 
     public static class Provider implements IGenericSubsystemProvider<Mat, JsonNode, VisionOffloaderConfig> {
 
-        private final FRCSysRegistry registry;
-
-        public Provider(FRCSysRegistry registry) {
-            this.registry = registry;
-        }
-
         @Override
         public ISubsystem<Mat, JsonNode> getSubsystem(VisionOffloaderConfig config) {
-            return registry.register(new VisionOffloaderSubsystem(registry.nextUnusedId(), config));
+            return new VisionOffloaderSubsystem(config);
         }
 
     }

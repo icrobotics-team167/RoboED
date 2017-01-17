@@ -13,6 +13,7 @@ public interface IGenericSubsystemProvider<I, O, T> extends ISubsystemProvider<I
      * @param value The descriptor for the subsystem.
      * @return The newly instantiated subsystem.
      */
+    @Providing
     ISubsystem<I, O> getSubsystem(T value);
     
 }

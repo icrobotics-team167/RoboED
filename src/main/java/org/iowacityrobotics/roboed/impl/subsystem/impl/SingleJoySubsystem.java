@@ -21,8 +21,8 @@ public class SingleJoySubsystem extends FRCSourceSubsystem<Vector3> {
     
     private final IDataSource<Vector3> upstream;
 
-    protected SingleJoySubsystem(int id, Joystick joy) {
-        super(TYPE, id);
+    protected SingleJoySubsystem(Joystick joy) {
+        super(TYPE);
         upstream = Data.provider(() -> new Vector3(joy.getAxis(Joystick.AxisType.kX), joy.getAxis(Joystick.AxisType.kY), joy.getAxis(Joystick.AxisType.kZ)));
     }
 
@@ -32,16 +32,10 @@ public class SingleJoySubsystem extends FRCSourceSubsystem<Vector3> {
     }
     
     public static class Provider implements ISinglePortSubsystemProvider<Void, Vector3> {
-
-        private final FRCSysRegistry registry;
-        
-        public Provider(FRCSysRegistry registry) {
-            this.registry = registry;
-        }
         
         @Override
         public ISubsystem<Void, Vector3> getSubsystem(int port) {
-            return registry.register(new SingleJoySubsystem(registry.nextUnusedId(), new Joystick(port)));
+            return new SingleJoySubsystem(new Joystick(port));
         }
         
     }

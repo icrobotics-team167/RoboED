@@ -6,6 +6,4 @@ import org.iowacityrobotics.roboed.api.subsystem.provider.ISubsystemProvider;
 /**
  * @author Evan Geng
  */
-public class FRCSubsystemType<I, O, P extends ISubsystemProvider<I, O>> implements ISubsystemType<I, O, P> {
-    // NO-OP
-}
+public class FRCSubsystemType<I, O, P extends ISubsystemProvider<I, O>> implements ISubsystemType<I, O, P> { }

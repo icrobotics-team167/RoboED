@@ -10,21 +10,14 @@ import org.iowacityrobotics.roboed.api.subsystem.provider.ISubsystemProvider;
 public abstract class FRCSubsystem<I, O> implements ISubsystem<I, O> {
 
     private final ISubsystemType<I, O, ? extends ISubsystemProvider<I, O>> type;
-    private final int id;
     
-    protected <P extends ISubsystemProvider<I, O>> FRCSubsystem(ISubsystemType<I, O, P> type, int id) {
+    protected <P extends ISubsystemProvider<I, O>> FRCSubsystem(ISubsystemType<I, O, P> type) {
         this.type = type;
-        this.id = id;
     }
     
     @Override
     public final ISubsystemType<I, O, ? extends ISubsystemProvider<I, O>> getType() {
         return type;
-    }
-    
-    @Override
-    public int getId() {
-        return id;
     }
     
     @Override

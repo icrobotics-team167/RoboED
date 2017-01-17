@@ -3,17 +3,18 @@ package org.iowacityrobotics.roboed.impl.subsystem;
 import org.iowacityrobotics.roboed.api.data.DataUnavailableException;
 import org.iowacityrobotics.roboed.api.data.IDataSource;
 import org.iowacityrobotics.roboed.api.subsystem.ISubsystemType;
+import org.iowacityrobotics.roboed.api.subsystem.ITerminalSubsystem;
 import org.iowacityrobotics.roboed.api.subsystem.provider.ISubsystemProvider;
 
 /**
  * @author Evan Geng
  */
-public abstract class FRCTerminalSubsystem<T> extends FRCSubsystem<T, Void> {
+public abstract class FRCTerminalSubsystem<T> extends FRCSubsystem<T, Void> implements ITerminalSubsystem<T> {
     
     private IDataSource<T> input;
 
-    protected <P extends ISubsystemProvider<T, Void>> FRCTerminalSubsystem(ISubsystemType<T, Void, P> type, int id) {
-        super(type, id);
+    protected <P extends ISubsystemProvider<T, Void>> FRCTerminalSubsystem(ISubsystemType<T, Void, P> type) {
+        super(type);
     }
     
     @Override
@@ -30,7 +31,8 @@ public abstract class FRCTerminalSubsystem<T> extends FRCSubsystem<T, Void> {
     public void reset() {
         this.input = null;
     }
-    
+
+    @Override
     public void tick() {
         try {
             if (input != null)

@@ -7,14 +7,6 @@ import org.iowacityrobotics.roboed.api.subsystem.provider.ISubsystemProvider;
  * @author Evan Geng
  */
 public interface ISystemRegistry {
-
-    /**
-     * Get a particular subsystem.
-     * @param type The subsystem's type.
-     * @param id The subsystem's ID.
-     * @return The requested subsystem, if it exists.
-     */
-    <I, O, P extends ISubsystemProvider<I, O>> ISubsystem<I, O> getSubsystem(ISubsystemType<I, O, P> type, int id);
     
     /**
      * Gets a provider for the given subsystem type.
@@ -22,5 +14,12 @@ public interface ISystemRegistry {
      * @return The provider for this subsystem type.
      */
     <I, O, P extends ISubsystemProvider<I, O>> P getProvider(ISubsystemType<I, O, P> type);
+
+    /**
+     * Registers a new custom subsystem provider for the given subsystem type.
+     * @param type The subsystem type provided by the provider.
+     * @param provider The new custom provider.
+     */
+    <I, O, P extends ISubsystemProvider<I, O>> void registerProvider(ISubsystemType<I, O, P> type, P provider);
     
 }

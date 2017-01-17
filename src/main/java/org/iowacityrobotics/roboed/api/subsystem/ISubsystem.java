@@ -17,13 +17,6 @@ public interface ISubsystem<I, O> {
      * @return The subsystem's type.
      */
     ISubsystemType<I, O, ? extends ISubsystemProvider<I, O>> getType();
-    
-    /**
-     * Gets the ID of this subsystem as assigned by the {@link ISystemRegistry}.
-     * @return The subsystem's ID.
-     */
-    int getId();
-    
     /**
      * Binds a data stream to this subsystem to serve as the input stream.
      * @param input The input stream.

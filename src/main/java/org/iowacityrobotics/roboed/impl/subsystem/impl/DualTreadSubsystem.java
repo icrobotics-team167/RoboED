@@ -20,8 +20,8 @@ public class DualTreadSubsystem extends FRCTerminalSubsystem<DualTreadSubsystem.
 
     private final RobotDrive drive;
 
-    protected DualTreadSubsystem(int id, RobotDrive drive) {
-        super(TYPE, id);
+    protected DualTreadSubsystem(RobotDrive drive) {
+        super(TYPE);
         this.drive = drive;
     }
 
@@ -43,35 +43,23 @@ public class DualTreadSubsystem extends FRCTerminalSubsystem<DualTreadSubsystem.
 
     public static class Provider implements IQuadraPortSubsystemProvider<ControlDataFrame, Void> {
 
-        private final FRCSysRegistry registry;
-
-        public Provider(FRCSysRegistry registry) {
-            this.registry = registry;
-        }
-
         @Override
         public ISubsystem<ControlDataFrame, Void> getSubsystem(int port1, int port2, int port3, int port4) { // Front-left, front-right, back-left, back-right
-            return new DualTreadSubsystem(registry.nextUnusedId(), new RobotDrive(port1, port2, port3, port4));
+            return new DualTreadSubsystem(new RobotDrive(port1, port2, port3, port4));
         }
 
     }
 
     public static class CustomProvider implements IGenericSubsystemProvider<ControlDataFrame, Void, QuadraSpeedController> {
 
-        private final FRCSysRegistry registry;
-
-        public CustomProvider(FRCSysRegistry registry) {
-            this.registry = registry;
-        }
-
         @Override
         public ISubsystem<ControlDataFrame, Void> getSubsystem(QuadraSpeedController controllers) {
-            return registry.register(new DualTreadSubsystem(registry.nextUnusedId(), new RobotDrive(
+            return new DualTreadSubsystem(new RobotDrive(
                     controllers.getA(),
                     controllers.getB(),
                     controllers.getC(),
                     controllers.getD()
-            )));
+            ));
         }
 
     }

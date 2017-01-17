@@ -16,6 +16,7 @@ public interface IQuadraPortSubsystemProvider<I, O> extends ISubsystemProvider<I
      * @param port4 The fourth port number.
      * @return The newly instantiated subsystem.
      */
+    @Providing
     ISubsystem<I, O> getSubsystem(int port1, int port2, int port3, int port4);
     
 }

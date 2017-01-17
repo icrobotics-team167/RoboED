@@ -14,6 +14,7 @@ public interface IDualPortSubsystemProvider<I, O> extends ISubsystemProvider<I, 
      * @param port2 The second port number.
      * @return The newly instantiated subsystem.
      */
+    @Providing
     ISubsystem<I, O> getSubsystem(int port1, int port2);
     
 }
