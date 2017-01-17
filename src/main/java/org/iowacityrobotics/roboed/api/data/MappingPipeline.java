@@ -1,5 +1,6 @@
 package org.iowacityrobotics.roboed.api.data;
 
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
@@ -31,6 +32,11 @@ public class MappingPipeline<I, O> implements IDataSource<O> {
     @Override
     public <V> IDataSource<V> map(Function<O, V> mapper) {
         return new MappingPipeline<>(this, mapper);
+    }
+
+    @Override
+    public <U, V> IDataSource<V> interpolate(IDataSource<U> other, BiFunction<O, U, V> interpolator) {
+        return new InterpolatingPipeline<>(this, other, interpolator);
     }
 
     @Override

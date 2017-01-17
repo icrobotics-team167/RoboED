@@ -1,5 +1,6 @@
 package org.iowacityrobotics.roboed.api.data;
 
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
@@ -14,6 +15,14 @@ public interface IDataSource<T> {
      * @return The pipeline with the new segment attached.
      */
     <V> IDataSource<V> map(Function<T, V> mapper);
+
+    /**
+     * Create an interpolating pipeline segment that interpolates two data streams.
+     * @param other The other data pipeline.
+     * @param interpolator The interpolation function,
+     * @return The new interpolating pipeline.
+     */
+    <U, V> IDataSource<V> interpolate(IDataSource<U> other, BiFunction<T, U, V> interpolator);
     
     /**
      * Requests data from this pipeline.

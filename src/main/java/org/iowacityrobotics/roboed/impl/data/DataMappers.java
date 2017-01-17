@@ -23,15 +23,6 @@ public class DataMappers {
     public static Function<Pair<Vector2, Vector2>, DualTreadSubsystem.ControlDataFrame> dualJoyTank() {
         return p -> new DualTreadSubsystem.ControlDataFrame(p.getA().y(), p.getB().y());
     }
-
-    public static Function<Pair<Vector2, Vector2>, Pair<Vector2, Vector2>> throttle(DoubleSupplier throttleFunc) {
-        return p -> {
-            double throttle = throttleFunc.getAsDouble();
-            p.getA().x(p.getA().x() * throttle).y(p.getA().y() * throttle);
-            p.getB().x(p.getB().x() * throttle).y(p.getB().y() * throttle);
-            return p;
-        };
-    }
     
     public static Function<Pair<Vector2, Vector2>, Pair<Vector2, Vector2>> invert() {
         return p -> {
