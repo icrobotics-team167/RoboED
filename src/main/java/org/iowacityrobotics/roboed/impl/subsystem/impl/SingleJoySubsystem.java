@@ -23,7 +23,7 @@ public class SingleJoySubsystem extends FRCSourceSubsystem<Vector3> {
 
     protected SingleJoySubsystem(Joystick joy) {
         super(TYPE);
-        upstream = Data.provider(() -> new Vector3(joy.getAxis(Joystick.AxisType.kX), joy.getAxis(Joystick.AxisType.kY), joy.getAxis(Joystick.AxisType.kZ)));
+        upstream = Data.provider(() -> new Vector3(joy.getAxis(Joystick.AxisType.kX), joy.getAxis(Joystick.AxisType.kY), joy.getAxis(Joystick.AxisType.kTwist)));
     }
 
     @Override
