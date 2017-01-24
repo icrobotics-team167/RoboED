@@ -1,5 +1,6 @@
 package org.iowacityrobotics.roboed.impl.subsystem;
 
+import net.sf.cglib.proxy.Enhancer;
 import org.iowacityrobotics.roboed.api.subsystem.ISubsystem;
 import org.iowacityrobotics.roboed.api.subsystem.ISubsystemType;
 import org.iowacityrobotics.roboed.api.subsystem.ISystemRegistry;
@@ -42,10 +43,10 @@ public class FRCSysRegistry implements ISystemRegistry { // TODO A way to regist
     @SuppressWarnings("unchecked")
     @Override
     public <I, O, P extends ISubsystemProvider<I, O>> void registerProvider(ISubsystemType<I, O, P> type, P provider) {
-        providerMap.put(type, (ISubsystemProvider<I, O>)Proxy.newProxyInstance(
-                Thread.currentThread().getContextClassLoader(),
-                new Class<?>[] {provider.getClass()},
-                new FRCSysProviderProxy(this, provider)));
+        Enhancer enhancer = new Enhancer();
+        enhancer.setSuperclass(provider.getClass());
+        enhancer.setCallback(new FRCSysProviderProxy(this, provider));
+        providerMap.put(type, (ISubsystemProvider<I, O>)enhancer.create());
     }
 
     public void registerSubsystem(ISubsystem system) {

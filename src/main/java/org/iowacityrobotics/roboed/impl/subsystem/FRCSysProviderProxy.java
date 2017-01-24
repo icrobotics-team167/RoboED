@@ -1,16 +1,18 @@
 package org.iowacityrobotics.roboed.impl.subsystem;
 
+import net.sf.cglib.proxy.Callback;
+import net.sf.cglib.proxy.MethodInterceptor;
+import net.sf.cglib.proxy.MethodProxy;
 import org.iowacityrobotics.roboed.api.subsystem.ISubsystem;
 import org.iowacityrobotics.roboed.api.subsystem.provider.ISubsystemProvider;
 import org.iowacityrobotics.roboed.api.subsystem.provider.Providing;
 
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 /**
  * @author Evan Geng
  */
-public class FRCSysProviderProxy implements InvocationHandler {
+public class FRCSysProviderProxy implements MethodInterceptor {
 
     private final FRCSysRegistry registry;
     private final ISubsystemProvider provider;
@@ -21,8 +23,8 @@ public class FRCSysProviderProxy implements InvocationHandler {
     }
 
     @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        Object returnVal = method.invoke(provider, args);
+    public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
+        Object returnVal = proxy.invokeSuper(provider, args);
         if (method.isAnnotationPresent(Providing.class))
             registry.registerSubsystem((ISubsystem)returnVal);
         return returnVal;
