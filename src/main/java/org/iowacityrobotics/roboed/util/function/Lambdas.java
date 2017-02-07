@@ -1,16 +1,10 @@
 package org.iowacityrobotics.roboed.util.function;
 
-import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.IntBinaryOperator;
-import java.util.function.IntConsumer;
-import java.util.function.IntFunction;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
-
 import org.iowacityrobotics.roboed.util.primitive.IntTMap;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.function.*;
 
 /**
  * Utility class for creating various anonymous functions.
@@ -93,11 +87,13 @@ public class Lambdas {
     }
 
     /**
+     * @deprecated Use a method reference to {@link Objects#nonNull}
      * @param <T> The type of object to be tested.
      * @return A predicate that requires objects to be non-null.
      */
+    @Deprecated
     public static <T> Predicate<T> nonNull() {
-        return x -> x != null;
+        return Objects::nonNull;
     }
     
     /**

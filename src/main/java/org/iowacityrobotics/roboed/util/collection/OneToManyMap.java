@@ -41,12 +41,7 @@ public class OneToManyMap<K, V, C extends Collection<V>> {
      * @param val The entry's value.
      */
     public void put(K key, V val) {
-        C vals = backing.get(key);
-        if (vals == null) {
-            vals = factory.get();
-            backing.put(key, vals);
-        }
-        vals.add(val);
+        backing.computeIfAbsent(key, k -> factory.get()).add(val);
     }
 
     /**
