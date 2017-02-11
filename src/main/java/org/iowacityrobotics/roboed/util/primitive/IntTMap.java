@@ -2,6 +2,8 @@ package org.iowacityrobotics.roboed.util.primitive;
 
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.function.IntFunction;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 /**
@@ -164,6 +166,21 @@ public class IntTMap<T> {
                 n = n.next;
             }
         }
+    }
+
+    /**
+     * If the key exists, returns the value it's mapped to. Otherwise, uses the factory to create a new entry.
+     * @param key The key.
+     * @param mapper The factory function for new values.
+     * @return The entry mapped to the key, whether it was created or not.
+     */
+    public T computeIfAbsent(int key, IntFunction<T> mapper) {
+        T value = get(key);
+        if (value == null) {
+            value = mapper.apply(key);
+            put(key, value);
+        }
+        return value;
     }
 
     /**

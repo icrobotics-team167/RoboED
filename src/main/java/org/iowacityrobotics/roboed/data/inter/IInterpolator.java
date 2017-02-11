@@ -1,4 +1,6 @@
-package org.iowacityrobotics.roboed.data;
+package org.iowacityrobotics.roboed.data.inter;
+
+import org.iowacityrobotics.roboed.data.IStatefulData;
 
 /**
  * Function that interpolates two data streams.

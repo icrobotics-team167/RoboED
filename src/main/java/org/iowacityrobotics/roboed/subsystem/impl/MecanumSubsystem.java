@@ -5,10 +5,8 @@ import org.iowacityrobotics.roboed.api.subsystem.ISubsystem;
 import org.iowacityrobotics.roboed.api.subsystem.ISubsystemType;
 import org.iowacityrobotics.roboed.api.subsystem.provider.IGenericSubsystemProvider;
 import org.iowacityrobotics.roboed.api.subsystem.provider.IQuadraPortSubsystemProvider;
-import org.iowacityrobotics.roboed.subsystem.FRCSubsystemType;
-import org.iowacityrobotics.roboed.subsystem.FRCTerminalSubsystem;
 import org.iowacityrobotics.roboed.util.math.Vector2;
-import org.iowacityrobotics.roboed.util.robot.QuadraSpeedController;
+import org.iowacityrobotics.roboed.util.robot.MotorTuple4;
 
 /**
  * @author Evan Geng
@@ -16,7 +14,7 @@ import org.iowacityrobotics.roboed.util.robot.QuadraSpeedController;
 public class MecanumSubsystem extends FRCTerminalSubsystem<MecanumSubsystem.ControlDataFrame> {
     
     public static final ISubsystemType<ControlDataFrame, Void, IQuadraPortSubsystemProvider<ControlDataFrame, Void>> TYPE = new FRCSubsystemType<>();
-    public static final ISubsystemType<ControlDataFrame, Void, IGenericSubsystemProvider<ControlDataFrame, Void, QuadraSpeedController>> TYPE_CUSTOM = new FRCSubsystemType<>();
+    public static final ISubsystemType<ControlDataFrame, Void, IGenericSubsystemProvider<ControlDataFrame, Void, MotorTuple4>> TYPE_CUSTOM = new FRCSubsystemType<>();
     
     private final RobotDrive drive;
 
@@ -57,15 +55,15 @@ public class MecanumSubsystem extends FRCTerminalSubsystem<MecanumSubsystem.Cont
         
     }
 
-    public static class CustomProvider implements IGenericSubsystemProvider<ControlDataFrame, Void, QuadraSpeedController> {
+    public static class CustomProvider implements IGenericSubsystemProvider<ControlDataFrame, Void, MotorTuple4> {
 
         @Override
-        public ISubsystem<ControlDataFrame, Void> getSubsystem(QuadraSpeedController controllers) {
+        public ISubsystem<ControlDataFrame, Void> getSubsystem(MotorTuple4 controllers) {
             return new MecanumSubsystem(new RobotDrive(
-                    controllers.getA(),
-                    controllers.getB(),
-                    controllers.getC(),
-                    controllers.getD()
+                    controllers.getFrontLeft(),
+                    controllers.getFrontRight(),
+                    controllers.getRearLeft(),
+                    controllers.getRearRight()
             ));
         }
 

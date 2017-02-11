@@ -1,10 +1,12 @@
-package org.iowacityrobotics.roboed.data;
+package org.iowacityrobotics.roboed.data.inter;
+
+import org.iowacityrobotics.roboed.data.source.ISource;
 
 /**
  * The implementation of {@link ISource#inter}.
  * @author Evan Geng
  */
-public class InterpolatingSource<I1, I2, O> implements ISource<O> {
+public final class InterpolatingSource<I1, I2, O> implements ISource<O> {
 
     /**
      * The first backing data source.

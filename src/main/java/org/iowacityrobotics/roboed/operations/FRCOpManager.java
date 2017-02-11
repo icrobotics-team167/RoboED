@@ -2,7 +2,6 @@ package org.iowacityrobotics.roboed.operations;
 
 import org.iowacityrobotics.roboed.robot.RobotMode;
 import org.iowacityrobotics.roboed.api.operations.IOperationsManager;
-import org.iowacityrobotics.roboed.subsystem.FRCSysRegistry;
 import org.iowacityrobotics.roboed.util.collection.StackNode;
 import org.iowacityrobotics.roboed.util.function.ICondition;
 

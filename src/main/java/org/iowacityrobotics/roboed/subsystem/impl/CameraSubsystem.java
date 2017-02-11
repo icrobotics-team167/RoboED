@@ -6,8 +6,6 @@ import org.iowacityrobotics.roboed.api.subsystem.ISubsystem;
 import org.iowacityrobotics.roboed.api.subsystem.ISubsystemType;
 import org.iowacityrobotics.roboed.api.subsystem.provider.IGenericSubsystemProvider;
 import org.iowacityrobotics.roboed.api.vision.IImageProvider;
-import org.iowacityrobotics.roboed.subsystem.FRCSourceSubsystem;
-import org.iowacityrobotics.roboed.subsystem.FRCSubsystemType;
 import org.opencv.core.Mat;
 
 /**

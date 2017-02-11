@@ -1,10 +1,12 @@
-package org.iowacityrobotics.roboed.data;
+package org.iowacityrobotics.roboed.data.mapper;
+
+import org.iowacityrobotics.roboed.data.source.ISource;
 
 /**
  * The implementation of {@link ISource#map}.
  * @author Evan Geng
  */
-public class MappingSource<I, O> implements ISource<O> {
+public final class MappingSource<I, O> implements ISource<O> {
 
     /**
      * The backing data source.

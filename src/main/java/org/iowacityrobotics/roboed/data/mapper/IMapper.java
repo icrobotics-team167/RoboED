@@ -1,4 +1,6 @@
-package org.iowacityrobotics.roboed.data;
+package org.iowacityrobotics.roboed.data.mapper;
+
+import org.iowacityrobotics.roboed.data.IStatefulData;
 
 /**
  * A function that maps data of one type to the same or another type.

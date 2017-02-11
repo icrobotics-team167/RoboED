@@ -6,7 +6,6 @@ import org.iowacityrobotics.roboed.api.operations.IOperationsManager;
 import org.iowacityrobotics.roboed.api.subsystem.ISystemRegistry;
 import org.iowacityrobotics.roboed.api.vision.ICameraServer;
 import org.iowacityrobotics.roboed.operations.FRCOpManager;
-import org.iowacityrobotics.roboed.subsystem.FRCSysRegistry;
 import org.iowacityrobotics.roboed.vision.VisionServer;
 
 /** 

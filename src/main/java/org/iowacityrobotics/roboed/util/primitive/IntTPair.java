@@ -62,7 +62,7 @@ public class IntTPair<T> {
     
     @Override
     public String toString() {
-        return new StringBuilder("(").append(a).append(", ").append(b.toString()).append(")").toString();
+        return "(" + a + ", " + b.toString() + ")";
     }
 
 }

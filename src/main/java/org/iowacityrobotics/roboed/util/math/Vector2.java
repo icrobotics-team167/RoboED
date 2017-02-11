@@ -113,7 +113,7 @@ public class Vector2 implements Cloneable {
     
     /**
      * Adds another vector to this one.
-     * @param vec The x value to add.
+     * @param vec The other vector.
      * @return This vector, for chaining.
      */
     public Vector2 add(Vector2 vec) {
