@@ -24,7 +24,7 @@ public class VisionServer {
     /**
      * A map of camera names to vision threads.
      */
-    private final Map<String, Thread> visionThreads = new HashMap<>();
+    private static final Map<String, Thread> visionThreads = new HashMap<>();
 
     /**
      * Gets the image feed from a given camera.
@@ -33,7 +33,7 @@ public class VisionServer {
      * @param <T> The type of the identifier.
      * @return The camera feed.
      */
-    public <T> Supplier<Mat> getCamera(CameraType<T> type, T identifier) {
+    public static <T> Supplier<Mat> getCamera(CameraType<T> type, T identifier) {
         CameraServer camServ = CameraServer.getInstance();
         if (type == CameraType.USB) {
             UsbCamera cam = camServ.startAutomaticCapture((Integer)identifier);
@@ -52,12 +52,12 @@ public class VisionServer {
      * @param name The name of the image source.
      * @param provider The image provider.
      */
-    public void putImageSource(String name, Supplier<Mat> provider) {
+    public static void putImageSource(String name, Supplier<Mat> provider) {
         if (visionThreads.containsKey(name))
             visionThreads.get(name).interrupt();
         Thread thread = new Thread(() -> {
             CvSource out = CameraServer.getInstance().putVideo(name, RES_WIDTH, RES_HEIGHT);
-            while (true) out.putFrame(provider.get());
+            while (!Thread.interrupted()) out.putFrame(provider.get());
         });
         visionThreads.put(name, thread);
         thread.start();

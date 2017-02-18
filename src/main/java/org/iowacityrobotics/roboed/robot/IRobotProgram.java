@@ -9,8 +9,15 @@ import java.util.ServiceLoader;
  */
 public interface IRobotProgram {
 
+    /**
+     * The service loader for the robot program service.
+     */
     ServiceLoader<IRobotProgram> provider = ServiceLoader.load(IRobotProgram.class);
 
+    /**
+     * Gets the implementation (or the first available one) of the robot code.
+     * @return The implementation.
+     */
     static IRobotProgram getImplementation() {
         Iterator<IRobotProgram> implementations = provider.iterator();
         return implementations.hasNext() ? implementations.next() : null;

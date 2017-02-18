@@ -7,10 +7,24 @@ package org.iowacityrobotics.roboed.data;
 public interface IStatefulData {
 
     /**
-     * Reset this data source's state.
+     * Reset this data object's state.
      * @param temp Whether the reset was due to a temporary operation mode or not.
      */
     default void reset(boolean temp) {
+        // NO-OP
+    }
+
+    /**
+     * Stores the currently bound data binding state on a stack.
+     */
+    default void pushState() {
+        // NO-OP
+    }
+
+    /**
+     * Pops the top state stack element, restoring its bindings.
+     */
+    default void popState() {
         // NO-OP
     }
 

@@ -1,7 +1,9 @@
 package org.iowacityrobotics.roboed.robot;
 
 import com.ctre.CANTalon;
-import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.XboxController;
 import org.iowacityrobotics.roboed.util.primitive.IntTMap;
 
 import java.util.HashMap;
@@ -54,6 +56,33 @@ public class Devices {
      */
     public static CANTalon canTalon(int port) {
         return compute(CANTalon.class, port, CANTalon::new);
+    }
+
+    /**
+     * Creates or gets an {@link XboxController} for the given port number.
+     * @param port The controller's port number.
+     * @return The XboxController.
+     */
+    public static XboxController xboxController(int port) {
+        return compute(XboxController.class, port, XboxController::new);
+    }
+
+    /**
+     * Creates or gets a {@link Joystick} for the given port number.
+     * @param port The joystick's port number.
+     * @return The Joystick.
+     */
+    public static Joystick joystick(int port) {
+        return compute(Joystick.class, port, Joystick::new);
+    }
+
+    /**
+     * Creates or gets a {@link Servo} for the given port number.
+     * @param port The servo's port number.
+     * @return The servo.
+     */
+    public static Servo servo(int port) {
+        return compute(Servo.class, port, Servo::new);
     }
 
 }

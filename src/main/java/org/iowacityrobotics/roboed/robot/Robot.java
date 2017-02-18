@@ -1,61 +1,34 @@
 package org.iowacityrobotics.roboed.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import org.iowacityrobotics.roboed.api.IRobot;
-import org.iowacityrobotics.roboed.api.operations.IOperationsManager;
-import org.iowacityrobotics.roboed.api.subsystem.ISystemRegistry;
-import org.iowacityrobotics.roboed.api.vision.ICameraServer;
-import org.iowacityrobotics.roboed.operations.FRCOpManager;
-import org.iowacityrobotics.roboed.vision.VisionServer;
+import org.iowacityrobotics.roboed.data.sink.AbstractSink;
 
-/** 
+/**
+ * The robot's main class.
+ * TODO Document please
  * @author Evan Geng
  */
-public class Robot extends IterativeRobot implements IRobot {
-    
-    private final FRCSysRegistry sysReg;
-    private final FRCOpManager opMan;
-    private final VisionServer camServ;
+public class Robot extends IterativeRobot {
+
     private IRobotProgram prog;
     private RobotMode runMode;
     
     public Robot() {
-        this.sysReg = new FRCSysRegistry();
-        this.opMan = new FRCOpManager(sysReg);
-        this.camServ = new VisionServer();
         this.runMode = RobotMode.UNINITIALIZED;
     }
 
-    @Override
-    public ISystemRegistry getSystemRegistry() {
-        return sysReg;
-    }
-
-    @Override
-    public IOperationsManager getOpManager() {
-        return opMan;
-    }
-
-    @Override
-    public ICameraServer getCameraServer() {
-        return camServ;
-    }
-
-    @Override
     public RobotMode getRunningMode() {
         return runMode;
     }
-    
+
     private void setRunMode(RobotMode mode) {
         this.runMode = mode;
-        sysReg.reset();
-        opMan.modeChanged(mode);
     }
 
     private void tick() {
-        // NO-OP
+        AbstractSink.tickAll();
     }
-    
+
     @Override
     public void robotInit() {
         prog = IRobotProgram.getImplementation();
@@ -63,7 +36,6 @@ public class Robot extends IterativeRobot implements IRobot {
             prog.init(this);
         else
             System.out.println("[!] No robot program detected!"); // TODO Better logging implementation?
-        opMan.initialize();
         setRunMode(RobotMode.DISABLED);
     }
 
@@ -81,12 +53,12 @@ public class Robot extends IterativeRobot implements IRobot {
     public void disabledPeriodic() {
         // NO-OP
     }
-    
+
     @Override
     public void autonomousInit() {
         setRunMode(RobotMode.AUTO);
     }
-    
+
     @Override
     public void autonomousPeriodic() {
         // NO-OP
@@ -96,7 +68,7 @@ public class Robot extends IterativeRobot implements IRobot {
     public void teleopInit() {
         setRunMode(RobotMode.TELEOP);
     }
-    
+
     @Override
     public void teleopPeriodic() {
         // NO-OP

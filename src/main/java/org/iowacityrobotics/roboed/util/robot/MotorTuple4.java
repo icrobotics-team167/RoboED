@@ -2,6 +2,7 @@ package org.iowacityrobotics.roboed.util.robot;
 
 import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.SpeedController;
+import org.iowacityrobotics.roboed.robot.Devices;
 
 /**
  * Represents a set of four speed controllers.
@@ -84,7 +85,7 @@ public class MotorTuple4 {
      * @return The new controller set.
      */
     public static MotorTuple4 ofCANTalons(int fl, int fr, int rl, int rr) {
-        return new MotorTuple4(new CANTalon(fl), new CANTalon(fr), new CANTalon(rl), new CANTalon(rr));
+        return new MotorTuple4(Devices.canTalon(fl), Devices.canTalon(fr), Devices.canTalon(rl), Devices.canTalon(rr));
     }
 
 }
