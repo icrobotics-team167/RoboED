@@ -1,27 +1,27 @@
 package org.iowacityrobotics.roboed.data.inter;
 
-import org.iowacityrobotics.roboed.data.source.ISource;
+import org.iowacityrobotics.roboed.data.source.Source;
 
 /**
- * The implementation of {@link ISource#inter}.
+ * The implementation of {@link Source#inter}.
  * @author Evan Geng
  */
-public final class InterpolatingSource<I1, I2, O> implements ISource<O> {
+public final class InterpolatingSource<I1, I2, O> implements Source<O> {
 
     /**
      * The first backing data source.
      */
-    private final ISource<I1> src1;
+    private final Source<I1> src1;
 
     /**
      * The second backing data source.
      */
-    private final ISource<I2> src2;
+    private final Source<I2> src2;
 
     /**
      * The interpolation function.
      */
-    private final IInterpolator<I1, I2, O> inter;
+    private final Interpolator<I1, I2, O> inter;
 
     /**
      * Creates a new interpolating pipeline segment.
@@ -29,7 +29,7 @@ public final class InterpolatingSource<I1, I2, O> implements ISource<O> {
      * @param src2 The second data source.
      * @param inter The interpolation function.
      */
-    public InterpolatingSource(ISource<I1> src1, ISource<I2> src2, IInterpolator<I1, I2, O> inter) {
+    public InterpolatingSource(Source<I1> src1, Source<I2> src2, Interpolator<I1, I2, O> inter) {
         this.src1 = src1;
         this.src2 = src2;
         this.inter = inter;

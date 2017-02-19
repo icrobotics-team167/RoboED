@@ -1,7 +1,7 @@
 package org.iowacityrobotics.roboed.subsystem;
 
 import com.mashape.unirest.http.JsonNode;
-import org.iowacityrobotics.roboed.data.mapper.IMapper;
+import org.iowacityrobotics.roboed.data.mapper.Mapper;
 import org.iowacityrobotics.roboed.subsystem.impl.VisionOffloaderMapper;
 import org.opencv.core.Mat;
 
@@ -22,7 +22,7 @@ public final class MapperSystems {
          * @param routine The routine to run.
          * @return The new mapper.
          */
-        public final IMapper<Mat, JsonNode> offload(String host, String routine) {
+        public static Mapper<Mat, JsonNode> offload(String host, String routine) {
             return new VisionOffloaderMapper(host, routine);
         }
 

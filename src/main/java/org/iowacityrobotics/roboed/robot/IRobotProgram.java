@@ -25,8 +25,7 @@ public interface IRobotProgram {
 
     /**
      * Initialize the robot.
-     * @param robot The robot to be initialized.
      */
-    void init(Robot robot);
+    void init();
 
 }

@@ -3,12 +3,12 @@ package org.iowacityrobotics.roboed.data.source;
 /**
  * Source that caches the returned value for a period of time.
  */
-public class CachedSource<T> implements ISource<T> {
+public class CachedSource<T> implements Source<T> {
 
     /**
      * The backing source.
      */
-    private final ISource<T> backing;
+    private final Source<T> backing;
 
     /**
      * The time to cache for.
@@ -30,7 +30,7 @@ public class CachedSource<T> implements ISource<T> {
      * @param backing The backing source.
      * @param cacheTime The time to cache for, or -1 for indefinite caching.
      */
-    public CachedSource(ISource<T> backing, long cacheTime) {
+    public CachedSource(Source<T> backing, long cacheTime) {
         this.backing = backing;
         this.cacheTime = cacheTime;
     }

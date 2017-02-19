@@ -1,13 +1,20 @@
 package org.iowacityrobotics.roboed.data.inter;
 
+import org.iowacityrobotics.roboed.data.Data;
 import org.iowacityrobotics.roboed.data.IStatefulData;
 
 /**
  * Function that interpolates two data streams.
  * @author Evan Geng
  */
-@FunctionalInterface
-public interface IInterpolator<I1, I2, O> extends IStatefulData {
+public abstract class Interpolator<I1, I2, O> implements IStatefulData {
+
+    /**
+     * Constructs an interpolator.
+     */
+    public Interpolator() {
+        Data.registerStateful(this);
+    }
 
     /**
      * Interpolates two data elements.
@@ -15,6 +22,6 @@ public interface IInterpolator<I1, I2, O> extends IStatefulData {
      * @param b Input element B.
      * @return The output element.
      */
-    O apply(I1 a, I2 b);
+    public abstract O apply(I1 a, I2 b);
 
 }

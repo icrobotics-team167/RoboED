@@ -1,29 +1,29 @@
 package org.iowacityrobotics.roboed.data.mapper;
 
-import org.iowacityrobotics.roboed.data.source.ISource;
+import org.iowacityrobotics.roboed.data.source.Source;
 
 /**
- * The implementation of {@link ISource#map}.
+ * The implementation of {@link Source#map}.
  * @author Evan Geng
  */
-public final class MappingSource<I, O> implements ISource<O> {
+public final class MappingSource<I, O> implements Source<O> {
 
     /**
      * The backing data source.
      */
-    private final ISource<I> src;
+    private final Source<I> src;
 
     /**
      * The mapping function.
      */
-    private final IMapper<I, O> mapper;
+    private final Mapper<I, O> mapper;
 
     /**
      * Creates a new mapping pipeline element.
      * @param src The backing data source.
      * @param mapper The mapping function.
      */
-    public MappingSource(ISource<I> src, IMapper<I, O> mapper) {
+    public MappingSource(Source<I> src, Mapper<I, O> mapper) {
         this.src = src;
         this.mapper = mapper;
     }

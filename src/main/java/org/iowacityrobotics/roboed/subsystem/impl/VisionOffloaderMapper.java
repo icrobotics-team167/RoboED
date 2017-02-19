@@ -4,7 +4,7 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import org.iowacityrobotics.roboed.data.mapper.IMapper;
+import org.iowacityrobotics.roboed.data.mapper.Mapper;
 import org.iowacityrobotics.roboed.util.vision.Images;
 import org.opencv.core.Mat;
 
@@ -12,7 +12,7 @@ import org.opencv.core.Mat;
  * Vision offloader implementation using cotc-vision.
  * @author Evan Geng
  */
-public class VisionOffloaderMapper implements IMapper<Mat, JsonNode> {
+public class VisionOffloaderMapper extends Mapper<Mat, JsonNode> {
 
     /**
      * The vision processor's host address.

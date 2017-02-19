@@ -1,23 +1,30 @@
 package org.iowacityrobotics.roboed.data.source;
 
+import org.iowacityrobotics.roboed.data.Data;
 import org.iowacityrobotics.roboed.data.IStatefulData;
-import org.iowacityrobotics.roboed.data.inter.IInterpolator;
+import org.iowacityrobotics.roboed.data.inter.Interpolator;
 import org.iowacityrobotics.roboed.data.inter.InterpolatingSource;
-import org.iowacityrobotics.roboed.data.mapper.IMapper;
+import org.iowacityrobotics.roboed.data.mapper.Mapper;
 import org.iowacityrobotics.roboed.data.mapper.MappingSource;
 
 /**
  * Provides data.
  * @author Evan Geng
  */
-@FunctionalInterface
-public interface ISource<T> extends IStatefulData {
+public abstract class Source<T> implements IStatefulData {
+
+    /**
+     * Constructs a source.
+     */
+    public Source() {
+        Data.registerStateful(this);
+    }
 
     /**
      * Retrieve data from this source.
      * @return The data.
      */
-    T get();
+    public abstract T get();
 
     /**
      * Creates a mapping pipeline segment.
@@ -25,8 +32,8 @@ public interface ISource<T> extends IStatefulData {
      * @param <O> The output data type.
      * @return The newly-created pipeline segment.
      */
-    default <O> ISource<O> map(IMapper<T, O> mapper) {
-        return new MappingSource<>(this, mapper); // TODO Impl
+    public <O> Source<O> map(Mapper<T, O> mapper) {
+        return new MappingSource<>(this, mapper);
     }
 
     /**
@@ -37,7 +44,7 @@ public interface ISource<T> extends IStatefulData {
      * @param <O> The output data type.
      * @return The newly-created pipeline segment.
      */
-    default <V, O> ISource<O> inter(ISource<V> src, IInterpolator<T, V, O> inter) {
+    public <V, O> Source<O> inter(Source<V> src, Interpolator<T, V, O> inter) {
         return new InterpolatingSource<>(this, src, inter);
     }
 

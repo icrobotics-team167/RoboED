@@ -1,7 +1,6 @@
 package org.iowacityrobotics.roboed.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import org.iowacityrobotics.roboed.data.sink.AbstractSink;
 
 /**
  * The robot's main class.
@@ -10,30 +9,22 @@ import org.iowacityrobotics.roboed.data.sink.AbstractSink;
  */
 public class Robot extends IterativeRobot {
 
-    private IRobotProgram prog;
-    private RobotMode runMode;
-    
-    public Robot() {
-        this.runMode = RobotMode.UNINITIALIZED;
-    }
+    static RobotMode runMode;
 
-    public RobotMode getRunningMode() {
-        return runMode;
+    public Robot() {
+        runMode = RobotMode.UNINITIALIZED;
     }
 
     private void setRunMode(RobotMode mode) {
-        this.runMode = mode;
-    }
-
-    private void tick() {
-        AbstractSink.tickAll();
+        runMode = mode;
+        runMode.getOperation().run();
     }
 
     @Override
     public void robotInit() {
-        prog = IRobotProgram.getImplementation();
+        IRobotProgram prog = IRobotProgram.getImplementation();
         if (prog != null)
-            prog.init(this);
+            prog.init();
         else
             System.out.println("[!] No robot program detected!"); // TODO Better logging implementation?
         setRunMode(RobotMode.DISABLED);
@@ -41,7 +32,7 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void robotPeriodic() {
-        tick();
+        // NO-OP
     }
 
     @Override

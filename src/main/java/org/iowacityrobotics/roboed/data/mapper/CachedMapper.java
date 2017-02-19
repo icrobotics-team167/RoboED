@@ -3,12 +3,12 @@ package org.iowacityrobotics.roboed.data.mapper;
 /**
  * Mapper that caches the returned value for a period of time.
  */
-public class CachedMapper<I, O> implements IMapper<I, O> {
+public class CachedMapper<I, O> implements Mapper<I, O> {
 
     /**
      * The backing mapper implementation.
      */
-    private final IMapper<I, O> backing;
+    private final Mapper<I, O> backing;
 
     /**
      * The time to cache for.
@@ -30,7 +30,7 @@ public class CachedMapper<I, O> implements IMapper<I, O> {
      * @param backing The backing mapper.
      * @param cacheTime The time to cache for, or -1 for indefinite caching.
      */
-    public CachedMapper(IMapper<I, O> backing, long cacheTime) {
+    public CachedMapper(Mapper<I, O> backing, long cacheTime) {
         this.backing = backing;
         this.cacheTime = cacheTime;
     }
