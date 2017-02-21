@@ -9,10 +9,7 @@ import org.iowacityrobotics.roboed.data.source.Source;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.function.BiFunction;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Supplier;
+import java.util.function.*;
 
 /**
  * Various lower-level data utilities.
@@ -122,6 +119,17 @@ public final class Data {
      */
     public static void reset(boolean temp) {
         statefuls.forEach(dObj -> dObj.reset(temp));
+    }
+
+    /**
+     * Reset the state of all data objects that meet a criteria.
+     * @param condition The condition for the data objects to satisfy.
+     * @param temp Whether the reset was due to a temporary operation mode or not.
+     */
+    public static void resetIf(Predicate<IStatefulData> condition, boolean temp) {
+        statefuls.stream()
+                .filter(condition)
+                .forEach(dObj -> dObj.reset(temp));
     }
 
     /**
