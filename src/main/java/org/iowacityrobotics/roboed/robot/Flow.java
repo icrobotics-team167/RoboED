@@ -12,6 +12,27 @@ import java.util.concurrent.TimeUnit;
  */
 public final class Flow {
 
+    private static Thread opThread = new Thread();
+
+    /**
+     * Run an operation on the operations thread.
+     * @param func The operation to run.
+     */
+    static void run(Runnable func) {
+        if (opThread != null) {
+            opThread.interrupt();
+            while (opThread.isAlive()) {
+                try {
+                    Thread.sleep(50L);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        opThread = new Thread(func);
+        opThread.start();
+    }
+
     /**
      * Waits until a condition is satisfied.
      * @param factory The provider for the condition.
@@ -25,7 +46,9 @@ public final class Flow {
      * @param condition The condition to wait for.
      */
     public static void waitUntil(ICondition condition) {
-        while (!condition.isMet())
+        if (Thread.currentThread() == opThread)
+            throw new IllegalStateException("Wait can only be called on operations thread!");
+        while (!condition.isMet() && !Thread.interrupted())
             Sink.tickAll();
     }
 
@@ -61,6 +84,13 @@ public final class Flow {
     public static void waitFor(long ms) {
         long initTime = System.currentTimeMillis();
         waitUntil(() -> System.currentTimeMillis() - initTime > ms);
+    }
+
+    /**
+     * Wait until the next robot mode change.
+     */
+    public static void waitInfinite() {
+        waitUntil(() -> false);
     }
 
 }

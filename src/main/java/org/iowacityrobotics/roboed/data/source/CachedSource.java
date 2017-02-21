@@ -3,7 +3,7 @@ package org.iowacityrobotics.roboed.data.source;
 /**
  * Source that caches the returned value for a period of time.
  */
-public class CachedSource<T> implements Source<T> {
+public class CachedSource<T> extends Source<T> {
 
     /**
      * The backing source.

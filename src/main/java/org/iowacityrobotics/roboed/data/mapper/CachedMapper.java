@@ -3,7 +3,7 @@ package org.iowacityrobotics.roboed.data.mapper;
 /**
  * Mapper that caches the returned value for a period of time.
  */
-public class CachedMapper<I, O> implements Mapper<I, O> {
+public class CachedMapper<I, O> extends Mapper<I, O> {
 
     /**
      * The backing mapper implementation.

@@ -17,7 +17,7 @@ public class Robot extends IterativeRobot {
 
     private void setRunMode(RobotMode mode) {
         runMode = mode;
-        runMode.getOperation().run();
+        Flow.run(runMode.getOperation());
     }
 
     @Override

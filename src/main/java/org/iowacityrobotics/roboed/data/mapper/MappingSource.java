@@ -6,7 +6,7 @@ import org.iowacityrobotics.roboed.data.source.Source;
  * The implementation of {@link Source#map}.
  * @author Evan Geng
  */
-public final class MappingSource<I, O> implements Source<O> {
+public final class MappingSource<I, O> extends Source<O> {
 
     /**
      * The backing data source.

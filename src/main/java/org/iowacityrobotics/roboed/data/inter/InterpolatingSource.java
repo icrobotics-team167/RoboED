@@ -6,7 +6,7 @@ import org.iowacityrobotics.roboed.data.source.Source;
  * The implementation of {@link Source#inter}.
  * @author Evan Geng
  */
-public final class InterpolatingSource<I1, I2, O> implements Source<O> {
+public final class InterpolatingSource<I1, I2, O> extends Source<O> {
 
     /**
      * The first backing data source.

@@ -3,6 +3,7 @@ package org.iowacityrobotics.roboed.subsystem;
 import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.VictorSP;
 import org.iowacityrobotics.roboed.data.Data;
 import org.iowacityrobotics.roboed.data.sink.Sink;
 import org.iowacityrobotics.roboed.robot.Devices;
@@ -32,13 +33,23 @@ public final class SinkSystems {
         }
 
         /**
+         * Creates a sink for the given VictorSP.
+         * @param port The VictorSP port number.
+         * @return The new sink.
+         */
+        public static Sink<Double> victorSp(int port) {
+            final VictorSP motor = Devices.victorSp(port);
+            return Data.sink(motor::set, 0D);
+        }
+
+        /**
          * Creates a sink for the given Servo.
-         * @param port THe Servo's port number.
+         * @param port The Servo's port number.
          * @return The new sink.
          */
         public static Sink<Double> servo(int port) {
             final Servo servo = Devices.servo(port);
-            return Data.sink(servo::set, 0D);
+            return Data.sink(servo::setAngle, 0D);
         }
 
     }

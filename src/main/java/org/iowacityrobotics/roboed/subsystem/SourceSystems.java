@@ -56,8 +56,8 @@ public final class SourceSystems {
          * @param button The button ID.
          * @return The new source.
          */
-        public static Source<Boolean> button(int port, byte button) {
-            return Data.source(() -> DriverStation.getInstance().getStickButton(port, button));
+        public static Source<Boolean> button(int port, int button) {
+            return Data.source(() -> DriverStation.getInstance().getStickButton(port, (byte)button));
         }
 
     }

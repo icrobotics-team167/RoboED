@@ -3,6 +3,7 @@ package org.iowacityrobotics.roboed.robot;
 import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.XboxController;
 import org.iowacityrobotics.roboed.util.primitive.IntTMap;
 
@@ -56,6 +57,15 @@ public class Devices {
      */
     public static CANTalon canTalon(int port) {
         return compute(CANTalon.class, port, CANTalon::new);
+    }
+
+    /**
+     * Creates or gets a {@link VictorSP} for the given port number.
+     * @param port The controller's port number.
+     * @return The VictorSP.
+     */
+    public static VictorSP victorSp(int port) {
+        return compute(VictorSP.class, port, VictorSP::new);
     }
 
     /**
