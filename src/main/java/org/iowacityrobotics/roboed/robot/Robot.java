@@ -18,7 +18,7 @@ public class Robot extends IterativeRobot {
 
     private void setRunMode(RobotMode mode) {
         runMode = mode;
-        Logs.info("Switched to run mode: " + mode.toString());
+        Logs.info("Switched to run mode: {}", mode.toString());
         Flow.run(runMode.getOperation());
     }
 

@@ -19,6 +19,10 @@ public class Logs {
     public static void debug(String format, Object... arguments) {
         print(format(format, arguments), LogLevel.DEBUG);
     }
+    
+    public static void debug(Object arg) {
+        print(resolve(arg), LogLevel.DEBUG);
+    }
 
     public static void debug(String msg, Throwable t) {
         print(format("{} ({})", msg, t.getMessage()), LogLevel.DEBUG);
@@ -31,6 +35,10 @@ public class Logs {
 
     public static void info(String format, Object... arguments) {
         print(format(format, arguments), LogLevel.INFO);
+    }
+
+    public static void info(Object arg) {
+        print(resolve(arg), LogLevel.INFO);
     }
 
     public static void info(String msg, Throwable t) {
@@ -46,6 +54,10 @@ public class Logs {
         print(format(format, arguments), LogLevel.WARN);
     }
 
+    public static void warn(Object arg) {
+        print(resolve(arg), LogLevel.WARN);
+    }
+
     public static void warn(String msg, Throwable t) {
         print(format("{} ({})", msg, t.getMessage()), LogLevel.WARN);
         t.printStackTrace(System.out);
@@ -57,6 +69,10 @@ public class Logs {
 
     public static void error(String format, Object... arguments) {
         print(format(format, arguments), LogLevel.ERROR);
+    }
+
+    public static void error(Object arg) {
+        print(resolve(arg), LogLevel.ERROR);
     }
 
     public static void error(String msg, Throwable t) {
@@ -78,9 +94,7 @@ public class Logs {
     }
 
     private static String resolve(Object o) {
-        if (o == null)
-            return "<null>";
-        return o.toString();
+        return o == null ? "<null>" : o.toString();
     }
 
 }
