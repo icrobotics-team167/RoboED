@@ -13,7 +13,8 @@ public abstract class Interpolator<I1, I2, O> implements IStatefulData {
      * Constructs an interpolator.
      */
     public Interpolator() {
-        Data.registerStateful(this);
+        if (!(this instanceof Data.StatelessInterpolator))
+            Data.registerStateful(this);
     }
 
     /**

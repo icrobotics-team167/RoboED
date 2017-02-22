@@ -1,6 +1,7 @@
 package org.iowacityrobotics.roboed.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import org.iowacityrobotics.roboed.util.logging.Logs;
 
 /**
  * The robot's main class.
@@ -17,17 +18,18 @@ public class Robot extends IterativeRobot {
 
     private void setRunMode(RobotMode mode) {
         runMode = mode;
-        System.out.println("Switched to run mode: " + mode.toString());
+        Logs.info("Switched to run mode: " + mode.toString());
         Flow.run(runMode.getOperation());
     }
 
     @Override
     public void robotInit() {
         IRobotProgram prog = IRobotProgram.getImplementation();
+        Logs.info("Initializing robot program...");
         if (prog != null)
             prog.init();
         else
-            System.out.println("[!] No robot program detected!"); // TODO Better logging implementation?
+            Logs.warn("No robot program detected!");
     }
 
     @Override

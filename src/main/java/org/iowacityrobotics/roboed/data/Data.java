@@ -218,7 +218,7 @@ public final class Data {
     /**
      * A stateless implementation of {@link Sink} that uses a {@link Consumer} to process data.
      */
-    private static final class StatelessSink<T> extends Sink<T> {
+    public static final class StatelessSink<T> extends Sink<T> {
 
         /**
          * The backing processor.

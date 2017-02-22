@@ -4,6 +4,7 @@ import org.iowacityrobotics.roboed.data.Data;
 import org.iowacityrobotics.roboed.data.sink.Sink;
 import org.iowacityrobotics.roboed.util.function.ICondition;
 import org.iowacityrobotics.roboed.util.function.IConditionFactory;
+import org.iowacityrobotics.roboed.util.logging.Logs;
 
 import java.util.concurrent.TimeUnit;
 
@@ -34,11 +35,19 @@ public final class Flow {
             }
         }
         opThread = new Thread(() -> {
+            Logs.debug("OpThread : Start");
             Data.reset(true);
-            func.run();
+            Logs.debug("OpThread > Func : Start");
+            try {
+                func.run();
+            } catch (Exception e) {
+                Logs.error("Errored while running opmode!", e);
+            }
+            Logs.debug("OpThread > Func : End");
             Data.reset(true);
             while (!Thread.currentThread().isInterrupted())
                 Sink.tickAll();
+            Logs.debug("OpThread : End");
         });
         opThread.start();
     }
@@ -58,8 +67,12 @@ public final class Flow {
     public static void waitUntil(ICondition condition) {
         if (Thread.currentThread() != opThread)
             throw new IllegalStateException("Wait can only be called on operations thread!");
-        while (!condition.isMet() && !Thread.currentThread().isInterrupted())
-            Sink.tickAll();
+        if (!Thread.currentThread().isInterrupted()) {
+            Logs.debug("OpThread > Func > Wait : Start");
+            while (!condition.isMet() && !Thread.currentThread().isInterrupted())
+                Sink.tickAll();
+            Logs.debug("OpThread > Func > Wait : End");
+        }
     }
 
     /**

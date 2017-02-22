@@ -2,8 +2,8 @@ package org.iowacityrobotics.roboed.data.source;
 
 import org.iowacityrobotics.roboed.data.Data;
 import org.iowacityrobotics.roboed.data.IStatefulData;
-import org.iowacityrobotics.roboed.data.inter.Interpolator;
 import org.iowacityrobotics.roboed.data.inter.InterpolatingSource;
+import org.iowacityrobotics.roboed.data.inter.Interpolator;
 import org.iowacityrobotics.roboed.data.mapper.Mapper;
 import org.iowacityrobotics.roboed.data.mapper.MappingSource;
 
@@ -17,7 +17,8 @@ public abstract class Source<T> implements IStatefulData {
      * Constructs a source.
      */
     public Source() {
-        Data.registerStateful(this);
+        if (!(this instanceof Data.StatelessSource))
+            Data.registerStateful(this);
     }
 
     /**

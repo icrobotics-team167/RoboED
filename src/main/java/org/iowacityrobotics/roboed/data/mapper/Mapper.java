@@ -13,7 +13,8 @@ public abstract class Mapper<I, O> implements IStatefulData {
      * Constructs a mapper.
      */
     public Mapper() {
-        Data.registerStateful(this);
+        if (!(this instanceof Data.StatelessMapper))
+            Data.registerStateful(this);
     }
 
     /**
