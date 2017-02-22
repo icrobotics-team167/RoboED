@@ -1,5 +1,6 @@
 package org.iowacityrobotics.roboed.robot;
 
+import org.iowacityrobotics.roboed.data.Data;
 import org.iowacityrobotics.roboed.data.sink.Sink;
 import org.iowacityrobotics.roboed.util.function.ICondition;
 import org.iowacityrobotics.roboed.util.function.IConditionFactory;
@@ -12,6 +13,9 @@ import java.util.concurrent.TimeUnit;
  */
 public final class Flow {
 
+    /**
+     * The operations thread.
+     */
     private static Thread opThread = new Thread();
 
     /**
@@ -29,7 +33,13 @@ public final class Flow {
                 }
             }
         }
-        opThread = new Thread(func);
+        opThread = new Thread(() -> {
+            Data.reset(true);
+            func.run();
+            Data.reset(true);
+            while (!Thread.currentThread().isInterrupted())
+                Sink.tickAll();
+        });
         opThread.start();
     }
 
@@ -46,9 +56,9 @@ public final class Flow {
      * @param condition The condition to wait for.
      */
     public static void waitUntil(ICondition condition) {
-        if (Thread.currentThread() == opThread)
+        if (Thread.currentThread() != opThread)
             throw new IllegalStateException("Wait can only be called on operations thread!");
-        while (!condition.isMet() && !Thread.interrupted())
+        while (!condition.isMet() && !Thread.currentThread().isInterrupted())
             Sink.tickAll();
     }
 
@@ -82,7 +92,7 @@ public final class Flow {
      * @param ms Milliseconds to wait.
      */
     public static void waitFor(long ms) {
-        long initTime = System.currentTimeMillis();
+        final long initTime = System.currentTimeMillis();
         waitUntil(() -> System.currentTimeMillis() - initTime > ms);
     }
 

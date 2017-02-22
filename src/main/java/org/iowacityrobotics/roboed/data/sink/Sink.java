@@ -53,7 +53,8 @@ public abstract class Sink<T> implements IStatefulData {
     public void tick() {
         if (bound == null)
             noData();
-        process(bound.get());
+        else
+            process(bound.get());
     }
 
     @Override

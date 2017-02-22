@@ -17,6 +17,7 @@ public class Robot extends IterativeRobot {
 
     private void setRunMode(RobotMode mode) {
         runMode = mode;
+        System.out.println("Switched to run mode: " + mode.toString());
         Flow.run(runMode.getOperation());
     }
 
@@ -27,7 +28,6 @@ public class Robot extends IterativeRobot {
             prog.init();
         else
             System.out.println("[!] No robot program detected!"); // TODO Better logging implementation?
-        setRunMode(RobotMode.DISABLED);
     }
 
     @Override
