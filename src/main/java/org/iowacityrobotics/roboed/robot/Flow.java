@@ -7,6 +7,7 @@ import org.iowacityrobotics.roboed.util.function.IConditionFactory;
 import org.iowacityrobotics.roboed.util.logging.Logs;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Utilities to help with controlling program flow.
@@ -18,6 +19,16 @@ public final class Flow {
      * The operations thread.
      */
     private static Thread opThread = new Thread();
+
+    /**
+     * The function to run while waiting.
+     */
+    private static Runnable waitingFunc = null;
+
+    /**
+     * A flag telling the topmost wait call to break.
+     */
+    private static AtomicBoolean shouldBreak = new AtomicBoolean(false);
 
     /**
      * Run an operation on the operations thread.
@@ -53,6 +64,21 @@ public final class Flow {
     }
 
     /**
+     * Registers a function to run continuously in a loop on the next wait.
+     * @param func The function.
+     */
+    public static void whileWaiting(Runnable func) {
+        waitingFunc = func;
+    }
+
+    /**
+     * Breaks the topmost wait.
+     */
+    public static void breakWait() {
+        shouldBreak.set(true);
+    }
+
+    /**
      * Waits until a condition is satisfied.
      * @param factory The provider for the condition.
      */
@@ -69,9 +95,12 @@ public final class Flow {
             throw new IllegalStateException("Wait can only be called on operations thread!");
         if (!Thread.currentThread().isInterrupted()) {
             Logs.debug("OpThread > Func > Wait : Start");
-            while (!condition.isMet() && !Thread.currentThread().isInterrupted())
+            while (!condition.isMet() && !Thread.currentThread().isInterrupted() && !shouldBreak.get()) {
                 Sink.tickAll();
+                waitingFunc.run();
+            }
             Logs.debug("OpThread > Func > Wait : End");
+            shouldBreak.set(false);
         }
     }
 
