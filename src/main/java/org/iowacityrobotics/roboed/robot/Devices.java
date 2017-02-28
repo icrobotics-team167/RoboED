@@ -1,10 +1,7 @@
 package org.iowacityrobotics.roboed.robot;
 
 import com.ctre.CANTalon;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Servo;
-import edu.wpi.first.wpilibj.VictorSP;
-import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.*;
 import org.iowacityrobotics.roboed.util.primitive.IntTMap;
 
 import java.util.HashMap;
@@ -95,4 +92,13 @@ public class Devices {
         return compute(Servo.class, port, Servo::new);
     }
 
+    /**
+     * Creates or gets an {@link AnalogInput} for the given port number.
+     * @param port The device's port number.
+     * @return The analog input.
+     */
+    public static AnalogInput analogInput(int port) {
+        return compute(AnalogInput.class, port, AnalogInput::new);
+    }
+    
 }

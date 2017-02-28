@@ -4,6 +4,7 @@ import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.iowacityrobotics.roboed.data.Data;
 import org.iowacityrobotics.roboed.data.sink.Sink;
 import org.iowacityrobotics.roboed.robot.Devices;
@@ -111,6 +112,31 @@ public final class SinkSystems {
                     m.getRearRight()
             );
             return Data.sink(v -> drive.mecanumDrive_Cartesian(v.x(), v.y(), v.z(), v.w()), Vector4.ZERO);
+        }
+
+    }
+
+    /**
+     * Smart-dashboard-related subsystems.
+     */
+    public static final class DASH {
+
+        /**
+         * Creates a sink that outputs numeral data to Smart Dashboard.
+         * @param key The table entry key.
+         * @return The new sink.
+         */
+        public static Sink<Double> number(String key) {
+            return Data.sink(n -> SmartDashboard.putNumber(key, n));
+        }
+
+        /**
+         * Creates a sink that outputs textual data to Smart Dashboard.
+         * @param key The table entry key.
+         * @return The new sink.
+         */
+        public static Sink<String> string(String key) {
+            return Data.sink(s -> SmartDashboard.putString(key, s));
         }
 
     }

@@ -97,7 +97,8 @@ public final class Flow {
             Logs.debug("OpThread > Func > Wait : Start");
             while (!condition.isMet() && !Thread.currentThread().isInterrupted() && !shouldBreak.get()) {
                 Sink.tickAll();
-                waitingFunc.run();
+                if (waitingFunc != null)
+                    waitingFunc.run();
             }
             Logs.debug("OpThread > Func > Wait : End");
             shouldBreak.set(false);

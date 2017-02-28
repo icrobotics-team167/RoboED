@@ -68,6 +68,16 @@ public final class SourceSystems {
     public static final class SENSOR {
 
         /**
+         * Creates a source for a generic analog input device.
+         * @param port The port number.
+         * @return The new source.
+         */
+        public static Source<Double> analog(int port) {
+            final AnalogInput sensor = Devices.analogInput(port);
+            return Data.source(sensor::getVoltage);
+        }
+
+        /**
          * Creates a source for the given ultrasonic sensor.
          * @param ping The ping signal port.
          * @param echo The echo signal port.
