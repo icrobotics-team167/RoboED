@@ -1,5 +1,9 @@
 package org.iowacityrobotics.roboed.util.math;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.function.Function;
+
 /**
  * Mathematical utilities.
  * @author Evan Geng
@@ -27,4 +31,36 @@ public class Maths {
     public static double clamp(double n, double lower, double upper) {
         return Math.max(Math.min(n, upper), lower);
     }
+
+    /**
+     * Takes the average of a set of numbers.
+     * @param nums The numbers.
+     * @return The average.
+     */
+    public static double average(double... nums) {
+        return Arrays.stream(nums).sum() / (double)nums.length;
+    }
+
+    /**
+     * Returns the maximum element in a set of objects.
+     * @param key The function mapping an element to its comparison key.
+     * @param set The set of objects.
+     * @param <T> The type of objects in the set.
+     * @param <V> The type of comparison key.
+     */
+    public static <T, V extends Comparable<V>> T max(Function<T, V> key, T... set) {
+        return Arrays.stream(set).max(Comparator.comparing(key)).orElse(null);
+    }
+
+    /**
+     * Returns the minimum element in a set of objects.
+     * @param key The function mapping an element to its comparison key.
+     * @param set The set of objects.
+     * @param <T> The type of objects in the set.
+     * @param <V> The type of comparison key.
+     */
+    public static <T, V extends Comparable<V>> T min(Function<T, V> key, T... set) {
+        return Arrays.stream(set).min(Comparator.comparing(key)).orElse(null);
+    }
+
 }
