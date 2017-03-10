@@ -100,6 +100,7 @@ public final class Flow {
                 if (waitingFunc != null)
                     waitingFunc.run();
             }
+            waitingFunc = null;
             Logs.debug("OpThread > Func > Wait : End");
             shouldBreak.set(false);
         }
