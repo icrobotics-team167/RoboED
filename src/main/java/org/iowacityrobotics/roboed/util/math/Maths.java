@@ -33,6 +33,16 @@ public class Maths {
     }
 
     /**
+     * Thresholds a value by its absolute value.
+     * @param n The value to threshold.
+     * @param thresh The threshold.
+     * @return The thresholded value.
+     */
+    public static double threshAbs(double n, double thresh) {
+        return Math.abs(n) < thresh ? 0D : n;
+    }
+
+    /**
      * Takes the average of a set of numbers.
      * @param nums The numbers.
      * @return The average.
