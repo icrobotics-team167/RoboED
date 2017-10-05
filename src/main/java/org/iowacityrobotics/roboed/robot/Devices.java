@@ -1,6 +1,6 @@
 package org.iowacityrobotics.roboed.robot;
 
-import com.ctre.CANTalon;
+import com.ctre.MotorControl.CANTalon;
 import edu.wpi.first.wpilibj.*;
 import org.iowacityrobotics.roboed.util.primitive.IntTMap;
 

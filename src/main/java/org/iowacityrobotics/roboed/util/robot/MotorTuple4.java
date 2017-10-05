@@ -1,6 +1,6 @@
 package org.iowacityrobotics.roboed.util.robot;
 
-import com.ctre.CANTalon;
+import com.ctre.MotorControl.CANTalon;
 import edu.wpi.first.wpilibj.SpeedController;
 import org.iowacityrobotics.roboed.robot.Devices;
 

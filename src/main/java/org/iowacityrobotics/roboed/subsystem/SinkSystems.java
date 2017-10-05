@@ -1,6 +1,6 @@
 package org.iowacityrobotics.roboed.subsystem;
 
-import com.ctre.CANTalon;
+import com.ctre.MotorControl.CANTalon;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.VictorSP;
