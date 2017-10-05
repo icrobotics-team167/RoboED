@@ -45,8 +45,11 @@ public class CachedImageFeed implements Supplier<Mat> {
 
     @Override
     public Mat get() {
-        if (System.currentTimeMillis() - lastCache > cacheTime)
+        long time = System.currentTimeMillis();
+        if (time - lastCache > cacheTime) {
             backing.grabFrame(cached);
+            lastCache = time;
+        }
         return cached;
     }
 

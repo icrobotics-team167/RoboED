@@ -28,7 +28,7 @@ public final class Flow {
     /**
      * A flag telling the topmost wait call to break.
      */
-    private static AtomicBoolean shouldBreak = new AtomicBoolean(false);
+    private static final AtomicBoolean shouldBreak = new AtomicBoolean(false);
 
     /**
      * Run an operation on the operations thread.

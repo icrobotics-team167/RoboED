@@ -3,7 +3,6 @@ package org.iowacityrobotics.roboed.util.primitive;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.function.IntFunction;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 /**
@@ -21,7 +20,7 @@ public class IntTMap<T> {
     /**
      * The number of bindings to wait for before expanding the map.
      */
-    private int threshold;
+    private final int threshold;
 
     /**
      * The number of bindings in the map.
@@ -225,12 +224,12 @@ public class IntTMap<T> {
         /**
          * The key for this entry.
          */
-        int key;
+        final int key;
 
         /**
          * The value for this entry,
          */
-        Object value;
+        final Object value;
 
         /**
          * The next entry in this bucket, if it exists.
