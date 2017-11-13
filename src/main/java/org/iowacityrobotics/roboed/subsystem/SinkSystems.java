@@ -80,8 +80,8 @@ public final class SinkSystems {
         public static Sink<Vector2> dualTread(MotorTuple4 m) {
             final RobotDrive drive = new RobotDrive(
                     m.getFrontLeft(),
-                    m.getFrontRight(),
                     m.getRearLeft(),
+                    m.getFrontRight(),
                     m.getRearRight()
             );
             return Data.sink(v -> drive.tankDrive(v.x(), v.y()), Vector2.ZERO);
@@ -107,8 +107,8 @@ public final class SinkSystems {
         public static Sink<Vector4> mecanum(MotorTuple4 m) {
             final RobotDrive drive = new RobotDrive(
                     m.getFrontLeft(),
-                    m.getFrontRight(),
                     m.getRearLeft(),
+                    m.getFrontRight(),
                     m.getRearRight()
             );
             return Data.sink(v -> drive.mecanumDrive_Cartesian(v.x(), v.y(), v.z(), v.w()), Vector4.ZERO);
