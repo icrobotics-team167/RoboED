@@ -17,7 +17,11 @@ import org.iowacityrobotics.roboed.util.math.Vector3;
 public class DataMappers {
 
     public static Function<Vector3, MecanumSubsystem.ControlDataFrame> singleJoyMecanum() {
-        return v -> new MecanumSubsystem.ControlDataFrame(v.truncate(), v.z());
+        return v -> new MecanumSubsystem.ControlDataFrame(v.truncate().x(v.x() * -1), v.z());
+    }
+
+    public static Function<Pair<Vector2, Vector2>, MecanumSubsystem.ControlDataFrame> dualJoyMecanum() {
+        return p -> new MecanumSubsystem.ControlDataFrame(p.getA(), p.getB().x());
     }
 
     public static Function<Pair<Vector2, Vector2>, DualTreadSubsystem.ControlDataFrame> dualJoyTank() {
@@ -40,6 +44,20 @@ public class DataMappers {
                 v.y(0);
             if (Math.abs(v.z()) <= threshold)
                 v.z(0);
+            return v;
+        };
+    }
+
+    public static Function<Pair<Vector2, Vector2>, Pair<Vector2, Vector2>> deadZoneDual(double threshold) {
+        return v -> {
+            if (Math.abs(v.getA().x()) <= threshold)
+                v.getA().x(0);
+            if (Math.abs(v.getA().y()) <= threshold)
+                v.getA().y(0);
+            if (Math.abs(v.getB().x()) <= threshold)
+                v.getB().x(0);
+            if (Math.abs(v.getB().y()) <= threshold)
+                v.getB().y(0);
             return v;
         };
     }

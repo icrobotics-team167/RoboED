@@ -27,7 +27,7 @@ public class MecanumSubsystem extends FRCTerminalSubsystem<MecanumSubsystem.Cont
 
     @Override
     protected void processData(ControlDataFrame data) {
-        drive.mecanumDrive_Cartesian(data.direction.x(), data.direction.y(), data.pointRotation, 0D);
+        drive.mecanumDrive_Cartesian(data.direction.x() * -1, data.direction.y(), data.pointRotation, 0D);
     }
     
     public static class ControlDataFrame {
