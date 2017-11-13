@@ -30,6 +30,7 @@ public class Robot extends IterativeRobot {
             prog.init();
         else
             Logs.warn("No robot program detected!");
+        Logs.info("Initialization complete.");
     }
 
     @Override

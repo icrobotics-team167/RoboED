@@ -4,6 +4,7 @@ import edu.wpi.cscore.AxisCamera;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
 import java.util.HashMap;
@@ -19,7 +20,7 @@ public class VisionServer {
     /**
      * Default image parameters. // TODO Maybe make this configurable
      */
-    private static final int RES_WIDTH = 640, RES_HEIGHT = 480;
+    private static final int RES_WIDTH = 320, RES_HEIGHT = 240;
 
     /**
      * A map of camera names to vision threads.
@@ -38,11 +39,11 @@ public class VisionServer {
         if (type == CameraType.USB) {
             UsbCamera cam = camServ.startAutomaticCapture((Integer)identifier);
             cam.setResolution(RES_WIDTH, RES_HEIGHT);
-            return new CachedImageFeed(camServ.getVideo(cam), 30L);
+            return new CachedImageFeed(camServ.getVideo(cam), 30L, RES_WIDTH, RES_HEIGHT, CvType.CV_8UC3);
         } else if (type == CameraType.AXIS) {
             AxisCamera cam = camServ.addAxisCamera((String)identifier);
             cam.setResolution(RES_WIDTH, RES_HEIGHT);
-            return new CachedImageFeed(camServ.getVideo(cam), 30L);
+            return new CachedImageFeed(camServ.getVideo(cam), 30L, RES_WIDTH, RES_HEIGHT, CvType.CV_8UC3);
         }
         throw new IllegalArgumentException("Invalid camera type!");
     }
@@ -57,7 +58,11 @@ public class VisionServer {
             visionThreads.get(name).interrupt();
         Thread thread = new Thread(() -> {
             CvSource out = CameraServer.getInstance().putVideo(name, RES_WIDTH, RES_HEIGHT);
-            while (!Thread.interrupted()) out.putFrame(provider.get());
+            while (!Thread.interrupted()) {
+                Mat frame = provider.get();
+                out.putFrame(frame);
+                frame.release();
+            }
         });
         visionThreads.put(name, thread);
         thread.start();

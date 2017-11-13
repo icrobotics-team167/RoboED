@@ -60,6 +60,10 @@ public final class SourceSystems {
             return Data.source(() -> DriverStation.getInstance().getStickButton(port, (byte)button));
         }
 
+        public static Source<Double> axis(int port, int axis) {
+            return Data.source(() -> DriverStation.getInstance().getStickAxis(port, axis));
+        }
+
     }
 
     /**

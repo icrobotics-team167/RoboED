@@ -36,10 +36,10 @@ public class CachedImageFeed implements Supplier<Mat> {
      * @param backing The backing image source.
      * @param cacheTime The time to cache an image for.
      */
-    public CachedImageFeed(CvSink backing, long cacheTime) {
+    public CachedImageFeed(CvSink backing, long cacheTime, int width, int height, int type) {
         this.backing = backing;
         this.cacheTime = cacheTime;
-        this.cached = new Mat();
+        this.cached = new Mat(width, height, type);
         this.lastCache = 0L;
     }
 
@@ -47,7 +47,7 @@ public class CachedImageFeed implements Supplier<Mat> {
     public Mat get() {
         if (System.currentTimeMillis() - lastCache > cacheTime)
             backing.grabFrame(cached);
-        return cached.clone();
+        return cached;
     }
 
 }
