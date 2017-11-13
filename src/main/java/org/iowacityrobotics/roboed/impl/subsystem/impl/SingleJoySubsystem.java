@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class SingleJoySubsystem extends FRCSourceSubsystem<Vector3> {
     
-    public static final ISubsystemType<Void, Vector3, Provider> TYPE = new FRCSubsystemType<>();
+    public static final ISubsystemType<Void, Vector3, ISinglePortSubsystemProvider<Void, Vector3>> TYPE = new FRCSubsystemType<>();
     
     private final IDataSource<Vector3> upstream;
 

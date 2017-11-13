@@ -1,15 +1,13 @@
 package org.iowacityrobotics.roboed.impl.subsystem.impl;
 
+import edu.wpi.first.wpilibj.RobotDrive;
 import org.iowacityrobotics.roboed.api.subsystem.ISubsystem;
 import org.iowacityrobotics.roboed.api.subsystem.ISubsystemType;
 import org.iowacityrobotics.roboed.api.subsystem.provider.IGenericSubsystemProvider;
 import org.iowacityrobotics.roboed.api.subsystem.provider.IQuadraPortSubsystemProvider;
 import org.iowacityrobotics.roboed.impl.subsystem.FRCSubsystemType;
-import org.iowacityrobotics.roboed.impl.subsystem.FRCSysRegistry;
 import org.iowacityrobotics.roboed.impl.subsystem.FRCTerminalSubsystem;
 import org.iowacityrobotics.roboed.util.math.Vector2;
-
-import edu.wpi.first.wpilibj.RobotDrive;
 import org.iowacityrobotics.roboed.util.robot.QuadraSpeedController;
 
 /**
@@ -17,8 +15,8 @@ import org.iowacityrobotics.roboed.util.robot.QuadraSpeedController;
  */
 public class MecanumSubsystem extends FRCTerminalSubsystem<MecanumSubsystem.ControlDataFrame> {
     
-    public static final ISubsystemType<ControlDataFrame, Void, Provider> TYPE = new FRCSubsystemType<>();
-    public static final ISubsystemType<ControlDataFrame, Void, CustomProvider> TYPE_CUSTOM = new FRCSubsystemType<>();
+    public static final ISubsystemType<ControlDataFrame, Void, IQuadraPortSubsystemProvider<ControlDataFrame, Void>> TYPE = new FRCSubsystemType<>();
+    public static final ISubsystemType<ControlDataFrame, Void, IGenericSubsystemProvider<ControlDataFrame, Void, QuadraSpeedController>> TYPE_CUSTOM = new FRCSubsystemType<>();
     
     private final RobotDrive drive;
 

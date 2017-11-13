@@ -1,5 +1,9 @@
 package org.iowacityrobotics.roboed.impl.subsystem.impl;
 
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import org.iowacityrobotics.roboed.api.data.Data;
 import org.iowacityrobotics.roboed.api.data.DataUnavailableException;
 import org.iowacityrobotics.roboed.api.data.IDataSource;
@@ -8,14 +12,7 @@ import org.iowacityrobotics.roboed.api.subsystem.ISubsystemType;
 import org.iowacityrobotics.roboed.api.subsystem.provider.IGenericSubsystemProvider;
 import org.iowacityrobotics.roboed.impl.subsystem.FRCSubsystem;
 import org.iowacityrobotics.roboed.impl.subsystem.FRCSubsystemType;
-import org.iowacityrobotics.roboed.impl.subsystem.FRCSysRegistry;
 import org.iowacityrobotics.roboed.util.vision.Images;
-
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
-
 import org.opencv.core.Mat;
 
 /**
@@ -23,7 +20,7 @@ import org.opencv.core.Mat;
  */
 public class VisionOffloaderSubsystem extends FRCSubsystem<Mat, JsonNode> {
 
-    public static final ISubsystemType<Mat, JsonNode, Provider> TYPE = new FRCSubsystemType<>();
+    public static final ISubsystemType<Mat, JsonNode, IGenericSubsystemProvider<Mat, JsonNode, VisionOffloaderConfig>> TYPE = new FRCSubsystemType<>();
 
     private final String host, routine;
     private final IDataSource<JsonNode> output;

@@ -15,8 +15,8 @@ import org.iowacityrobotics.roboed.util.robot.QuadraSpeedController;
  */
 public class DualTreadSubsystem extends FRCTerminalSubsystem<DualTreadSubsystem.ControlDataFrame> {
 
-    public static final ISubsystemType<ControlDataFrame, Void, Provider> TYPE = new FRCSubsystemType<>();
-    public static final ISubsystemType<ControlDataFrame, Void, CustomProvider> TYPE_CUSTOM = new FRCSubsystemType<>();
+    public static final ISubsystemType<ControlDataFrame, Void, IQuadraPortSubsystemProvider<ControlDataFrame, Void>> TYPE = new FRCSubsystemType<>();
+    public static final ISubsystemType<ControlDataFrame, Void, IGenericSubsystemProvider<ControlDataFrame, Void, QuadraSpeedController>> TYPE_CUSTOM = new FRCSubsystemType<>();
 
     private final RobotDrive drive;
 

@@ -31,5 +31,17 @@ public class DataMappers {
             return p;
         };
     }
+
+    public static Function<Vector3, Vector3> deadZone(double threshold) {
+        return v -> {
+            if (Math.abs(v.x()) <= threshold)
+                v.x(0);
+            if (Math.abs(v.y()) <= threshold)
+                v.y(0);
+            if (Math.abs(v.z()) <= threshold)
+                v.z(0);
+            return v;
+        };
+    }
     
 }

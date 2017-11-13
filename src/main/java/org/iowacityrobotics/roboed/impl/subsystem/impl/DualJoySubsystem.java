@@ -9,7 +9,6 @@ import org.iowacityrobotics.roboed.api.subsystem.ISubsystemType;
 import org.iowacityrobotics.roboed.api.subsystem.provider.ISinglePortSubsystemProvider;
 import org.iowacityrobotics.roboed.impl.subsystem.FRCSourceSubsystem;
 import org.iowacityrobotics.roboed.impl.subsystem.FRCSubsystemType;
-import org.iowacityrobotics.roboed.impl.subsystem.FRCSysRegistry;
 import org.iowacityrobotics.roboed.util.collection.Pair;
 import org.iowacityrobotics.roboed.util.math.Vector2;
 
@@ -18,7 +17,7 @@ import org.iowacityrobotics.roboed.util.math.Vector2;
  */
 public class DualJoySubsystem extends FRCSourceSubsystem<Pair<Vector2, Vector2>> {
     
-    public static final ISubsystemType<Void, Pair<Vector2, Vector2>, Provider> TYPE = new FRCSubsystemType<>();
+    public static final ISubsystemType<Void, Pair<Vector2, Vector2>, ISinglePortSubsystemProvider<Void, Pair<Vector2, Vector2>>> TYPE = new FRCSubsystemType<>();
     
     private final IDataSource<Pair<Vector2, Vector2>> upstream;
 

@@ -8,7 +8,6 @@ import org.iowacityrobotics.roboed.api.subsystem.provider.IGenericSubsystemProvi
 import org.iowacityrobotics.roboed.api.vision.IImageProvider;
 import org.iowacityrobotics.roboed.impl.subsystem.FRCSourceSubsystem;
 import org.iowacityrobotics.roboed.impl.subsystem.FRCSubsystemType;
-import org.iowacityrobotics.roboed.impl.subsystem.FRCSysRegistry;
 import org.opencv.core.Mat;
 
 /**
@@ -16,7 +15,7 @@ import org.opencv.core.Mat;
  */
 public class CameraSubsystem extends FRCSourceSubsystem<Mat> {
 
-    public static final ISubsystemType<Void, Mat, Provider> TYPE = new FRCSubsystemType<>();
+    public static final ISubsystemType<Void, Mat, IGenericSubsystemProvider<Void, Mat, IImageProvider>> TYPE = new FRCSubsystemType<>();
 
     private final IDataSource<Mat> output;
     
