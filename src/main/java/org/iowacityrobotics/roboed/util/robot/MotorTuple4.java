@@ -1,6 +1,6 @@
 package org.iowacityrobotics.roboed.util.robot;
 
-import com.ctre.MotorControl.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.SpeedController;
 import org.iowacityrobotics.roboed.robot.Devices;
 
@@ -77,15 +77,15 @@ public class MotorTuple4 {
     }
 
     /**
-     * Creates a new set of four {@link CANTalon}s.
+     * Creates a new set of four {@link WPI_TalonSRX}s.
      * @param fl The front-left Talon.
      * @param fr The front-right Talon.
      * @param rl The rear-left Talon.
      * @param rr The rear-right Talon.
      * @return The new controller set.
      */
-    public static MotorTuple4 ofCANTalons(int fl, int fr, int rl, int rr) {
-        return new MotorTuple4(Devices.canTalon(fl), Devices.canTalon(fr), Devices.canTalon(rl), Devices.canTalon(rr));
+    public static MotorTuple4 ofTalons(int fl, int fr, int rl, int rr) {
+        return new MotorTuple4(Devices.talonSrx(fl), Devices.talonSrx(fr), Devices.talonSrx(rl), Devices.talonSrx(rr));
     }
 
 }

@@ -1,6 +1,6 @@
 package org.iowacityrobotics.roboed.robot;
 
-import com.ctre.MotorControl.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.*;
 import org.iowacityrobotics.roboed.util.primitive.IntTMap;
 
@@ -48,12 +48,12 @@ public class Devices {
     }
 
     /**
-     * Creates or gets a {@link CANTalon} for the given port number.
+     * Creates or gets a {@link WPI_TalonSRX} for the given port number.
      * @param port The controller's port number.
-     * @return The CANTalon.
+     * @return The TalonSRX.
      */
-    public static CANTalon canTalon(int port) {
-        return compute(CANTalon.class, port, CANTalon::new);
+    public static WPI_TalonSRX talonSrx(int port) {
+        return compute(WPI_TalonSRX.class, port, WPI_TalonSRX::new);
     }
 
     /**

@@ -3,11 +3,11 @@ plugins {
     id "maven-publish"
     id "eclipse"
     id "idea"
-    id "jaci.openrio.gradle.GradleRIO" version "2017.2.3"
+    id "jaci.openrio.gradle.GradleRIO" version "2018.01.11"
 }
 
 group = "org.iowacityrobotics.roboed"
-version = "2017-1.0.0"
+version = "2018-1.0.0"
 
 repositories {
     mavenCentral()
@@ -15,7 +15,7 @@ repositories {
 
 dependencies {
     compile wpilib()
-    compile talonSrx()
+    compile ctre()
     compile group: 'com.mashape.unirest', name: 'unirest-java', version: '1.4.9'
 }
 
@@ -35,5 +35,5 @@ publishing {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.2.1'
+    gradleVersion = '4.4.1'
 }

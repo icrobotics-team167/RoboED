@@ -1,6 +1,6 @@
 package org.iowacityrobotics.roboed.subsystem;
 
-import com.ctre.MotorControl.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -24,12 +24,12 @@ public final class SinkSystems {
     public static final class MOTOR {
 
         /**
-         * Creates a sink for the given CANTalon.
-         * @param port The CANTalon's port number.
+         * Creates a sink for the given TalonSRX.
+         * @param port The TalonSRX's port number.
          * @return The new sink.
          */
-        public static Sink<Double> canTalon(int port) {
-            final CANTalon motor = Devices.canTalon(port);
+        public static Sink<Double> talonSrx(int port) {
+            final WPI_TalonSRX motor = Devices.talonSrx(port);
             return Data.sink(motor::set, 0D);
         }
 
@@ -61,7 +61,7 @@ public final class SinkSystems {
     public static final class DRIVE {
 
         /**
-         * Creates a dual-tread tank drive sink using {@link CANTalon}s.
+         * Creates a dual-tread tank drive sink using {@link WPI_TalonSRX}s.
          * @param fl The front-left talon's ID.
          * @param rl The rear-left talon's ID.
          * @param fr The front-right talon's ID.
@@ -69,7 +69,7 @@ public final class SinkSystems {
          * @return The new sink.
          */
         public static Sink<Vector2> dualTread(int fl, int rl, int fr, int rr) {
-            return dualTread(MotorTuple4.ofCANTalons(fl, rl, fr, rr));
+            return dualTread(MotorTuple4.ofTalons(fl, rl, fr, rr));
         }
 
         /**
@@ -88,7 +88,7 @@ public final class SinkSystems {
         }
 
         /**
-         * Creates a 4-wheel mecanum drive sink using {@link CANTalon}s.
+         * Creates a 4-wheel mecanum drive sink using {@link WPI_TalonSRX}s.
          * @param fl The front-left talon's ID.
          * @param rl The rear-left talon's ID.
          * @param fr The front-right talon's ID.
@@ -96,7 +96,7 @@ public final class SinkSystems {
          * @return The new sink.
          */
         public static Sink<Vector4> mecanum(int fl, int rl, int fr, int rr) {
-            return mecanum(MotorTuple4.ofCANTalons(fl, rl, fr, rr));
+            return mecanum(MotorTuple4.ofTalons(fl, rl, fr, rr));
         }
 
         /**
