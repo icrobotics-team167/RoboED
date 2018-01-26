@@ -1,6 +1,7 @@
 package org.iowacityrobotics.roboed.subsystem;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -51,6 +52,24 @@ public final class SinkSystems {
         public static Sink<Double> servo(int port) {
             final Servo servo = Devices.servo(port);
             return Data.sink(servo::setAngle, 0D);
+        }
+
+    }
+
+    /**
+     * Other actuators.
+     */
+    public static final class OTHER {
+
+        /**
+         * Creates a sink for the given pair of solenoids.
+         * @param portFwd The forwards solenoid's port.
+         * @param portRev The reverse solenoid's port.
+         * @return The new sink.
+         */
+        public static Sink<DoubleSolenoid.Value> dblSolenoid(int portFwd, int portRev) {
+            final DoubleSolenoid solenoid = Devices.dblSolenoid(portFwd, portRev);
+            return Data.sink(solenoid::set, DoubleSolenoid.Value.kOff);
         }
 
     }
