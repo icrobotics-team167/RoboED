@@ -100,5 +100,37 @@ public class Devices {
     public static AnalogInput analogInput(int port) {
         return compute(AnalogInput.class, port, AnalogInput::new);
     }
+
+    /**
+     * Creates or gets a {@link DoubleSolenoid} for the given port numbers.
+     * @param portFwd The forwards solenoid's port number.
+     * @param portRev The reverse solenoid's port number.
+     * @return The double solenoid.
+     */
+    public static DoubleSolenoid dblSolenoid(int portFwd, int portRev) {
+        IntTMap<Object> solenoids = registry.computeIfAbsent(FakeDoubleSolenoidHalf.class, ignored -> new IntTMap<>());
+        if (solenoids.contains(portFwd) && solenoids.contains(portRev))
+            return ((FakeDoubleSolenoidHalf)solenoids.get(portFwd)).parent;
+        if (solenoids.contains(portFwd) || solenoids.contains(portRev))
+            throw new IllegalArgumentException("You're dumb!!! Don't make two solenoids with conflicting port numbers!!!");
+        DoubleSolenoid solenoid = new DoubleSolenoid(portFwd, portRev);
+        FakeDoubleSolenoidHalf fake = new FakeDoubleSolenoidHalf(solenoid);
+        solenoids.put(portFwd, fake);
+        solenoids.put(portRev, fake);
+        return solenoid;
+    }
+
+    /**
+     * Placeholder class for making {@link DoubleSolenoid} construction work.
+     */
+    private static class FakeDoubleSolenoidHalf {
+
+        final DoubleSolenoid parent;
+
+        FakeDoubleSolenoidHalf(DoubleSolenoid parent) {
+            this.parent = parent;
+        }
+
+    }
     
 }
