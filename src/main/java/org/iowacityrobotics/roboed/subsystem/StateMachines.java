@@ -2,7 +2,7 @@ package org.iowacityrobotics.roboed.subsystem;
 
 import org.iowacityrobotics.roboed.data.inter.Interpolator;
 import org.iowacityrobotics.roboed.data.mapper.Mapper;
-import org.iowacityrobotics.roboed.subsystem.impl.CounterMapper;
+import org.iowacityrobotics.roboed.subsystem.impl.StateCounterMapper;
 import org.iowacityrobotics.roboed.subsystem.impl.ResetSetInterpolator;
 import org.iowacityrobotics.roboed.subsystem.impl.RisingEdgeMapper;
 
@@ -33,15 +33,15 @@ public class StateMachines {
     }
 
     /**
-     * Creates a counter that begins outputting a different value each time input rises from false to true.
+     * Creates a register that begins outputting a different value each time input rises from false to true.
      * Once the last value is reached, additional rising edges do nothing.
      * @param initial The value to return initially.
      * @param values The values to return on each state change.
      * @param <T> The type of value to return.
-     * @return The newly-created counter.
+     * @return The newly-created state counter.
      */
-    public static <T> Mapper<Boolean, T> counter(T initial, T... values) {
-        return new CounterMapper<>(initial, values);
+    public static <T> Mapper<Boolean, T> stateCounter(T initial, T... values) {
+        return new StateCounterMapper<>(initial, values);
     }
 
 }

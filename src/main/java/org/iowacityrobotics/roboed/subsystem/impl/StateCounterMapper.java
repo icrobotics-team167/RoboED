@@ -3,10 +3,10 @@ package org.iowacityrobotics.roboed.subsystem.impl;
 import org.iowacityrobotics.roboed.data.mapper.Mapper;
 
 /**
- * An implementation of a counter that outputs a different value each time input rises from false to true.
+ * An implementation of a register that outputs a different value each time input rises from false to true.
  * @author Evan Geng
  */
-public class CounterMapper<T> extends Mapper<Boolean, T> {
+public class StateCounterMapper<T> extends Mapper<Boolean, T> {
 
     /**
      * The initial output value.
@@ -29,11 +29,11 @@ public class CounterMapper<T> extends Mapper<Boolean, T> {
     private boolean lastFrame;
 
     /**
-     * Creates a new counter that outputs the given values.
+     * Creates a new register that outputs the given values.
      * @param initial The initial output value.
      * @param values The subsequent output values.
      */
-    public CounterMapper(T initial, T[] values) {
+    public StateCounterMapper(T initial, T[] values) {
         this.initial = initial;
         this.values = values;
         this.index = 0;
