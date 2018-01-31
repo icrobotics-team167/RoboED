@@ -183,6 +183,15 @@ public class Vector4 implements Cloneable {
     public Vector4 add(Vector4 vec) {
         return add(vec.x, vec.y, vec.z, vec.w);
     }
+
+    /**
+     * Multiplies this vector's first two dimensions by a given factor.
+     * @param fac The factor.
+     * @return This vector, for chaining.
+     */
+    public Vector4 multiply2D(double fac) {
+        return x(x * fac).y(y * fac).z(z).w(w);
+    }
     
     /**
      * Multiplies this vector's magnitude by a given factor.
