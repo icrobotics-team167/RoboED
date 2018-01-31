@@ -190,7 +190,7 @@ public class Vector4 implements Cloneable {
      * @return This vector, for chaining.
      */
     public Vector4 multiply2D(double fac) {
-        return x(x * fac).y(y * fac).z(z).w(w);
+        return x(x * fac).y(y * fac);
     }
     
     /**
