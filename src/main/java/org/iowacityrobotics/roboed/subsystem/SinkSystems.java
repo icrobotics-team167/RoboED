@@ -146,7 +146,7 @@ public final class SinkSystems {
          * @return The new sink.
          */
         public static Sink<Double> number(String key) {
-            return Data.sink(n -> SmartDashboard.putNumber(key, n));
+            return Data.sink(n -> SmartDashboard.putNumber(key, n != null ? n : 0D));
         }
 
         /**
@@ -155,7 +155,7 @@ public final class SinkSystems {
          * @return The new sink.
          */
         public static Sink<String> string(String key) {
-            return Data.sink(s -> SmartDashboard.putString(key, s));
+            return Data.sink(s -> SmartDashboard.putString(key, s != null ? s : ""));
         }
 
     }

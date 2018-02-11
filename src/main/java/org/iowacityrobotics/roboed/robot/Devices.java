@@ -132,5 +132,14 @@ public class Devices {
         }
 
     }
+
+    /**
+     * Creates or gets a {@link DigitalInput} for the given DIO port number.
+     * @param port The DIO device's port number.
+     * @return The newly-created DIO input.
+     */
+    public static DigitalInput dioInput(int port) {
+        return compute(DigitalInput.class, port, DigitalInput::new);
+    }
     
 }

@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.*;
 import org.iowacityrobotics.roboed.data.Data;
 import org.iowacityrobotics.roboed.data.source.Source;
 import org.iowacityrobotics.roboed.robot.Devices;
+import org.iowacityrobotics.roboed.subsystem.impl.LidarLiteSource;
 import org.iowacityrobotics.roboed.util.collection.Pair;
 import org.iowacityrobotics.roboed.util.math.Vector2;
 import org.iowacityrobotics.roboed.util.math.Vector4;
@@ -60,6 +61,12 @@ public final class SourceSystems {
             return Data.source(() -> DriverStation.getInstance().getStickButton(port, (byte)button));
         }
 
+        /**
+         * Creates a source for the given joystick axis.
+         * @param port The controller port.
+         * @param axis The axis ID.
+         * @return The new source,
+         */
         public static Source<Double> axis(int port, int axis) {
             return Data.source(() -> DriverStation.getInstance().getStickAxis(port, axis));
         }
@@ -90,6 +97,16 @@ public final class SourceSystems {
         public static Source<Double> ultrasonic(int ping, int echo) {
             final Ultrasonic sensor = new Ultrasonic(ping, echo);
             return Data.source(sensor::getRangeMM);
+        }
+
+        /**
+         * Creates a source for the given LIDAR Lite unit.
+         * @param port The DIO port the LIDAR is running on.
+         * @param conversionConst The constant of conversion from pulse length microseconds to distance.
+         * @return The new source.
+         */
+        public static Source<Double> lidarLite(int port, double conversionConst) {
+            return new LidarLiteSource(Devices.dioInput(port), conversionConst);
         }
 
     }
