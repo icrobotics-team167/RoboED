@@ -46,13 +46,24 @@ public class StateMachines {
     }
 
     /**
-     * Creates a latch that stores and outputs states marked "non-empty".
+     * Creates a latch that stores and outputs states marked "non-empty". Initially has "empty" state.
      * @param empty The "empty" state in the enum.
      * @param <T> The enum type to store.
      * @return The newly-created latch.
      */
     public static <T extends Enum<T>> Mapper<T, T> stateLatch(T empty) {
-        return new StateLatchMapper<>(empty);
+        return stateLatch(empty, empty);
+    }
+
+    /**
+     * Creates a latch that stores and outputs states marked "non-empty".
+     * @param empty The "empty" state in the enum.
+     * @param initial The initial state to store.
+     * @param <T> The enum type to store.
+     * @return The newly-created latch.
+     */
+    public static <T extends Enum<T>> Mapper<T, T> stateLatch(T empty, T initial) {
+        return new StateLatchMapper<>(empty, initial);
     }
 
 }

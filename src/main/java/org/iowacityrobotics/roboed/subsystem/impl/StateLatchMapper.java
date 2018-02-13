@@ -21,9 +21,11 @@ public class StateLatchMapper<T> extends Mapper<T, T> {
     /**
      * Creates a new latch.
      * @param empty The "empty" state. Represents the lack of a meaningful state.
+     * @param initial The initial stored state.
      */
-    public StateLatchMapper(T empty) {
-        this.empty = this.state = empty;
+    public StateLatchMapper(T empty, T initial) {
+        this.empty = empty;
+        this.state = initial;
     }
 
     @Override
