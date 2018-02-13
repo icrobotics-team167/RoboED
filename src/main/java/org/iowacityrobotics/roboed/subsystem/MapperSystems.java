@@ -49,6 +49,19 @@ public final class MapperSystems {
             return Data.mapper(v -> v >= thresh);
         }
 
+        /**
+         * Implements a dead zone on a pair of joysticks.
+         * @param thresh The threshold for the dead zones.
+         * @return The new mapper.
+         */
+        public static Mapper<Pair<Vector2, Vector2>, Pair<Vector2, Vector2>> deadZone(double thresh) {
+            return Data.mapper(p -> {
+                if (p.getA().magnitude() < thresh) p.getA().set(0, 0);
+                if (p.getB().magnitude() < thresh) p.getB().set(0, 0);
+                return p;
+            });
+        }
+
     }
 
     /**
