@@ -40,6 +40,15 @@ public final class MapperSystems {
             return Data.mapper(v -> v ? on : off);
         }
 
+        /**
+         * Transforms some analog controller input to a boolean.
+         * @param thresh The activation threshold.
+         * @return The new mapper.
+         */
+        public static Mapper<Double, Boolean> booleanify(double thresh) {
+            return Data.mapper(v -> v >= thresh);
+        }
+
     }
 
     /**
