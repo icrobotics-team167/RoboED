@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.*;
 import org.iowacityrobotics.roboed.data.Data;
 import org.iowacityrobotics.roboed.data.source.Source;
 import org.iowacityrobotics.roboed.robot.Devices;
+import org.iowacityrobotics.roboed.subsystem.impl.EncoderSource;
 import org.iowacityrobotics.roboed.subsystem.impl.LidarLiteSource;
 import org.iowacityrobotics.roboed.util.collection.Pair;
 import org.iowacityrobotics.roboed.util.math.Vector2;
@@ -107,6 +108,24 @@ public final class SourceSystems {
          */
         public static Source<Double> lidarLite(int port, double conversionConst) {
             return new LidarLiteSource(Devices.dioInput(port), conversionConst);
+        }
+
+    }
+
+    /**
+     * Motor-related input subsystems.
+     */
+    public static final class MOTOR {
+
+        /**
+         * Creates a source that outputs the count from an encoder.
+         * @param port1 The encoder's first DIO port.
+         * @param port2 The encoder's second DIO port.
+         * @param type The counting method used by this encoder.
+         * @return The new source.
+         */
+        public static Source<Integer> encoder(int port1, int port2, CounterBase.EncodingType type) {
+            return new EncoderSource(port1, port2, type);
         }
 
     }
