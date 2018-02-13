@@ -5,6 +5,7 @@ import org.iowacityrobotics.roboed.data.mapper.Mapper;
 import org.iowacityrobotics.roboed.subsystem.impl.StateCounterMapper;
 import org.iowacityrobotics.roboed.subsystem.impl.ResetSetInterpolator;
 import org.iowacityrobotics.roboed.subsystem.impl.RisingEdgeMapper;
+import org.iowacityrobotics.roboed.subsystem.impl.StateLatchMapper;
 
 /**
  * Various simple stateful pipeline node implementations.
@@ -42,6 +43,16 @@ public class StateMachines {
      */
     public static <T> Mapper<Boolean, T> stateCounter(T initial, T... values) {
         return new StateCounterMapper<>(initial, values);
+    }
+
+    /**
+     * Creates a latch that stores and outputs states marked "non-empty".
+     * @param empty The "empty" state in the enum.
+     * @param <T> The enum type to store.
+     * @return The newly-created latch.
+     */
+    public static <T extends Enum<T>> Mapper<T, T> stateLatch(T empty) {
+        return new StateLatchMapper<>(empty);
     }
 
 }
