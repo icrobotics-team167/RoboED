@@ -54,12 +54,16 @@ public final class MapperSystems {
          * @param thresh The threshold for the dead zones.
          * @return The new mapper.
          */
-        public static Mapper<Pair<Vector2, Vector2>, Pair<Vector2, Vector2>> deadZone(double thresh) {
+        public static Mapper<Pair<Vector2, Vector2>, Pair<Vector2, Vector2>> deadZone2V2(double thresh) {
             return Data.mapper(p -> {
                 if (p.getA().magnitude() < thresh) p.getA().set(0, 0);
                 if (p.getB().magnitude() < thresh) p.getB().set(0, 0);
                 return p;
             });
+        }
+
+        public static Mapper<Double, Double> deadZoneD(double thresh) {
+            return Data.mapper(v -> Math.abs(v) >= thresh ? v : 0);
         }
 
     }
