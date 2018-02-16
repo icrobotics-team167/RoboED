@@ -7,7 +7,7 @@ import org.iowacityrobotics.roboed.data.source.Source;
 import org.iowacityrobotics.roboed.util.collection.StackNode;
 
 import java.util.Collection;
-import java.util.LinkedList;
+import java.util.HashSet;
 
 /**
  * Consumes data.
@@ -18,7 +18,7 @@ public abstract class Sink<T> implements IStatefulData {
     /**
      * Collection of all sinks.
      */
-    private static final Collection<Sink> sinks = new LinkedList<>();
+    private static final Collection<Sink> sinks = new HashSet<>();
 
     /**
      * The stack of stored states.
@@ -122,6 +122,7 @@ public abstract class Sink<T> implements IStatefulData {
         MapDelegateSink(Sink<T> downstream, Mapper<V, T> mapper) {
             this.mapper = mapper;
             this.downstream = downstream;
+            sinks.remove(downstream);
         }
 
         public void process(V data) {
@@ -145,6 +146,8 @@ public abstract class Sink<T> implements IStatefulData {
         JoiningSink(Sink<T> dsA, Sink<T> dsB) {
             this.dsA = dsA;
             this.dsB = dsB;
+            sinks.remove(dsA);
+            sinks.remove(dsB);
         }
 
         public void process(T data) {
