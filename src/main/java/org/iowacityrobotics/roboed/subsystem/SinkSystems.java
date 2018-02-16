@@ -1,10 +1,7 @@
 package org.iowacityrobotics.roboed.subsystem;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.Servo;
-import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.iowacityrobotics.roboed.data.Data;
 import org.iowacityrobotics.roboed.data.sink.Sink;
@@ -41,6 +38,16 @@ public final class SinkSystems {
          */
         public static Sink<Double> victorSp(int port) {
             final VictorSP motor = Devices.victorSp(port);
+            return Data.sink(motor::set, 0D);
+        }
+
+        /**
+         * Creates a sink for the given Spark.
+         * @param port The Spark's PWM port.
+         * @return The new sink.
+         */
+        public static Sink<Double> spark(int port) {
+            final Spark motor = Devices.spark(port);
             return Data.sink(motor::set, 0D);
         }
 

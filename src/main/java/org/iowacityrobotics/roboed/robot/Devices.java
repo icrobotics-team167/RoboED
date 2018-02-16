@@ -66,6 +66,15 @@ public class Devices {
     }
 
     /**
+     * Creates or gets a {@link Spark} for the given port number.
+     * @param port The controller's PWM port.
+     * @return The Spark.
+     */
+    public static Spark spark(int port) {
+        return compute(Spark.class, port, Spark::new);
+    }
+
+    /**
      * Creates or gets an {@link XboxController} for the given port number.
      * @param port The controller's port number.
      * @return The XboxController.
