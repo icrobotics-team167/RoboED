@@ -2,6 +2,7 @@ package org.iowacityrobotics.roboed.data.sink;
 
 import org.iowacityrobotics.roboed.data.Data;
 import org.iowacityrobotics.roboed.data.IStatefulData;
+import org.iowacityrobotics.roboed.data.mapper.Mapper;
 import org.iowacityrobotics.roboed.data.source.Source;
 import org.iowacityrobotics.roboed.util.collection.StackNode;
 
@@ -46,9 +47,28 @@ public abstract class Sink<T> implements IStatefulData {
     }
 
     /**
+     * Creates a new mapper wrapping this one by superimposing a mapper.
+     * @param mapper The mapper data should be processed by.
+     * @param <V> The data type to map from.
+     * @return The new pipeline element.
+     */
+    public <V> Sink<V> map(Mapper<V, T> mapper) {
+        return new MapDelegateSink<>(this, mapper);
+    }
+
+    /**
+     * Creates a new sink that distributes one value to multiple downstream sinks.
+     * @param other The other sinks to distribute data to.
+     * @return The new pipeline element.
+     */
+    public Sink<T> join(Sink<T>... other) {
+        return new JoiningSink(other);
+    }
+
+    /**
      * Tells this sink to read and consume one frame of data.
      */
-    public void tick() {
+    private void tick() {
         if (bound == null)
             noData();
         else
@@ -89,6 +109,52 @@ public abstract class Sink<T> implements IStatefulData {
      */
     public static void tickAll() {
         sinks.forEach(Sink::tick);
+    }
+
+    /**
+     * A sink implementation that superimposes a mapping function onto another sink.
+     */
+    private static class MapDelegateSink<V, T> extends Sink<V> {
+
+        private final Sink<T> downstream;
+        private final Mapper<V, T> mapper;
+
+        MapDelegateSink(Sink<T> downstream, Mapper<V, T> mapper) {
+            this.mapper = mapper;
+            this.downstream = downstream;
+        }
+
+        public void process(V data) {
+            downstream.process(mapper.apply(data));
+        }
+
+        @Override
+        public void noData() {
+            downstream.noData();
+        }
+
+    }
+
+    /**
+     * A sink implementation that distributes one value to multiple downstream sinks.
+     */
+    private class JoiningSink extends Sink<T> {
+
+        private final Sink<T>[] downstream;
+
+        JoiningSink(Sink<T>[] downstream) {
+            this.downstream = downstream;
+        }
+
+        public void process(T data) {
+            for (Sink<T> sink : downstream) sink.process(data);
+        }
+
+        @Override
+        public void noData() {
+            for (Sink<T> sink : downstream) sink.noData();
+        }
+
     }
 
 }
