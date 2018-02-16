@@ -13,7 +13,7 @@ public class Funcs {
      * Inverts a double.
      * @return The new mapper.
      */
-    public Mapper<Double, Double> invertD() {
+    public static Mapper<Double, Double> invertD() {
         return Data.mapper(d -> -d);
     }
 
@@ -21,7 +21,7 @@ public class Funcs {
      * Sums two doubles.
      * @return The new interpolator.
      */
-    public Interpolator<Double, Double, Double> sumD() {
+    public static Interpolator<Double, Double, Double> sumD() {
         return Data.inter((a, b) -> a + b);
     }
 
@@ -29,7 +29,7 @@ public class Funcs {
      * Multiplies two doubles.
      * @return The new interpolator.
      */
-    public Interpolator<Double, Double, Double> multD() {
+    public static Interpolator<Double, Double, Double> multD() {
         return Data.inter((a, b) -> a * b);
     }
 
