@@ -58,11 +58,11 @@ public abstract class Sink<T> implements IStatefulData {
 
     /**
      * Creates a new sink that distributes one value to multiple downstream sinks.
-     * @param other The other sinks to distribute data to.
+     * @param other The other sink to distribute data to.
      * @return The new pipeline element.
      */
-    public Sink<T> join(Sink<T>... other) {
-        return new JoiningSink(other);
+    public Sink<T> join(Sink<T> other) {
+        return new JoiningSink<>(this, other);
     }
 
     /**
@@ -138,21 +138,24 @@ public abstract class Sink<T> implements IStatefulData {
     /**
      * A sink implementation that distributes one value to multiple downstream sinks.
      */
-    private class JoiningSink extends Sink<T> {
+    private static class JoiningSink<T> extends Sink<T> {
 
-        private final Sink<T>[] downstream;
+        private final Sink<T> dsA, dsB;
 
-        JoiningSink(Sink<T>[] downstream) {
-            this.downstream = downstream;
+        JoiningSink(Sink<T> dsA, Sink<T> dsB) {
+            this.dsA = dsA;
+            this.dsB = dsB;
         }
 
         public void process(T data) {
-            for (Sink<T> sink : downstream) sink.process(data);
+            dsA.process(data);
+            dsB.process(data);
         }
 
         @Override
         public void noData() {
-            for (Sink<T> sink : downstream) sink.noData();
+            dsA.noData();
+            dsB.noData();
         }
 
     }
