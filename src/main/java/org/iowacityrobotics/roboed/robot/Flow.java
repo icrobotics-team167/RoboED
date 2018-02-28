@@ -2,6 +2,7 @@ package org.iowacityrobotics.roboed.robot;
 
 import org.iowacityrobotics.roboed.data.Data;
 import org.iowacityrobotics.roboed.data.sink.Sink;
+import org.iowacityrobotics.roboed.util.collection.StackNode;
 import org.iowacityrobotics.roboed.util.function.ICondition;
 import org.iowacityrobotics.roboed.util.function.IConditionFactory;
 import org.iowacityrobotics.roboed.util.logging.Logs;
@@ -21,9 +22,9 @@ public final class Flow {
     private static Thread opThread = new Thread();
 
     /**
-     * The function to run while waiting.
+     * The context of the current wait call.
      */
-    private static Runnable waitingFunc = null;
+    private static StackNode<WaitingContext> waitCtx = new StackNode<>(new WaitingContext());
 
     /**
      * A flag telling the topmost wait call to break.
@@ -68,7 +69,7 @@ public final class Flow {
      * @param func The function.
      */
     public static void whileWaiting(Runnable func) {
-        waitingFunc = func;
+        waitCtx.getValue().waitingFunc = func;
     }
 
     /**
@@ -95,15 +96,17 @@ public final class Flow {
             throw new IllegalStateException("Wait can only be called on operations thread!");
         if (!Thread.currentThread().isInterrupted()) {
             Logs.debug("OpThread > Func > Wait : Start");
+            WaitingContext ctx = waitCtx.getValue();
+            waitCtx = waitCtx.extend(new WaitingContext());
             while (!condition.isMet() && !Thread.currentThread().isInterrupted() && !shouldBreak.get()) {
                 Sink.tickAll();
-                if (waitingFunc != null)
-                    waitingFunc.run();
+                if (ctx.waitingFunc != null)
+                    ctx.waitingFunc.run();
             }
             Logs.debug("OpThread > Func > Wait : End");
             shouldBreak.set(false);
         }
-        waitingFunc = null;
+        waitCtx = waitCtx.getParent();
     }
 
     /**
@@ -145,6 +148,18 @@ public final class Flow {
      */
     public static void waitInfinite() {
         waitUntil(() -> false);
+    }
+
+    /**
+     * Utility class that stores state concerning the current wait call.
+     */
+    private static class WaitingContext {
+
+        /**
+         * The function to run while waiting.
+         */
+        Runnable waitingFunc = null;
+
     }
 
 }
