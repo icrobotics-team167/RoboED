@@ -24,7 +24,7 @@ public final class Flow {
     /**
      * The context of the current wait call.
      */
-    private static StackNode<WaitingContext> waitCtx = new StackNode<>(new WaitingContext());
+    private static StackNode<WaitingContext> waitCtx;
 
     /**
      * A flag telling the topmost wait call to break.
@@ -47,19 +47,19 @@ public final class Flow {
             }
         }
         opThread = new Thread(() -> {
-            Logs.debug("OpThread : Start");
-            Data.reset(true);
-            Logs.debug("OpThread > Func : Start");
+            Data.reset(false);
+            waitCtx = new StackNode<>(new WaitingContext());
             try {
                 func.run();
+            } catch (EndOp e) {
+                Logs.info("Opmode ended early");
+                return;
             } catch (Exception e) {
                 Logs.error("Errored while running opmode!", e);
             }
-            Logs.debug("OpThread > Func : End");
-            Data.reset(true);
+            Data.reset(false);
             while (!Thread.currentThread().isInterrupted())
                 Sink.tickAll();
-            Logs.debug("OpThread : End");
         });
         opThread.start();
     }
@@ -151,6 +151,13 @@ public final class Flow {
     }
 
     /**
+     * Ends the currently running opmode.
+     */
+    public static void end() {
+        throw new EndOp();
+    }
+
+    /**
      * Utility class that stores state concerning the current wait call.
      */
     private static class WaitingContext {
@@ -160,6 +167,13 @@ public final class Flow {
          */
         Runnable waitingFunc = null;
 
+    }
+
+    /**
+     * Exception to be thrown and caught when an opmode needs to end prematurely.
+     */
+    private static class EndOp extends RuntimeException {
+        // NO-OP
     }
 
 }

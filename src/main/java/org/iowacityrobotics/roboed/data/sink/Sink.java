@@ -78,6 +78,7 @@ public abstract class Sink<T> implements IStatefulData {
     @Override
     public void reset(boolean temp) {
         bound = null;
+        if (!temp) state = null;
     }
 
     @Override
