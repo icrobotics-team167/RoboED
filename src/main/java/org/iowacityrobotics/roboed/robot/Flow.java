@@ -105,8 +105,8 @@ public final class Flow {
             }
             Logs.debug("OpThread > Func > Wait : End");
             shouldBreak.set(false);
+            waitCtx = waitCtx.getParent();
         }
-        waitCtx = waitCtx.getParent();
     }
 
     /**
