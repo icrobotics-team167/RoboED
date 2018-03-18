@@ -4,6 +4,7 @@ import org.iowacityrobotics.roboed.data.Data;
 import org.iowacityrobotics.roboed.data.IStatefulData;
 import org.iowacityrobotics.roboed.data.mapper.Mapper;
 import org.iowacityrobotics.roboed.data.source.Source;
+import org.iowacityrobotics.roboed.robot.RobotMode;
 import org.iowacityrobotics.roboed.util.collection.StackNode;
 
 import java.util.Collection;
@@ -109,7 +110,8 @@ public abstract class Sink<T> implements IStatefulData {
      * Ticks all sinks.
      */
     public static void tickAll() {
-        sinks.forEach(Sink::tick);
+        if (RobotMode.get().shouldTick)
+            sinks.forEach(Sink::tick);
     }
 
     /**

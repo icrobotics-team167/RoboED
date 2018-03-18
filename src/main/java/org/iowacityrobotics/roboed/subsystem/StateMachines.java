@@ -2,9 +2,9 @@ package org.iowacityrobotics.roboed.subsystem;
 
 import org.iowacityrobotics.roboed.data.inter.Interpolator;
 import org.iowacityrobotics.roboed.data.mapper.Mapper;
-import org.iowacityrobotics.roboed.subsystem.impl.StateCounterMapper;
 import org.iowacityrobotics.roboed.subsystem.impl.ResetSetInterpolator;
 import org.iowacityrobotics.roboed.subsystem.impl.RisingEdgeMapper;
+import org.iowacityrobotics.roboed.subsystem.impl.StateCounterMapper;
 import org.iowacityrobotics.roboed.subsystem.impl.StateLatchMapper;
 
 /**

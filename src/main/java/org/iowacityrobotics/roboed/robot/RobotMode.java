@@ -11,12 +11,12 @@ public enum RobotMode {
     /**
      * The robot hasn't been initialized yet.
      */
-    UNINITIALIZED,
+    UNINITIALIZED(false),
     
     /**
      * The robot is disabled.
      */
-    DISABLED,
+    DISABLED(false),
     
     /**
      * THe robot is in autonomous mode.
@@ -34,9 +34,29 @@ public enum RobotMode {
     TEST;
 
     /**
+     * Whether data sinks should be ticked in this mode or not.
+     */
+    public final boolean shouldTick;
+
+    /**
      * The operation to run on mode change.
      */
     private Runnable operation;
+
+    /**
+     * Constructs a robot mode.
+     * @param shouldTick Whether data sinks should be ticked in this mode or not.
+     */
+    RobotMode(boolean shouldTick) {
+        this.shouldTick = shouldTick;
+    }
+
+    /**
+     * Constructs a robot mode under the assumption that data sinks should be ticked.
+     */
+    RobotMode() {
+        this(true);
+    }
 
     /**
      * Gets the mode change operation.

@@ -54,12 +54,11 @@ public final class SinkSystems {
         /**
          * Creates a sink for the given Servo.
          * @param port The Servo's port number.
-         * @param initial The initial position for the servo.
          * @return The new sink.
          */
-        public static Sink<Double> servo(int port, double initial) {
+        public static Sink<Double> servo(int port) {
             final Servo servo = Devices.servo(port);
-            return Data.sink(servo::set, initial);
+            return Data.sink(servo::set, 0D);
         }
 
     }

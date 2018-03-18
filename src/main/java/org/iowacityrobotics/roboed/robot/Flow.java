@@ -7,6 +7,9 @@ import org.iowacityrobotics.roboed.util.function.ICondition;
 import org.iowacityrobotics.roboed.util.function.IConditionFactory;
 import org.iowacityrobotics.roboed.util.logging.Logs;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -17,9 +20,14 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public final class Flow {
 
     /**
-     * The operations thread.
+     * The executor service handling the operations thread.
      */
-    private static Thread opThread = new Thread();
+    private static final ExecutorService executor = Executors.newSingleThreadExecutor();
+
+    /**
+     * The future representing the current operations thread.
+     */
+    private static Future<?> future;
 
     /**
      * The context of the current wait call.
@@ -36,17 +44,8 @@ public final class Flow {
      * @param func The operation to run.
      */
     static void run(Runnable func) {
-        if (opThread != null) {
-            opThread.interrupt();
-            while (opThread.isAlive()) {
-                try {
-                    Thread.sleep(50L);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        opThread = new Thread(() -> {
+        if (future != null) future.cancel(true);
+        future = executor.submit(() -> {
             Data.reset(false);
             waitCtx = new StackNode<>(new WaitingContext());
             try {
@@ -61,7 +60,6 @@ public final class Flow {
             while (!Thread.currentThread().isInterrupted())
                 Sink.tickAll();
         });
-        opThread.start();
     }
 
     /**
@@ -92,8 +90,6 @@ public final class Flow {
      * @param condition The condition to wait for.
      */
     public static void waitUntil(ICondition condition) {
-        if (Thread.currentThread() != opThread)
-            throw new IllegalStateException("Wait can only be called on operations thread!");
         if (!Thread.currentThread().isInterrupted()) {
             Logs.debug("OpThread > Func > Wait : Start");
             WaitingContext ctx = waitCtx.getValue();
