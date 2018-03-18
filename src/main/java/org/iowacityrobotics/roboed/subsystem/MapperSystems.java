@@ -1,14 +1,11 @@
 package org.iowacityrobotics.roboed.subsystem;
 
-import com.mashape.unirest.http.JsonNode;
 import org.iowacityrobotics.roboed.data.Data;
 import org.iowacityrobotics.roboed.data.mapper.Mapper;
 import org.iowacityrobotics.roboed.subsystem.impl.ToggleMapper;
-import org.iowacityrobotics.roboed.subsystem.impl.VisionOffloaderMapper;
 import org.iowacityrobotics.roboed.util.collection.Pair;
 import org.iowacityrobotics.roboed.util.math.Vector2;
 import org.iowacityrobotics.roboed.util.math.Vector4;
-import org.opencv.core.Mat;
 
 /**
  * Data mappers representing various physical subsystems.
@@ -87,23 +84,6 @@ public final class MapperSystems {
          */
         public static Mapper<Pair<Vector2, Vector2>, Vector4> dualJoyMecanum() {
             return Data.mapper(p -> new Vector4(p.getA().x(), p.getA().y(), p.getB().x(), 0));
-        }
-
-    }
-
-    /**
-     * Vision-related subsystems.
-     */
-    public static final class VISION {
-
-        /**
-         * Creates a vision offloading mapper.
-         * @param host The external processor's hostname.
-         * @param routine The routine to run.
-         * @return The new mapper.
-         */
-        public static Mapper<Mat, JsonNode> offload(String host, String routine) {
-            return new VisionOffloaderMapper(host, routine);
         }
 
     }

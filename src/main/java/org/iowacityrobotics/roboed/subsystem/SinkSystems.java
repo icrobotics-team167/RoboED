@@ -2,6 +2,8 @@ package org.iowacityrobotics.roboed.subsystem;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.iowacityrobotics.roboed.data.Data;
 import org.iowacityrobotics.roboed.data.sink.Sink;
@@ -104,11 +106,9 @@ public final class SinkSystems {
          * @return The new sink.
          */
         public static Sink<Vector2> dualTread(MotorTuple4 m) {
-            final RobotDrive drive = new RobotDrive(
-                    m.getFrontLeft(),
-                    m.getRearLeft(),
-                    m.getFrontRight(),
-                    m.getRearRight()
+            final DifferentialDrive drive = new DifferentialDrive(
+                    new SpeedControllerGroup(m.getFrontLeft(), m.getRearLeft()),
+                    new SpeedControllerGroup(m.getFrontRight(), m.getRearRight())
             );
             return Data.sink(v -> drive.tankDrive(v.x(), v.y()), Vector2.ZERO);
         }
@@ -131,13 +131,13 @@ public final class SinkSystems {
          * @return The new sink.
          */
         public static Sink<Vector4> mecanum(MotorTuple4 m) {
-            final RobotDrive drive = new RobotDrive(
+            final MecanumDrive drive = new MecanumDrive(
                     m.getFrontLeft(),
                     m.getRearLeft(),
                     m.getFrontRight(),
                     m.getRearRight()
             );
-            return Data.sink(v -> drive.mecanumDrive_Cartesian(v.x(), v.y(), v.z(), v.w()), Vector4.ZERO);
+            return Data.sink(v -> drive.driveCartesian(v.x(), v.y(), v.z(), v.w()), Vector4.ZERO);
         }
 
     }

@@ -31,10 +31,10 @@ public final class SourceSystems {
         public static Source<Vector4> singleJoy(int port) {
             final Joystick joy = Devices.joystick(port);
             return Data.source(() -> new Vector4(
-                    joy.getAxis(Joystick.AxisType.kX),
-                    joy.getAxis(Joystick.AxisType.kY),
-                    joy.getAxis(Joystick.AxisType.kTwist),
-                    joy.getAxis(Joystick.AxisType.kThrottle)
+                    joy.getX(),
+                    joy.getY(),
+                    joy.getTwist(),
+                    joy.getThrottle()
             ));
         }
 
