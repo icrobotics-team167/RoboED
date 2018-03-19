@@ -16,7 +16,7 @@ public class StateCounterMapper<T> extends Mapper<Boolean, T> {
     /**
      * Subsequent output values.
      */
-    private final T[] values;
+    private final Object[] values;
 
     /**
      * The index of the current output value.
@@ -33,17 +33,18 @@ public class StateCounterMapper<T> extends Mapper<Boolean, T> {
      * @param initial The initial output value.
      * @param values The subsequent output values.
      */
-    public StateCounterMapper(T initial, T[] values) {
+    public StateCounterMapper(T initial, Object[] values) {
         this.initial = initial;
         this.values = values;
         this.index = 0;
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public T apply(Boolean data) {
         if (!lastFrame && data && index < values.length) index++;
         lastFrame = data;
-        return index > 0 ? values[index - 1] : initial;
+        return index > 0 ? (T)values[index - 1] : initial;
     }
 
 }

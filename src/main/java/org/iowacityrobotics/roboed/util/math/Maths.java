@@ -58,8 +58,9 @@ public class Maths {
      * @param <T> The type of objects in the set.
      * @param <V> The type of comparison key.
      */
-    public static <T, V extends Comparable<V>> T max(Function<T, V> key, T... set) {
-        return Arrays.stream(set).max(Comparator.comparing(key)).orElse(null);
+    @SuppressWarnings("unchecked")
+    public static <T, V extends Comparable<V>> T max(Function<T, V> key, Object... set) {
+        return Arrays.stream(set).map(v -> (T)v).max(Comparator.comparing(key)).orElse(null);
     }
 
     /**
@@ -69,8 +70,9 @@ public class Maths {
      * @param <T> The type of objects in the set.
      * @param <V> The type of comparison key.
      */
-    public static <T, V extends Comparable<V>> T min(Function<T, V> key, T... set) {
-        return Arrays.stream(set).min(Comparator.comparing(key)).orElse(null);
+    @SuppressWarnings("unchecked")
+    public static <T, V extends Comparable<V>> T min(Function<T, V> key, Object... set) {
+        return Arrays.stream(set).map(v -> (T)v).min(Comparator.comparing(key)).orElse(null);
     }
 
 }

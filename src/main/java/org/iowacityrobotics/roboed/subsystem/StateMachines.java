@@ -41,7 +41,7 @@ public class StateMachines {
      * @param <T> The type of value to return.
      * @return The newly-created state counter.
      */
-    public static <T> Mapper<Boolean, T> stateCounter(T initial, T... values) {
+    public static <T> Mapper<Boolean, T> stateCounter(T initial, Object... values) {
         return new StateCounterMapper<>(initial, values);
     }
 
