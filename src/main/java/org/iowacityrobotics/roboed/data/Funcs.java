@@ -33,4 +33,37 @@ public class Funcs {
         return Data.inter((a, b) -> a * b);
     }
 
+    /**
+     * Performs the AND operation on two booleans.
+     * @return The new interpolator.
+     */
+    public static Interpolator<Boolean, Boolean, Boolean> and() {
+        return Data.inter((a, b) -> a && b);
+    }
+
+    /**
+     * Performs the OR operation on two booleans.
+     * @return The new interpolator.
+     */
+    public static Interpolator<Boolean, Boolean, Boolean> or() {
+        return Data.inter((a, b) -> a || b);
+    }
+
+    /**
+     * Performs the NAND operation on two booleans.
+     * @return The new interpolator.
+     */
+    public static Interpolator<Boolean, Boolean, Boolean> nand() {
+        return Data.inter((a, b) -> !(a && b));
+    }
+
+    /**
+     * Performs the NOR operation on two booleans.
+     * @return The new interpolator.
+     */
+    public static Interpolator<Boolean, Boolean, Boolean> nor() {
+        return Data.inter((a, b) -> !(a || b));
+    }
+
+
 }
