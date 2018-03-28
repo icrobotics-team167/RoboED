@@ -59,8 +59,18 @@ public final class SinkSystems {
          * @return The new sink.
          */
         public static Sink<Double> servo(int port) {
+            return servo(port, 0D);
+        }
+
+        /**
+         * Creates a sink for the given Servo with a default setpoint.
+         * @param port The Servo's port number.
+         * @param def The default setpoint.
+         * @return The new sink.
+         */
+        public static Sink<Double> servo(int port, double def) {
             final Servo servo = Devices.servo(port);
-            return Data.sink(servo::set, 0D);
+            return Data.sink(servo::set, def);
         }
 
     }
@@ -153,7 +163,9 @@ public final class SinkSystems {
          * @return The new sink.
          */
         public static Sink<Double> number(String key) {
-            return Data.sink(n -> SmartDashboard.putNumber(key, n != null ? n : 0D));
+            return Data.sink(n -> {
+                if (n != null) SmartDashboard.putNumber(key, n);
+            });
         }
 
         /**
@@ -162,7 +174,9 @@ public final class SinkSystems {
          * @return The new sink.
          */
         public static Sink<String> string(String key) {
-            return Data.sink(s -> SmartDashboard.putString(key, s != null ? s : ""));
+            return Data.sink(s -> {
+                if (s != null) SmartDashboard.putString(key, s);
+            });
         }
 
     }

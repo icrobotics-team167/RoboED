@@ -40,12 +40,26 @@ public final class Flow {
     private static final AtomicBoolean shouldBreak = new AtomicBoolean(false);
 
     /**
+     * A thread-local variable for the run mode represented by a particular thread.
+     */
+    static final ThreadLocal<RobotMode> threadMode = new ThreadLocal<>();
+
+    /**
+     * Gets the operational mode represented by the current opthread.
+     * @return The current mode, or null if this thread isn't an opthread.
+     */
+    static RobotMode getRobotMode() {
+        return threadMode.get();
+    }
+
+    /**
      * Run an operation on the operations thread.
      * @param func The operation to run.
      */
     static void run(Runnable func) {
         if (future != null) future.cancel(true);
         future = executor.submit(() -> {
+            threadMode.set(RobotMode.getUnsafe());
             Data.reset(false);
             waitCtx = new StackNode<>(new WaitingContext());
             try {
@@ -57,8 +71,10 @@ public final class Flow {
                 Logs.error("Errored while running opmode!", e);
             }
             Data.reset(false);
-            while (!Thread.currentThread().isInterrupted())
-                Sink.tickAll();
+            if (threadMode.get().shouldTick) {
+                while (!Thread.currentThread().isInterrupted() && threadMode.get() == RobotMode.getUnsafe())
+                    Sink.tickAll();
+            }
         });
     }
 
@@ -95,7 +111,9 @@ public final class Flow {
             WaitingContext ctx = waitCtx.getValue();
             waitCtx = waitCtx.extend(new WaitingContext());
             while (!condition.isMet() && !Thread.currentThread().isInterrupted() && !shouldBreak.get()) {
-                Sink.tickAll();
+                RobotMode canonicalMode = threadMode.get();
+                if (canonicalMode != RobotMode.getUnsafe()) throw new EndOp();
+                if (canonicalMode.shouldTick) Sink.tickAll();
                 if (ctx.waitingFunc != null)
                     ctx.waitingFunc.run();
             }

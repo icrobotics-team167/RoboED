@@ -75,11 +75,20 @@ public enum RobotMode {
     }
 
     /**
-     * Gets the robot's current operational mode.
-     * @return The robot's mode.
+     * Gets the robot's current operational mode as seen in real time.
+     * @return The robot's real mode.
+     */
+    public static RobotMode getUnsafe() {
+        return Robot.runMode;
+    }
+
+    /**
+     * Gets the robot's operational mode as seen by the current thread.
+     * @return The robot's canonical mode.
      */
     public static RobotMode get() {
-        return Robot.runMode;
+        RobotMode mode = Flow.threadMode.get();
+        return mode == null ? getUnsafe() : mode;
     }
     
 }
