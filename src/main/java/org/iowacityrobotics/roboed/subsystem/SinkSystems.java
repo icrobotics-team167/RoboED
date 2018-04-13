@@ -147,7 +147,7 @@ public final class SinkSystems {
                     m.getFrontRight(),
                     m.getRearRight()
             );
-            return Data.sink(v -> drive.driveCartesian(v.x(), v.y(), v.z(), v.w()), Vector4.ZERO);
+            return Data.sink(v -> drive.driveCartesian(v.x(), -v.y(), v.z(), v.w()), Vector4.ZERO);
         }
 
     }
